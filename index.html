@@ -7,45 +7,49 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header class="hero">
+  <header class="hero hero-home">
+    <div class="hero-emojis" aria-hidden="true">🚀 ⭐ 🎈 🧩 🌈</div>
     <h1>¡Hola, Ana Isabella! 👋</h1>
-    <p>Un espacio para aprender, jugar y programar juntas.</p>
+    <p>Elige un juego y aprende jugando. ¡Vamos a divertirnos!</p>
   </header>
 
   <main>
-    <h2>Elige qué quieres hacer hoy</h2>
-    <div class="tarjetas">
-      <a class="tarjeta" href="lecciones/leccion-01-que-es-programar.html">
-        <span class="emoji">🤖</span>
-        <h3>Lección 1: ¿Qué es programar?</h3>
-        <p>Dale instrucciones a un robot y descubre cómo piensan las computadoras.</p>
+    <h2 class="titulo-seccion">🎮 Tus juegos</h2>
+
+    <div class="juegos-hub">
+      <a class="juego-card color-morado" href="lecciones/leccion-01-que-es-programar.html">
+        <span class="badge-emoji">🤖</span>
+        <h3>Robot Programador</h3>
+        <p>Dale instrucciones al robot para que llegue a la estrella.</p>
+        <span class="jugar">¡Jugar! →</span>
       </a>
 
-      <a class="tarjeta" href="juegos/banderas-del-mundo.html">
-        <span class="emoji">🚩</span>
+      <a class="juego-card color-azul" href="juegos/banderas-del-mundo.html">
+        <span class="badge-emoji">🚩</span>
         <h3>Banderas del mundo</h3>
-        <p>Adivina el país por su bandera, con niveles fácil, intermedio y difícil.</p>
+        <p>Adivina el país por su bandera. ¡Tres niveles de reto!</p>
+        <span class="jugar">¡Jugar! →</span>
       </a>
 
-      <div class="tarjeta proximamente">
-        <span class="emoji">🔢</span>
-        <h3>Matemáticas</h3>
-        <p>Juegos de números y retos de lógica.</p>
-        <span class="etiqueta">Próximamente</span>
+      <div class="juego-card proximamente color-naranja">
+        <span class="badge-emoji">🔢</span>
+        <h3>Números mágicos</h3>
+        <p>Juegos de sumas, restas y retos de lógica.</p>
+        <span class="candado">🔒 Pronto</span>
       </div>
 
-      <div class="tarjeta proximamente">
-        <span class="emoji">📚</span>
-        <h3>Lectura</h3>
-        <p>Cuentos y actividades de comprensión.</p>
-        <span class="etiqueta">Próximamente</span>
+      <div class="juego-card proximamente color-rosa">
+        <span class="badge-emoji">📚</span>
+        <h3>Aventura de lectura</h3>
+        <p>Cuentos y juegos de palabras.</p>
+        <span class="candado">🔒 Pronto</span>
       </div>
 
-      <div class="tarjeta proximamente">
-        <span class="emoji">🎨</span>
-        <h3>Proyectos de tarea</h3>
-        <p>Un lugar para organizar tus proyectos de clase.</p>
-        <span class="etiqueta">Próximamente</span>
+      <div class="juego-card proximamente color-verde">
+        <span class="badge-emoji">🧠</span>
+        <h3>Memoria</h3>
+        <p>Encuentra las parejas y entrena tu memoria.</p>
+        <span class="candado">🔒 Pronto</span>
       </div>
     </div>
   </main>
