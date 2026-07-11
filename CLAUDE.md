@@ -22,4 +22,10 @@ y, más adelante, matemáticas y lectura.
 
 ## Estado actual
 - Lección 1 (secuencias de instrucciones con un robot) completa.
+- Juego "Banderas del mundo" completo: 3 niveles (fácil/intermedio/difícil),
+  quiz de opción múltiple, puntaje y pantalla final. Vive en
+  `juegos/banderas-del-mundo.html` + `js/banderas.js`. Las banderas se cargan
+  como imágenes desde flagcdn.com (única dependencia externa; requiere
+  internet). Si se quiere 100% offline, habría que descargar los SVG/PNG al
+  repo.
 - Módulos de Matemáticas, Lectura y Proyectos de tarea: pendientes.

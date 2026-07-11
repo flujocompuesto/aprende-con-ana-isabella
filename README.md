@@ -10,15 +10,21 @@ Abre `index.html` en el navegador, o publícalo con GitHub Pages.
 
 ## Estructura
 
-- `index.html` — página de inicio con las lecciones disponibles.
+- `index.html` — página de inicio con las lecciones y juegos disponibles.
 - `lecciones/` — cada lección es una página independiente.
+- `juegos/` — juegos educativos, cada uno en su propia página.
 - `css/style.css` — estilos compartidos.
-- `js/` — la lógica de cada lección (un archivo por lección).
+- `js/` — la lógica de cada lección o juego (un archivo por cada uno).
 
 ## Lecciones disponibles
 
 1. **¿Qué es programar?** — un juego donde se le dan instrucciones en
    secuencia a un robot para que llegue hasta una estrella.
+
+## Juegos disponibles
+
+- **Banderas del mundo** — adivina el país por su bandera, con niveles
+  fácil, intermedio y difícil. Las banderas se cargan desde flagcdn.com.
 
 ## Cómo agregar una lección nueva
 
