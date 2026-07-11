@@ -459,7 +459,139 @@ footer {
 .mensaje-juego.error { color: var(--color-acento); }
 
 .fin-emoji { font-size: 3.5rem; }
+.fin-estrellas { font-size: 2.8rem; letter-spacing: 6px; }
 
 .fin-puntaje { font-size: 1.3rem; font-weight: bold; margin: 4px 0; }
 .fin-puntos { font-size: 1.1rem; color: var(--color-primario-oscuro); font-weight: bold; margin: 4px 0; }
 .fin-nivel { color: #636e72; margin: 4px 0 8px; }
+
+/* ====== Juego de números mágicos ====== */
+
+.racha {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #e17055;
+}
+
+.manipulativos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 8px auto 20px;
+  min-height: 40px;
+}
+
+.grupo-objetos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  max-width: 220px;
+  padding: 10px 14px;
+  background: #f8f7ff;
+  border-radius: 14px;
+}
+
+.objeto {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.objeto.quitado {
+  opacity: 0.3;
+  position: relative;
+}
+
+.objeto.quitado::after {
+  content: "✖";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--color-acento);
+  font-size: 1.1rem;
+}
+
+.signo-objetos {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--color-primario-oscuro);
+}
+
+.problema {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 10px auto 24px;
+  font-size: clamp(2rem, 9vw, 3rem);
+  font-weight: bold;
+  color: var(--color-texto);
+}
+
+.problema .igual { color: #b2bec3; }
+
+.respuesta {
+  min-width: 80px;
+  padding: 6px 18px;
+  border: 3px dashed var(--color-primario);
+  border-radius: 14px;
+  color: var(--color-primario-oscuro);
+  text-align: center;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.respuesta.correcta {
+  border-style: solid;
+  border-color: var(--color-exito);
+  background: #d6f5e9;
+  color: #087f5b;
+  transform: scale(1.1);
+}
+
+.respuesta.incorrecta {
+  border-style: solid;
+  border-color: var(--color-acento);
+  background: #ffe0dd;
+  color: #c0392b;
+}
+
+.teclado {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.tecla {
+  border: none;
+  background: linear-gradient(180deg, #ffffff, #eef0f5);
+  border: 2px solid #dfe4ea;
+  border-radius: 14px;
+  padding: 18px 0;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--color-texto);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.tecla:hover:not(:disabled) { transform: translateY(-2px); }
+.tecla:active:not(:disabled) { transform: scale(0.95); }
+.tecla:disabled { opacity: 0.5; cursor: default; }
+
+.tecla-borrar {
+  background: linear-gradient(180deg, #ffefea, #ffd9cf);
+  border-color: #ffb3a0;
+  color: #c0392b;
+}
+
+.tecla-comprobar {
+  background: linear-gradient(135deg, #00b894, #55efc4);
+  border-color: #00b894;
+  color: white;
+}

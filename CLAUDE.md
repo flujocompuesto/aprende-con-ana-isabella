@@ -42,4 +42,9 @@ Inspirado en https://www.synthesis.com/ — aprendizaje **gamificado**:
   como imágenes desde flagcdn.com (única dependencia externa; requiere
   internet). Si se quiere 100% offline, habría que descargar los SVG/PNG al
   repo.
-- Módulos de Matemáticas, Lectura y Proyectos de tarea: pendientes.
+- Juego "Números mágicos" (matemáticas) completo: 3 niveles, teclado numérico
+  en pantalla, objetos para contar en el nivel fácil (manipulativos visuales),
+  racha 🔥 con bono de puntos, y pantalla final con estrellas. Vive en
+  `juegos/numeros-magicos.html` + `js/numeros.js`. Fácil = sumas/restas con
+  dibujos; Intermedio = +/-/×; Difícil = +/-/×/÷ (divisiones exactas).
+- Módulos de Lectura y Memoria: pendientes (siguen como "Pronto" en la home).

@@ -25,6 +25,9 @@ Abre `index.html` en el navegador, o publícalo con GitHub Pages.
 
 - **Banderas del mundo** — adivina el país por su bandera, con niveles
   fácil, intermedio y difícil. Las banderas se cargan desde flagcdn.com.
+- **Números mágicos** — resuelve operaciones con un teclado interactivo,
+  con objetos para contar en el nivel fácil, rachas y estrellas. Niveles
+  fácil (sumas/restas), intermedio (+/-/×) y difícil (+/-/×/÷).
 
 ## Cómo agregar una lección nueva
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Números mágicos — Aprende con Ana Isabella</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>🔢 Números mágicos</h1>
+    <p>Resuelve las operaciones y gana estrellas.</p>
+  </header>
+
+  <main class="leccion">
+    <a class="volver" href="../index.html">← Volver al inicio</a>
+
+    <!-- Pantalla 1: elegir nivel -->
+    <section id="pantalla-inicio" class="juego">
+      <h2>Elige tu nivel</h2>
+      <p>Cada partida tiene 10 operaciones. ¡Junta una racha! 🔥</p>
+      <div class="niveles">
+        <button class="nivel facil" data-nivel="facil">
+          <span class="emoji">🟢</span>
+          <span class="nombre">Fácil</span>
+          <span class="detalle">Sumas y restas con dibujos para contar</span>
+        </button>
+        <button class="nivel intermedio" data-nivel="intermedio">
+          <span class="emoji">🟡</span>
+          <span class="nombre">Intermedio</span>
+          <span class="detalle">Sumas, restas y multiplicaciones</span>
+        </button>
+        <button class="nivel dificil" data-nivel="dificil">
+          <span class="emoji">🔴</span>
+          <span class="nombre">Difícil</span>
+          <span class="detalle">También multiplicar y dividir</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Pantalla 2: el juego -->
+    <section id="pantalla-juego" class="juego" hidden>
+      <div class="barra-superior">
+        <button class="volver-juego" data-accion="inicio" aria-label="Salir">←</button>
+        <span id="puntos" class="puntos">Puntos: 0</span>
+        <span id="racha" class="racha" hidden></span>
+        <span id="contador" class="contador">1/10</span>
+      </div>
+
+      <div class="progreso"><div id="barra-progreso" class="progreso-relleno"></div></div>
+
+      <div id="manipulativos" class="manipulativos" hidden></div>
+
+      <div class="problema">
+        <span id="operacion" class="operacion">1 + 1</span>
+        <span class="igual">=</span>
+        <span id="respuesta" class="respuesta">?</span>
+      </div>
+
+      <div id="teclado" class="teclado"></div>
+
+      <p id="mensaje-juego" class="mensaje-juego"></p>
+    </section>
+
+    <!-- Pantalla 3: resultado final -->
+    <section id="pantalla-fin" class="juego" hidden>
+      <div id="fin-estrellas" class="fin-estrellas">⭐⭐⭐</div>
+      <h2 id="fin-felicitacion">¡Muy bien!</h2>
+      <p id="fin-puntaje" class="fin-puntaje">Acertaste 0 de 10</p>
+      <p id="fin-puntos" class="fin-puntos">0 puntos</p>
+      <p id="fin-nivel" class="fin-nivel">Nivel: Fácil</p>
+      <div class="acciones">
+        <button id="btn-repetir" class="boton ejecutar">🔁 Jugar otra vez</button>
+        <button class="boton borrar" data-accion="inicio">🎚️ Cambiar nivel</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Hecho con cariño para Ana Isabella 💜
+  </footer>
+
+  <script src="../js/numeros.js"></script>
+</body>
+</html>
