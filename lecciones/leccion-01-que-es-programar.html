@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 1: ¿Qué es programar? — Aprende con Ana Isabella</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>🤖 ¿Qué es programar?</h1>
+    <p>Ayuda al robot a llegar a la estrella dándole instrucciones, en orden.</p>
+  </header>
+
+  <main class="leccion">
+    <a class="volver" href="../index.html">← Volver al inicio</a>
+
+    <section class="explicacion">
+      <p>
+        Programar es dar <strong>instrucciones, en orden</strong>, para que algo
+        (como una computadora o un robot 🤖) haga lo que queremos.
+      </p>
+      <p>
+        Usa los botones de flechas para armar una lista de movimientos.
+        Cuando estés lista, presiona <strong>▶️ Ejecutar</strong> y mira si el
+        robot llega hasta la estrella ⭐.
+      </p>
+    </section>
+
+    <section class="juego">
+      <div id="tablero" class="tablero"></div>
+
+      <div class="controles">
+        <button id="arriba" aria-label="Arriba">⬆️</button>
+        <button id="izquierda" aria-label="Izquierda">⬅️</button>
+        <button id="derecha" aria-label="Derecha">➡️</button>
+        <button id="abajo" aria-label="Abajo">⬇️</button>
+      </div>
+
+      <div id="lista-instrucciones" class="lista-instrucciones"></div>
+
+      <div class="acciones">
+        <button id="btn-ejecutar" class="boton ejecutar">▶️ Ejecutar</button>
+        <button id="btn-borrar" class="boton borrar">🗑️ Borrar</button>
+      </div>
+
+      <p id="mensaje" class="mensaje"></p>
+    </section>
+  </main>
+
+  <footer>
+    Hecho con cariño para Ana Isabella 💜
+  </footer>
+
+  <script src="../js/leccion-01.js"></script>
+</body>
+</html>

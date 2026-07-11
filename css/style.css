@@ -1,0 +1,236 @@
+:root {
+  --color-fondo: #fef9ef;
+  --color-primario: #6c5ce7;
+  --color-primario-oscuro: #5344c9;
+  --color-acento: #ff7675;
+  --color-exito: #00b894;
+  --color-texto: #2d3436;
+  --radio: 16px;
+  --sombra: 0 4px 14px rgba(45, 52, 54, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Comic Sans MS", "Trebuchet MS", system-ui, sans-serif;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.5;
+}
+
+header.hero {
+  background: linear-gradient(135deg, var(--color-primario), #a29bfe);
+  color: white;
+  padding: 48px 24px;
+  text-align: center;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+}
+
+header.hero h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+}
+
+header.hero p {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.95;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.tarjeta {
+  background: white;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 24px;
+  text-decoration: none;
+  color: var(--color-texto);
+  display: block;
+  transition: transform 0.15s ease;
+  border: 3px solid transparent;
+}
+
+.tarjeta:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-primario);
+}
+
+.tarjeta .emoji {
+  font-size: 2.2rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.tarjeta h3 {
+  margin: 0 0 6px;
+}
+
+.tarjeta p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #636e72;
+}
+
+.tarjeta.proximamente {
+  opacity: 0.55;
+  cursor: default;
+  pointer-events: none;
+}
+
+.etiqueta {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--color-primario-oscuro);
+  background: #eee6ff;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+a.volver {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--color-primario-oscuro);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a.volver:hover {
+  text-decoration: underline;
+}
+
+.leccion h2 {
+  font-size: 1.6rem;
+}
+
+.explicacion {
+  background: white;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 20px 24px;
+  margin-bottom: 28px;
+}
+
+.juego {
+  background: white;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 24px;
+  text-align: center;
+}
+
+.tablero {
+  display: grid;
+  grid-template-columns: repeat(5, 56px);
+  grid-template-rows: repeat(5, 56px);
+  gap: 4px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.celda {
+  background: #f1f0fb;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.controles {
+  display: grid;
+  grid-template-columns: repeat(3, 56px);
+  grid-template-rows: repeat(3, 56px);
+  gap: 6px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.controles button {
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--color-primario);
+  color: white;
+  cursor: pointer;
+}
+
+.controles button:hover {
+  background: var(--color-primario-oscuro);
+}
+
+.controles button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+#arriba { grid-column: 2; grid-row: 1; }
+#izquierda { grid-column: 1; grid-row: 2; }
+#derecha { grid-column: 3; grid-row: 2; }
+#abajo { grid-column: 2; grid-row: 3; }
+
+.lista-instrucciones {
+  min-height: 40px;
+  background: #f8f7ff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 16px auto;
+  max-width: 500px;
+  font-size: 1.3rem;
+  letter-spacing: 4px;
+}
+
+.acciones {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.boton {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+}
+
+.boton.ejecutar { background: var(--color-exito); }
+.boton.borrar { background: var(--color-acento); }
+.boton:disabled { opacity: 0.5; cursor: default; }
+
+.mensaje {
+  margin-top: 16px;
+  font-weight: bold;
+  min-height: 24px;
+}
+
+.mensaje.exito { color: var(--color-exito); }
+.mensaje.error { color: var(--color-acento); }
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #b2b2b2;
+  font-size: 0.85rem;
+}
