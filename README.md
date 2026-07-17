@@ -28,6 +28,9 @@ Abre `index.html` en el navegador, o publícalo con GitHub Pages.
 - **Números mágicos** — resuelve operaciones con un teclado interactivo,
   con objetos para contar en el nivel fácil, rachas y estrellas. Niveles
   fácil (sumas/restas), intermedio (+/-/×) y difícil (+/-/×/÷).
+- **Memoria de perritos** — encuentra las parejas de perritos iguales, con
+  ilustraciones SVG originales. Niveles fácil (3 pares), intermedio (6 pares)
+  y difícil (10 pares).
 
 ## Cómo agregar una lección nueva
 

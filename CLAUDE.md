@@ -47,4 +47,11 @@ Inspirado en https://www.synthesis.com/ — aprendizaje **gamificado**:
   racha 🔥 con bono de puntos, y pantalla final con estrellas. Vive en
   `juegos/numeros-magicos.html` + `js/numeros.js`. Fácil = sumas/restas con
   dibujos; Intermedio = +/-/×; Difícil = +/-/×/÷ (divisiones exactas).
-- Módulos de Lectura y Memoria: pendientes (siguen como "Pronto" en la home).
+- Juego "Memoria de perritos" completo: 3 niveles (3, 6 y 10 pares), volteo
+  de cartas 3D, marcador de pares e intentos, y pantalla final con estrellas.
+  Vive en `juegos/memoria-perritos.html` + `js/memoria.js`. Los perritos son
+  ILUSTRACIONES SVG ORIGINALES (10 beagles caricatura con accesorios: gorro de
+  fiesta, moño, lentes, flor, corona, bufanda, audífonos, gorra, enamorado,
+  juguetón). NO se usa arte de Snoopy (personaje con copyright) — Ivan pidió
+  "estilo Snoopy" pero al ser sitio público se hicieron perritos propios.
+- Módulo de Lectura: pendiente (sigue como "Pronto" en la home).

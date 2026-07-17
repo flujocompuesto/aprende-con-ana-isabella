@@ -595,3 +595,84 @@ footer {
   border-color: #00b894;
   color: white;
 }
+
+/* ====== Juego de memoria de perritos ====== */
+
+.tablero {
+  display: grid;
+  gap: 12px;
+  max-width: 520px;
+  margin: 8px auto 0;
+}
+
+.tablero.nivel-facil { grid-template-columns: repeat(3, 1fr); max-width: 340px; }
+.tablero.nivel-intermedio { grid-template-columns: repeat(4, 1fr); max-width: 440px; }
+.tablero.nivel-dificil { grid-template-columns: repeat(5, 1fr); }
+
+.carta {
+  position: relative;
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  perspective: 700px;
+}
+
+.carta-inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease;
+}
+
+.carta.volteada .carta-inner,
+.carta.encontrada .carta-inner {
+  transform: rotateY(180deg);
+}
+
+.carta-cara {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.carta-frente {
+  background: linear-gradient(135deg, var(--color-primario), #a29bfe);
+  font-size: 1.8rem;
+  box-shadow: var(--sombra);
+}
+
+.carta-reverso {
+  background: white;
+  border: 3px solid #eee;
+  transform: rotateY(180deg);
+  box-shadow: var(--sombra);
+}
+
+.carta-reverso svg {
+  width: 84%;
+  height: 84%;
+}
+
+.carta.encontrada .carta-reverso {
+  border-color: var(--color-exito);
+  background: #eafaf3;
+  animation: latido 0.4s ease;
+}
+
+@keyframes latido {
+  0% { transform: rotateY(180deg) scale(1); }
+  50% { transform: rotateY(180deg) scale(1.08); }
+  100% { transform: rotateY(180deg) scale(1); }
+}
+
+@media (max-width: 520px) {
+  .tablero.nivel-dificil { grid-template-columns: repeat(4, 1fr); }
+  .tablero { gap: 8px; }
+}
