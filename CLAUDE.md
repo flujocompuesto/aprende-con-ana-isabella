@@ -54,4 +54,12 @@ Inspirado en https://www.synthesis.com/ — aprendizaje **gamificado**:
   fiesta, moño, lentes, flor, corona, bufanda, audífonos, gorra, enamorado,
   juguetón). NO se usa arte de Snoopy (personaje con copyright) — Ivan pidió
   "estilo Snoopy" pero al ser sitio público se hicieron perritos propios.
-- Módulo de Lectura: pendiente (sigue como "Pronto" en la home).
+- Juego "Aventura de lectura" completo: 3 niveles (palabras cortas / medianas
+  / largas), mecánica de ordenar fichas de letras revueltas para formar la
+  palabra con pista de emoji, botón borrar, soporte de teclado físico, puntos
+  y pantalla final con estrellas. Vive en `juegos/aventura-lectura.html` +
+  `js/lectura.js`. Las palabras se eligen sin tildes para que las fichas
+  queden limpias.
+- Los 5 juegos previstos están completos. La home ya no tiene tarjetas
+  "Pronto"; si se agregan juegos nuevos, seguir el mismo patrón (página en
+  `juegos/` + script en `js/` + tarjeta en index.html).

@@ -31,6 +31,9 @@ Abre `index.html` en el navegador, o publícalo con GitHub Pages.
 - **Memoria de perritos** — encuentra las parejas de perritos iguales, con
   ilustraciones SVG originales. Niveles fácil (3 pares), intermedio (6 pares)
   y difícil (10 pares).
+- **Aventura de lectura** — ordena las letras revueltas para formar la palabra,
+  con una pista de emoji. Niveles fácil (palabras cortas), intermedio
+  (medianas) y difícil (largas).
 
 ## Cómo agregar una lección nueva
 
