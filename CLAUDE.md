@@ -60,6 +60,13 @@ Inspirado en https://www.synthesis.com/ — aprendizaje **gamificado**:
   y pantalla final con estrellas. Vive en `juegos/aventura-lectura.html` +
   `js/lectura.js`. Las palabras se eligen sin tildes para que las fichas
   queden limpias.
-- Los 5 juegos previstos están completos. La home ya no tiene tarjetas
-  "Pronto"; si se agregan juegos nuevos, seguir el mismo patrón (página en
-  `juegos/` + script en `js/` + tarjeta en index.html).
+- Juego "Fracciones divertidas" completo: 3 niveles, mecánicas visuales
+  (identificar la fracción coloreada, colorear una fracción tocando partes,
+  comparar cuál es mayor) con pizzas (círculos) y barras SVG divididas en
+  partes iguales. Vive en `juegos/fracciones-divertidas.html` +
+  `js/fracciones.js`. Puntos y pantalla final con estrellas.
+- Nota CSS importante: se agregó una regla global `[hidden]{display:none
+  !important}` porque una clase con `display` (ej. `.acciones`) le ganaba al
+  atributo `hidden` y dejaba visible un botón que debía ocultarse.
+- Los 6 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
+  patrón (página en `juegos/` + script en `js/` + tarjeta en index.html).

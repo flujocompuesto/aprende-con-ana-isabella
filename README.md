@@ -34,6 +34,9 @@ Abre `index.html` en el navegador, o publícalo con GitHub Pages.
 - **Aventura de lectura** — ordena las letras revueltas para formar la palabra,
   con una pista de emoji. Niveles fácil (palabras cortas), intermedio
   (medianas) y difícil (largas).
+- **Fracciones divertidas** — aprende fracciones de forma visual: identifica la
+  fracción coloreada, colorea una fracción tocando las partes, y compara cuál
+  es mayor, con pizzas y barras. Niveles fácil, intermedio y difícil.
 
 ## Cómo agregar una lección nueva
 
