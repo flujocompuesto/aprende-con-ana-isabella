@@ -39,6 +39,7 @@ const instruccionEl = document.getElementById("instruccion");
 const figuraEl = document.getElementById("figura");
 const opcionesEl = document.getElementById("opciones");
 const zonaListoEl = document.getElementById("zona-listo");
+const contadorColorEl = document.getElementById("contador-color");
 const btnListoEl = document.getElementById("btn-listo");
 const mensajeEl = document.getElementById("mensaje-juego");
 
@@ -195,6 +196,7 @@ function mostrarPregunta() {
   opcionesEl.innerHTML = "";
   figuraEl.innerHTML = "";
   zonaListoEl.hidden = true;
+  contadorColorEl.hidden = true;
 
   if (pregunta.tipo === "identificar") renderIdentificar();
   else if (pregunta.tipo === "colorear") renderColorear();
@@ -208,6 +210,7 @@ function renderIdentificar() {
     const [nu, de] = frac.split("/");
     const boton = document.createElement("button");
     boton.className = "opcion-frac";
+    boton.dataset.fraccion = frac;
     boton.innerHTML = fraccionHTML(nu, de);
     boton.addEventListener("click", () => responderIdentificar(frac, boton));
     opcionesEl.appendChild(boton);
@@ -221,7 +224,7 @@ function responderIdentificar(frac, boton) {
   const acerto = frac === correcta;
   opcionesEl.querySelectorAll(".opcion-frac").forEach((b) => {
     b.disabled = true;
-    if (b.textContent.replace(/\s/g, "") === correcta.replace("/", "")) b.classList.add("correcta");
+    if (b.dataset.fraccion === correcta) b.classList.add("correcta");
   });
   finalizarRespuesta(acerto, boton, `Era ${correcta}`);
 }
@@ -229,17 +232,21 @@ function responderIdentificar(frac, boton) {
 function renderColorear() {
   instruccionEl.innerHTML = `Colorea la fracción ${fraccionHTML(pregunta.num, pregunta.den)}`;
   zonaListoEl.hidden = false;
+  contadorColorEl.hidden = false;
   pintarColorear();
 }
 
 function pintarColorear() {
   figuraEl.innerHTML = figuraSVG(pregunta.forma, pregunta.den, coloreadas, true);
+  // Muestra en vivo la fracción que lleva coloreada.
+  contadorColorEl.innerHTML = `Llevas ${fraccionHTML(coloreadas.size, pregunta.den)}`;
   figuraEl.querySelectorAll(".porcion").forEach((p) => {
     p.addEventListener("click", () => {
       if (bloqueo) return;
       const i = Number(p.dataset.i);
       if (coloreadas.has(i)) coloreadas.delete(i);
       else coloreadas.add(i);
+      Aprende.sonido.clic();
       pintarColorear();
     });
   });
@@ -274,8 +281,7 @@ function responderComparar(lado, envoltura) {
     b.disabled = true;
     if (i === pregunta.mayor) b.classList.add("correcta");
   });
-  if (!acerto) envoltura.classList.add("incorrecta");
-  finalizarRespuesta(acerto, null, "");
+  finalizarRespuesta(acerto, envoltura, "");
 }
 
 // Feedback común y avance a la siguiente pregunta.
@@ -286,10 +292,14 @@ function finalizarRespuesta(acerto, botonElegido, textoError) {
     puntosEl.textContent = `Puntos: ${puntos}`;
     mensajeEl.textContent = "¡Muy bien! 🎉";
     mensajeEl.className = "mensaje-juego exito";
+    Aprende.sonido.acierto();
+    Aprende.efecto.rebote(botonElegido || figuraEl);
   } else {
     if (botonElegido) botonElegido.classList.add("incorrecta");
     mensajeEl.textContent = textoError || "¡Casi!";
     mensajeEl.className = "mensaje-juego error";
+    Aprende.sonido.error();
+    Aprende.efecto.sacudir(botonElegido || figuraEl);
   }
   setTimeout(siguiente, 1600);
 }
@@ -304,19 +314,15 @@ function terminarPartida() {
   barraEl.style.width = "100%";
   mostrarPantalla(pantallaFin);
 
-  const porcentaje = aciertos / TOTAL_PREGUNTAS;
-  let estrellas = 0;
-  if (porcentaje >= 0.9) estrellas = 3;
-  else if (porcentaje >= 0.6) estrellas = 2;
-  else if (porcentaje >= 0.3) estrellas = 1;
+  const estrellas = Aprende.estrellasPorAciertos(aciertos, TOTAL_PREGUNTAS);
 
   let felicitacion = "¡Sigue practicando las fracciones!";
   if (estrellas === 3) felicitacion = "¡Increíble! Dominas las fracciones.";
   else if (estrellas === 2) felicitacion = "¡Muy bien! Ya entiendes las fracciones.";
   else if (estrellas === 1) felicitacion = "¡Buen intento! Cada vez lo haces mejor.";
 
-  document.getElementById("fin-estrellas").textContent =
-    "⭐".repeat(estrellas) + "☆".repeat(3 - estrellas);
+  document.getElementById("fin-estrellas").textContent = Aprende.textoEstrellas(estrellas);
+  Aprende.finDePartida("fracciones", nivelActual, estrellas);
   document.getElementById("fin-felicitacion").textContent = felicitacion;
   document.getElementById("fin-resumen").textContent = `Acertaste ${aciertos} de ${TOTAL_PREGUNTAS}`;
   document.getElementById("fin-puntos").textContent = `${puntos} puntos`;

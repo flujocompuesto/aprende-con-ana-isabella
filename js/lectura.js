@@ -66,6 +66,8 @@ let aciertos = 0;
 let fichas = []; // { letra, usada }
 let respuesta = []; // índices de fichas en el orden elegido
 let bloqueo = false;
+let usoPista = false; // si en la palabra actual se pidió pista
+let conPista = 0; // palabras acertadas con ayuda de una pista
 
 // Elementos de la página.
 const pantallaInicio = document.getElementById("pantalla-inicio");
@@ -112,12 +114,14 @@ function empezarPartida(nivel) {
   indice = 0;
   puntos = 0;
   aciertos = 0;
+  conPista = 0;
   mostrarPantalla(pantallaJuego);
   mostrarPalabra();
 }
 
 function mostrarPalabra() {
   bloqueo = false;
+  usoPista = false;
   respuesta = [];
   mensajeEl.textContent = "";
   mensajeEl.className = "mensaje-juego";
@@ -168,6 +172,24 @@ function elegirLetra(i) {
   if (bloqueo || fichas[i].usada) return;
   fichas[i].usada = true;
   respuesta.push(i);
+  Aprende.sonido.clic();
+  actualizarVista();
+}
+
+// Pista: quita las letras mal puestas y coloca la siguiente letra correcta.
+function pista() {
+  if (bloqueo) return;
+  const palabra = ronda[indice].palabra;
+  let bienPuestas = 0;
+  while (bienPuestas < respuesta.length && fichas[respuesta[bienPuestas]].letra === palabra[bienPuestas]) {
+    bienPuestas++;
+  }
+  while (respuesta.length > bienPuestas) fichas[respuesta.pop()].usada = false;
+  const i = fichas.findIndex((f) => !f.usada && f.letra === palabra[bienPuestas]);
+  usoPista = true;
+  Aprende.sonido.clic();
+  fichas[i].usada = true;
+  respuesta.push(i);
   actualizarVista();
 }
 
@@ -186,15 +208,21 @@ function comprobar() {
 
   if (acerto) {
     aciertos++;
-    puntos += PUNTOS_POR_ACIERTO;
+    if (usoPista) conPista++;
+    // Con pista la palabra vale la mitad.
+    puntos += usoPista ? PUNTOS_POR_ACIERTO / 2 : PUNTOS_POR_ACIERTO;
     puntosEl.textContent = `Puntos: ${puntos}`;
     slotsEl.classList.add("correcta");
-    mensajeEl.textContent = "¡Muy bien! 🎉";
+    mensajeEl.textContent = usoPista ? "¡Bien! 🎉 (con pista)" : "¡Muy bien! 🎉";
     mensajeEl.className = "mensaje-juego exito";
+    Aprende.sonido.acierto();
+    Aprende.efecto.rebote(slotsEl);
   } else {
     slotsEl.classList.add("incorrecta");
     mensajeEl.textContent = `Era: ${item.palabra}`;
     mensajeEl.className = "mensaje-juego error";
+    Aprende.sonido.error();
+    Aprende.efecto.sacudir(slotsEl);
   }
   // Desactivamos las fichas mientras se muestra el resultado.
   letrasEl.querySelectorAll(".letra").forEach((b) => (b.disabled = true));
@@ -214,22 +242,19 @@ function terminarPartida() {
   barraEl.style.width = "100%";
   mostrarPantalla(pantallaFin);
 
-  const porcentaje = aciertos / TOTAL_PALABRAS;
-  let estrellas = 0;
-  if (porcentaje >= 0.9) estrellas = 3;
-  else if (porcentaje >= 0.6) estrellas = 2;
-  else if (porcentaje >= 0.3) estrellas = 1;
+  // Las palabras logradas con pista cuentan como media para las estrellas.
+  const estrellas = Aprende.estrellasPorAciertos(aciertos - conPista / 2, TOTAL_PALABRAS);
 
   let felicitacion = "¡Sigue leyendo, cada vez lo haces mejor!";
   if (estrellas === 3) felicitacion = "¡Increíble! Eres una campeona de las palabras.";
   else if (estrellas === 2) felicitacion = "¡Muy bien! Formaste casi todas las palabras.";
   else if (estrellas === 1) felicitacion = "¡Buen intento! Ya vas aprendiendo muchas palabras.";
 
-  document.getElementById("fin-estrellas").textContent =
-    "⭐".repeat(estrellas) + "☆".repeat(3 - estrellas);
+  document.getElementById("fin-estrellas").textContent = Aprende.textoEstrellas(estrellas);
+  Aprende.finDePartida("lectura", nivelActual, estrellas);
   document.getElementById("fin-felicitacion").textContent = felicitacion;
   document.getElementById("fin-resumen").textContent =
-    `Formaste ${aciertos} de ${TOTAL_PALABRAS} palabras`;
+    `Formaste ${aciertos} de ${TOTAL_PALABRAS} palabras` + (conPista ? ` (${conPista} con pista)` : "");
   document.getElementById("fin-puntos").textContent = `${puntos} puntos`;
   document.getElementById("fin-nivel").textContent = `Nivel: ${NOMBRE_NIVEL[nivelActual]}`;
 }
@@ -256,6 +281,7 @@ document.querySelectorAll("[data-nivel]").forEach((boton) => {
 
 // Botón "borrar" (quita la última letra).
 document.getElementById("btn-borrar").addEventListener("click", borrar);
+document.getElementById("btn-pista").addEventListener("click", pista);
 
 // Botones "volver a elegir nivel".
 document.querySelectorAll("[data-accion='inicio']").forEach((boton) => {

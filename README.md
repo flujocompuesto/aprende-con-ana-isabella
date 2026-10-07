@@ -1,28 +1,30 @@
 # Aprende con Ana Isabella
 
-Sitio educativo hecho a mano por su papá, con lecciones interactivas de
-programación y (próximamente) matemáticas y lectura, pensado para una niña
-de 8 a 10 años.
+Sitio de juegos educativos hecho a mano por su papá para una niña de 8 a 10
+años: programación, banderas, matemáticas, lectura, memoria y fracciones.
+Cada juego tiene niveles, sonidos, celebraciones y estrellas que se guardan
+en el navegador.
 
 ## Cómo verlo
 
-Abre `index.html` en el navegador, o publícalo con GitHub Pages.
+En línea: https://aprende-con-ana-isabella.pages.dev (se publica solo con
+cada cambio en `main`). En local basta con abrir `index.html`.
 
 ## Estructura
 
-- `index.html` — página de inicio con las lecciones y juegos disponibles.
-- `lecciones/` — cada lección es una página independiente.
-- `juegos/` — juegos educativos, cada uno en su propia página.
+- `index.html` — página de inicio: los juegos y las estrellas ganadas.
+- `lecciones/` y `juegos/` — una página por juego.
 - `css/style.css` — estilos compartidos.
-- `js/` — la lógica de cada lección o juego (un archivo por cada uno).
-
-## Lecciones disponibles
-
-1. **¿Qué es programar?** — un juego donde se le dan instrucciones en
-   secuencia a un robot para que llegue hasta una estrella.
+- `js/comun.js` — sonidos, confeti, animaciones y estrellas guardadas
+  (lo usan todos los juegos).
+- `js/inicio.js` — muestra el progreso en la página de inicio.
+- `js/` — la lógica de cada juego (un archivo por juego).
 
 ## Juegos disponibles
 
+- **Robot Programador** — arma un programa de flechas para que el robot
+  llegue a la estrella esquivando rocas. 5 niveles que se desbloquean en
+  orden; 3 estrellas si usas el camino más corto.
 - **Banderas del mundo** — adivina el país por su bandera, con niveles
   fácil, intermedio y difícil. Las banderas se cargan desde flagcdn.com.
 - **Números mágicos** — resuelve operaciones con un teclado interactivo,
@@ -38,8 +40,11 @@ Abre `index.html` en el navegador, o publícalo con GitHub Pages.
   fracción coloreada, colorea una fracción tocando las partes, y compara cuál
   es mayor, con pizzas y barras. Niveles fácil, intermedio y difícil.
 
-## Cómo agregar una lección nueva
+## Cómo agregar un juego nuevo
 
-1. Crea `lecciones/leccion-XX-tema.html` copiando la estructura de la lección 1.
-2. Crea su lógica en `js/leccion-XX.js`.
-3. Agrega una tarjeta nueva en `index.html` enlazando a la lección.
+1. Crea `juegos/mi-juego.html` copiando la estructura de otro juego (carga
+   `js/comun.js` antes del script del juego).
+2. Crea su lógica en `js/mi-juego.js` y, al terminar la partida, llama
+   `Aprende.finDePartida("mi-juego", nivel, estrellas)`.
+3. Agrega su tarjeta en `index.html` con `data-juego="mi-juego"` y
+   `data-max` (estrellas máximas) para que se vea el progreso.

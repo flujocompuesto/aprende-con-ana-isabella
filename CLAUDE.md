@@ -34,8 +34,34 @@ Inspirado en https://www.synthesis.com/ — aprendizaje **gamificado**:
   salvo que el contenido lo amerite claramente.
 - Priorizar lo visual, lo interactivo y lo divertido sobre el texto largo.
 
+## Capa común de los juegos (`js/comun.js`)
+Todas las páginas cargan `js/comun.js` **antes** del script del juego. Expone
+el objeto `Aprende`:
+- `Aprende.sonido.acierto() / error() / clic() / paso() / victoria()` —
+  sonidos sintetizados con Web Audio (sin archivos). El botón 🔊/🔇 se agrega
+  solo al encabezado y recuerda la preferencia.
+- `Aprende.efecto.rebote(el) / sacudir(el)` y `Aprende.confeti()` (respetan
+  "reducir movimiento").
+- `Aprende.estrellasPorAciertos(aciertos, total)` y `Aprende.textoEstrellas(n)`.
+- `Aprende.finDePartida(juego, nivel, estrellas)` — al terminar: guarda el
+  récord (solo si mejora), celebra y muestra `#fin-record` si hubo récord.
+
+El progreso vive en `localStorage` (`aprende:progreso` = mejores estrellas por
+juego y nivel). Es solo del navegador de quien juega: no viaja entre
+dispositivos y se pierde si se borran los datos del sitio.
+
+**Juego nuevo**: cargar `comun.js`, poner `<p id="fin-record" class="fin-record"
+hidden>` en la pantalla final, llamar `Aprende.finDePartida(...)`, y en
+`index.html` darle a la tarjeta `data-juego` + `data-max` (estrellas máximas)
+y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
+
 ## Estado actual
-- Lección 1 (secuencias de instrucciones con un robot) completa.
+- "Robot Programador" (`lecciones/leccion-01-que-es-programar.html` +
+  `js/leccion-01.js`, la URL se mantuvo): 5 niveles con rocas, se desbloquean
+  en orden; el programa se ve como fichas que se iluminan al ejecutarse; las
+  estrellas comparan las instrucciones usadas con el camino más corto
+  (búsqueda en anchura). Su tablero usa `.tablero-robot` (no `.tablero`, que
+  es el de Memoria). Flechas del teclado, Enter y Borrar también funcionan.
 - Juego "Banderas del mundo" completo: 3 niveles (fácil/intermedio/difícil),
   quiz de opción múltiple, puntaje y pantalla final. Vive en
   `juegos/banderas-del-mundo.html` + `js/banderas.js`. Las banderas se cargan

@@ -127,6 +127,7 @@ let primeraCarta = null;
 let bloqueo = false;
 let intentos = 0;
 let paresEncontrados = 0;
+let combo = 0; // parejas encontradas seguidas, sin fallar
 
 const pantallaInicio = document.getElementById("pantalla-inicio");
 const pantallaJuego = document.getElementById("pantalla-juego");
@@ -159,6 +160,7 @@ function empezarPartida(nivel) {
   bloqueo = false;
   intentos = 0;
   paresEncontrados = 0;
+  combo = 0;
 
   // Elegimos los perritos del nivel y armamos las parejas.
   const elegidos = mezclar(PERRITOS).slice(0, totalPares);
@@ -196,6 +198,7 @@ function voltear(carta) {
   if (carta.classList.contains("volteada") || carta.classList.contains("encontrada")) return;
 
   carta.classList.add("volteada");
+  Aprende.sonido.clic();
 
   if (!primeraCarta) {
     primeraCarta = carta;
@@ -214,14 +217,18 @@ function voltear(carta) {
     primeraCarta = null;
     paresEncontrados++;
     actualizarMarcador();
-    mensajeEl.textContent = "¡Encontraste una pareja! 🎉";
+    combo++;
+    mensajeEl.textContent = combo >= 2 ? `¡Combo x${combo}! 🔥` : "¡Encontraste una pareja! 🎉";
     mensajeEl.className = "mensaje-juego exito";
+    Aprende.sonido.acierto();
+    Aprende.efecto.rebote(mensajeEl);
     if (paresEncontrados === totalPares) {
       setTimeout(terminarPartida, 700);
     }
   } else {
     // No coinciden: las volteamos de nuevo tras un momento.
     bloqueo = true;
+    combo = 0;
     mensajeEl.textContent = "Casi... ¡intenta otra vez!";
     mensajeEl.className = "mensaje-juego";
     setTimeout(() => {
@@ -245,8 +252,8 @@ function terminarPartida() {
   if (estrellas === 3) felicitacion = "¡Increíble memoria! Encontraste todas las parejas rapidísimo.";
   else if (estrellas === 2) felicitacion = "¡Muy bien! Encontraste todas las parejas.";
 
-  document.getElementById("fin-estrellas").textContent =
-    "⭐".repeat(estrellas) + "☆".repeat(3 - estrellas);
+  document.getElementById("fin-estrellas").textContent = Aprende.textoEstrellas(estrellas);
+  Aprende.finDePartida("memoria", nivelActual, estrellas);
   document.getElementById("fin-felicitacion").textContent = felicitacion;
   document.getElementById("fin-resumen").textContent =
     `Encontraste ${totalPares} pares en ${intentos} intentos`;

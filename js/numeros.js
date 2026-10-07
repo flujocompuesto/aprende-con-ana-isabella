@@ -213,6 +213,7 @@ function habilitarTeclado(activo) {
 // Maneja cada tecla del teclado en pantalla.
 function pulsarTecla(valor) {
   if (bloqueado) return;
+  if (valor !== "comprobar") Aprende.sonido.clic();
   if (valor === "borrar") {
     respuestaEscrita = respuestaEscrita.slice(0, -1);
     actualizarRespuesta();
@@ -245,13 +246,22 @@ function comprobar() {
     respuestaEl.classList.add("correcta");
     mensajeEl.textContent = bono > 0 ? `${elegir(ANIMOS)} (+${PUNTOS_BASE + bono})` : elegir(ANIMOS);
     mensajeEl.className = "mensaje-juego exito";
+    Aprende.sonido.acierto();
+    Aprende.efecto.rebote(respuestaEl.parentElement);
   } else {
     racha = 0;
     respuestaEl.classList.add("incorrecta");
     mensajeEl.textContent = `Casi... la respuesta era ${problema.respuesta}`;
     mensajeEl.className = "mensaje-juego error";
+    Aprende.sonido.error();
+    Aprende.efecto.sacudir(respuestaEl);
   }
   actualizarRacha();
+  // Celebración especial al llegar a una racha de 5.
+  if (acerto && racha > 0 && racha % 5 === 0) {
+    Aprende.confeti(35);
+    Aprende.efecto.rebote(rachaEl);
+  }
 
   setTimeout(siguiente, 1500);
 }
@@ -269,19 +279,15 @@ function terminarPartida() {
   barraEl.style.width = "100%";
   mostrarPantalla(pantallaFin);
 
-  const porcentaje = aciertos / TOTAL_PREGUNTAS;
-  let estrellas = 0;
-  if (porcentaje >= 0.9) estrellas = 3;
-  else if (porcentaje >= 0.6) estrellas = 2;
-  else if (porcentaje >= 0.3) estrellas = 1;
+  const estrellas = Aprende.estrellasPorAciertos(aciertos, TOTAL_PREGUNTAS);
 
   let felicitacion = "¡Sigue practicando, lo estás logrando!";
   if (estrellas === 3) felicitacion = "¡Increíble! Eres una maga de los números.";
   else if (estrellas === 2) felicitacion = "¡Muy bien! Ya dominas muchas operaciones.";
   else if (estrellas === 1) felicitacion = "¡Buen intento! Cada vez lo haces mejor.";
 
-  document.getElementById("fin-estrellas").textContent =
-    "⭐".repeat(estrellas) + "☆".repeat(3 - estrellas);
+  document.getElementById("fin-estrellas").textContent = Aprende.textoEstrellas(estrellas);
+  Aprende.finDePartida("numeros", nivelActual, estrellas);
   document.getElementById("fin-felicitacion").textContent = felicitacion;
   document.getElementById("fin-puntaje").textContent = `Acertaste ${aciertos} de ${TOTAL_PREGUNTAS}`;
   document.getElementById("fin-puntos").textContent = `${puntos} puntos`;

@@ -137,6 +137,7 @@ function empezarPartida(nivel) {
 
 function mostrarPregunta() {
   bloqueado = false;
+  Aprende.efecto.rebote(banderaEl.parentElement);
   mensajeEl.textContent = "";
   mensajeEl.className = "mensaje-juego";
 
@@ -180,10 +181,14 @@ function responder(pais, boton) {
     puntosEl.textContent = `Puntos: ${puntos}`;
     mensajeEl.textContent = "¡Muy bien! 🎉";
     mensajeEl.className = "mensaje-juego exito";
+    Aprende.sonido.acierto();
+    Aprende.efecto.rebote(boton);
   } else {
     boton.classList.add("incorrecta");
     mensajeEl.textContent = `Era ${correcto.nombre}`;
     mensajeEl.className = "mensaje-juego error";
+    Aprende.sonido.error();
+    Aprende.efecto.sacudir(boton);
   }
 
   // Avanzamos automáticamente a la siguiente pregunta.
@@ -203,21 +208,14 @@ function terminarPartida() {
   barraEl.style.width = "100%";
   mostrarPantalla(pantallaFin);
 
-  const porcentaje = aciertos / TOTAL_PREGUNTAS;
-  let emoji = "🌱";
+  const estrellas = Aprende.estrellasPorAciertos(aciertos, TOTAL_PREGUNTAS);
   let felicitacion = "¡Sigue practicando!";
-  if (porcentaje === 1) {
-    emoji = "🏆";
-    felicitacion = "¡Perfecto! Eres una campeona de banderas.";
-  } else if (porcentaje >= 0.7) {
-    emoji = "⭐";
-    felicitacion = "¡Muy bien! Ya sabes muchas banderas.";
-  } else if (porcentaje >= 0.4) {
-    emoji = "👍";
-    felicitacion = "¡Vas mejorando! Inténtalo otra vez.";
-  }
+  if (aciertos === TOTAL_PREGUNTAS) felicitacion = "¡Perfecto! Eres una campeona de banderas.";
+  else if (estrellas >= 2) felicitacion = "¡Muy bien! Ya sabes muchas banderas.";
+  else if (estrellas === 1) felicitacion = "¡Vas mejorando! Inténtalo otra vez.";
 
-  document.getElementById("fin-emoji").textContent = emoji;
+  document.getElementById("fin-estrellas").textContent = Aprende.textoEstrellas(estrellas);
+  Aprende.finDePartida("banderas", nivelActual, estrellas);
   document.getElementById("fin-puntaje").textContent = `Acertaste ${aciertos} de ${TOTAL_PREGUNTAS}`;
   document.getElementById("fin-felicitacion").textContent = felicitacion;
   document.getElementById("fin-puntos").textContent = `${puntos} puntos`;

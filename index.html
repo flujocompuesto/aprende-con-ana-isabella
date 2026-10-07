@@ -11,51 +11,58 @@
     <div class="hero-emojis" aria-hidden="true">🚀 ⭐ 🎈 🧩 🌈</div>
     <h1>¡Hola, Ana Isabella! 👋</h1>
     <p>Elige un juego y aprende jugando. ¡Vamos a divertirnos!</p>
+    <div id="total-estrellas" class="total-estrellas" hidden></div>
   </header>
 
   <main>
     <h2 class="titulo-seccion">🎮 Tus juegos</h2>
 
     <div class="juegos-hub">
-      <a class="juego-card color-morado" href="lecciones/leccion-01-que-es-programar.html">
+      <a class="juego-card color-morado" href="lecciones/leccion-01-que-es-programar.html" data-juego="robot" data-max="15">
         <span class="badge-emoji">🤖</span>
         <h3>Robot Programador</h3>
-        <p>Dale instrucciones al robot para que llegue a la estrella.</p>
+        <p>Programa al robot para que esquive las rocas. ¡5 niveles!</p>
+        <span class="progreso-card"></span>
         <span class="jugar">¡Jugar! →</span>
       </a>
 
-      <a class="juego-card color-azul" href="juegos/banderas-del-mundo.html">
+      <a class="juego-card color-azul" href="juegos/banderas-del-mundo.html" data-juego="banderas" data-max="9">
         <span class="badge-emoji">🚩</span>
         <h3>Banderas del mundo</h3>
         <p>Adivina el país por su bandera. ¡Tres niveles de reto!</p>
+        <span class="progreso-card"></span>
         <span class="jugar">¡Jugar! →</span>
       </a>
 
-      <a class="juego-card color-naranja" href="juegos/numeros-magicos.html">
+      <a class="juego-card color-naranja" href="juegos/numeros-magicos.html" data-juego="numeros" data-max="9">
         <span class="badge-emoji">🔢</span>
         <h3>Números mágicos</h3>
         <p>Sumas, restas, multiplicaciones y más. ¡Gana estrellas!</p>
+        <span class="progreso-card"></span>
         <span class="jugar">¡Jugar! →</span>
       </a>
 
-      <a class="juego-card color-rosa" href="juegos/aventura-lectura.html">
+      <a class="juego-card color-rosa" href="juegos/aventura-lectura.html" data-juego="lectura" data-max="9">
         <span class="badge-emoji">📚</span>
         <h3>Aventura de lectura</h3>
         <p>Ordena las letras y forma la palabra. ¡Gana estrellas!</p>
+        <span class="progreso-card"></span>
         <span class="jugar">¡Jugar! →</span>
       </a>
 
-      <a class="juego-card color-verde" href="juegos/memoria-perritos.html">
+      <a class="juego-card color-verde" href="juegos/memoria-perritos.html" data-juego="memoria" data-max="9">
         <span class="badge-emoji">🐶</span>
         <h3>Memoria de perritos</h3>
         <p>Encuentra las parejas de perritos. ¡Entrena tu memoria!</p>
+        <span class="progreso-card"></span>
         <span class="jugar">¡Jugar! →</span>
       </a>
 
-      <a class="juego-card color-turquesa" href="juegos/fracciones-divertidas.html">
+      <a class="juego-card color-turquesa" href="juegos/fracciones-divertidas.html" data-juego="fracciones" data-max="9">
         <span class="badge-emoji">🍕</span>
         <h3>Fracciones divertidas</h3>
         <p>Colorea, identifica y compara fracciones con pizzas y barras.</p>
+        <span class="progreso-card"></span>
         <span class="jugar">¡Jugar! →</span>
       </a>
     </div>
@@ -64,5 +71,8 @@
   <footer>
     Hecho con cariño para Ana Isabella 💜
   </footer>
+
+  <script src="js/comun.js"></script>
+  <script src="js/inicio.js"></script>
 </body>
 </html>

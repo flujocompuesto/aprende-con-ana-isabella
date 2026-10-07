@@ -27,6 +27,7 @@ body {
 }
 
 header.hero {
+  position: relative;
   background: linear-gradient(135deg, var(--color-primario), #a29bfe);
   color: white;
   padding: 48px 24px;
@@ -34,6 +35,22 @@ header.hero {
   border-bottom-left-radius: 32px;
   border-bottom-right-radius: 32px;
 }
+
+/* Botón para activar/quitar el sonido (lo agrega js/comun.js) */
+.boton-sonido {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.boton-sonido:hover { background: rgba(255, 255, 255, 0.4); }
 
 header.hero h1 {
   margin: 0 0 8px;
@@ -200,66 +217,140 @@ a.volver:hover {
   text-align: center;
 }
 
-.tablero {
-  display: grid;
-  grid-template-columns: repeat(5, 56px);
-  grid-template-rows: repeat(5, 56px);
-  gap: 4px;
+/* ====== Robot programador ====== */
+
+.niveles-robot {
+  display: flex;
+  gap: 8px;
   justify-content: center;
-  margin: 20px auto;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.punto-nivel {
+  min-width: 58px;
+  padding: 6px 10px;
+  border: 2px solid #dcd6fa;
+  border-radius: 12px;
+  background: white;
+  color: var(--color-texto);
+  font-weight: bold;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.punto-nivel .estrellas-nivel {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+}
+
+.punto-nivel.actual {
+  background: var(--color-primario);
+  border-color: var(--color-primario);
+  color: white;
+}
+
+.punto-nivel:disabled { opacity: 0.5; cursor: default; }
+
+.tablero-robot {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+  width: min(100%, 320px);
+  margin: 16px auto;
 }
 
 .celda {
+  aspect-ratio: 1;
   background: #f1f0fb;
-  border-radius: 8px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
+  font-size: clamp(1.3rem, 6vw, 1.8rem);
+  transition: background 0.2s ease;
 }
+
+.celda.pisada { background: #dcd6fa; }
+.celda.roca { background: #ece6dc; }
+.celda.choque { background: #ffe0dd; }
 
 .controles {
   display: grid;
-  grid-template-columns: repeat(3, 56px);
-  grid-template-rows: repeat(3, 56px);
+  grid-template-columns: repeat(3, 60px);
+  grid-template-rows: repeat(3, 60px);
   gap: 6px;
   justify-content: center;
-  margin: 20px auto;
+  margin: 18px auto 10px;
 }
 
 .controles button {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--color-primario);
   color: white;
   cursor: pointer;
 }
 
-.controles button:hover {
-  background: var(--color-primario-oscuro);
-}
-
-.controles button:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
+.controles button:hover:not(:disabled) { background: var(--color-primario-oscuro); }
+.controles button:active:not(:disabled) { transform: scale(0.94); }
+.controles button:disabled { opacity: 0.4; cursor: default; }
 
 #arriba { grid-column: 2; grid-row: 1; }
 #izquierda { grid-column: 1; grid-row: 2; }
 #derecha { grid-column: 3; grid-row: 2; }
 #abajo { grid-column: 2; grid-row: 3; }
 
+/* Programa del robot: cada instrucción es una ficha */
 .lista-instrucciones {
-  min-height: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+  min-height: 56px;
   background: #f8f7ff;
-  border-radius: 10px;
-  padding: 10px 14px;
-  margin: 16px auto;
-  max-width: 500px;
-  font-size: 1.3rem;
-  letter-spacing: 4px;
+  border-radius: 12px;
+  padding: 10px;
+  margin: 12px auto 4px;
+  max-width: 520px;
 }
+
+.lista-instrucciones .vacia { color: #8f8aa8; font-size: 0.95rem; }
+
+.chip {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 2px solid #dcd6fa;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  transition: transform 0.15s ease;
+}
+
+.chip.activa {
+  border-color: var(--color-primario);
+  background: #ece8ff;
+  transform: scale(1.18);
+}
+
+.chip.hecha { opacity: 0.45; }
+.chip.fallo { border-color: var(--color-acento); background: #ffe0dd; }
+
+.pasos-info {
+  font-size: 0.9rem;
+  color: #636e72;
+  margin: 0 0 6px;
+}
+
+.boton.siguiente { background: var(--color-primario); }
+.boton.quitar { background: #636e72; }
 
 .acciones {
   display: flex;
@@ -837,3 +928,97 @@ footer {
 
 /* Nuevo color de tarjeta en la home */
 .color-turquesa { background: linear-gradient(135deg, #00cec9, #81ecec); }
+
+/* ====== Efectos compartidos (js/comun.js) ====== */
+
+.confeti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.confeti span {
+  position: absolute;
+  top: -16px;
+  width: 10px;
+  height: 14px;
+  border-radius: 2px;
+  animation-name: caer;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes caer {
+  to { transform: translate(var(--x), 105vh) rotate(var(--giro)); }
+}
+
+.rebote { animation: rebote 0.45s ease; }
+
+@keyframes rebote {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.15); }
+  70% { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+.sacudir { animation: sacudir 0.4s ease; }
+
+@keyframes sacudir {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rebote, .sacudir, .hero-emojis { animation: none; }
+}
+
+.fin-record {
+  display: inline-block;
+  margin: 6px 0;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: #fff4d6;
+  color: #9a6b00;
+  font-weight: bold;
+}
+
+/* ====== Progreso en la página de inicio ====== */
+
+.total-estrellas {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.progreso-card {
+  align-self: flex-start;
+  font-size: 0.85rem;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+/* ====== Mejoras de lectura y fracciones ====== */
+
+.boton.pista { background: #fdcb6e; color: #6b4b00; }
+
+.contador-color {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-primario-oscuro);
+  margin: -8px 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
