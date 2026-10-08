@@ -50,6 +50,11 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   juego, cómo se mueve cada pieza (con retos de recoger estrellas), jaque y
   jaque mate, cómo empezar la partida, y una partida contra la compu.
 
+- **Robótica** — con Capi, la ingeniera: programa un robot con bloques
+  (avanzar, girar, repetir y sensores, con programas que deben funcionar en
+  varios tableros) y arma circuitos girando cables (interruptor, motor, serie,
+  paralelo y cortocircuito).
+
 ## Cómo agregar un juego nuevo
 
 1. Crea `juegos/mi-juego.html` copiando la estructura de otro juego (carga

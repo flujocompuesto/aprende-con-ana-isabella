@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robótica — Aprende con Ana Isabella</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header class="hero" data-sin-mascota>
+    <img class="mascota-cabecera" src="../img/capibara-ingeniera.svg" alt="" />
+    <h1>Robótica</h1>
+    <p>Programa robots y arma circuitos con Capi, la ingeniera.</p>
+  </header>
+
+  <main class="leccion">
+    <a class="volver" href="../index.html">← Volver al inicio</a>
+
+    <!-- Taller: elegir nivel -->
+    <section id="pantalla-mapa" class="juego">
+      <div class="burbuja">
+        <img class="guia" src="../img/capibara-ingeniera.svg" alt="Capi" />
+        <div>¡Hola, ingeniera! En robótica hay dos cosas: <strong>programar</strong> al robot para que sepa qué hacer, y <strong>armar sus circuitos</strong> para que tenga energía. ¿Con cuál empezamos?</div>
+      </div>
+      <div class="talleres">
+        <div class="taller color-turquesa">
+          <img class="icono-taller" src="../img/robotica/rover.svg" alt="" />
+          <h2>Robot con sensores</h2>
+          <p>Programa con bloques: avanzar, girar, repetir y sensores.</p>
+          <div id="niveles-robot" class="niveles-taller"></div>
+        </div>
+        <div class="taller color-amarillo">
+          <img class="icono-taller" src="../img/iconos/foco.svg" alt="" />
+          <h2>Taller de circuitos</h2>
+          <p>Gira los cables y prende focos y motores.</p>
+          <div id="niveles-circuito" class="niveles-taller"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nivel del robot -->
+    <section id="pantalla-robot" class="juego" hidden>
+      <div class="barra-leccion">
+        <button class="volver-juego" data-accion="mapa" aria-label="Volver a los talleres">←</button>
+        <h2 id="titulo-robot"></h2>
+      </div>
+      <div class="burbuja">
+        <img class="guia" src="../img/capibara-ingeniera.svg" alt="Capi" />
+        <div id="texto-robot"></div>
+      </div>
+
+      <div class="taller-robot">
+        <div class="zona-tablero">
+          <div id="variantes" class="variantes"></div>
+          <div id="tablero-sensores" class="tablero-sensores"></div>
+          <p id="reto-robot" class="pasos-info"></p>
+        </div>
+        <div class="zona-programa">
+          <p class="etiqueta-zona">1. Toca un bloque para agregarlo</p>
+          <div id="caja-bloques" class="caja-bloques"></div>
+          <p class="etiqueta-zona">2. Tu programa <span id="cuenta-bloques"></span></p>
+          <div id="programa" class="programa"></div>
+          <div class="acciones">
+            <button id="btn-correr" class="boton ejecutar">▶ Ejecutar</button>
+            <button id="btn-limpiar" class="boton borrar">Borrar todo</button>
+          </div>
+        </div>
+      </div>
+      <p id="mensaje-robot" class="mensaje-juego"></p>
+      <p class="fin-record" data-record hidden></p>
+      <div class="acciones">
+        <button id="btn-siguiente-robot" class="boton siguiente" hidden>Siguiente nivel →</button>
+      </div>
+    </section>
+
+    <!-- Nivel de circuitos -->
+    <section id="pantalla-circuito" class="juego" hidden>
+      <div class="barra-leccion">
+        <button class="volver-juego" data-accion="mapa" aria-label="Volver a los talleres">←</button>
+        <h2 id="titulo-circuito"></h2>
+      </div>
+      <div class="burbuja">
+        <img class="guia" src="../img/capibara-ingeniera.svg" alt="Capi" />
+        <div id="texto-circuito"></div>
+      </div>
+      <div id="placa" class="placa"></div>
+      <p id="reto-circuito" class="pasos-info"></p>
+      <p id="mensaje-circuito" class="mensaje-juego"></p>
+      <p class="fin-record" data-record hidden></p>
+      <div class="acciones">
+        <button id="btn-reiniciar-circuito" class="boton quitar">↺ Reiniciar</button>
+        <button id="btn-siguiente-circuito" class="boton siguiente" hidden>Siguiente nivel →</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Hecho a mano por papá, para Ana Isabella.
+  </footer>
+
+  <script src="../js/comun.js"></script>
+  <script src="../js/robotica-motor.js"></script>
+  <script src="../js/robotica-niveles.js"></script>
+  <script src="../js/robotica.js"></script>
+</body>
+</html>

@@ -130,5 +130,19 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     partida) y la compu (`elegirJugada`, heurística de 1 jugada con azar; la
     "tranquila" a veces no revisa si deja piezas colgando). Los mates en 1 se
     validan con el motor, no con una respuesta fija.
-- Los 8 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
+- "Robótica" (`juegos/robotica.html`), con Capi ingeniera
+  (`img/capibara-ingeniera.svg`, con casco). Dos talleres de 7 niveles
+  (progreso `robotica` → `robot-N` y `circuito-N`, máximo 42 ⭐):
+  - Robot con sensores: programación por bloques con orientación (avanzar,
+    girar), Repetir N, Repetir hasta llegar y Si hay algo adelante / si no.
+    Niveles con varios tableros: el mismo programa debe funcionar en todos.
+  - Taller de circuitos: girar cables (recta, curva, T) e interruptores;
+    focos y motores se prenden solo si están en un camino de + a −; detecta
+    cortocircuitos. Serie, paralelo, y el circuito final del robot.
+  - `js/robotica-motor.js` (puro, probado en Node), `js/robotica-niveles.js`
+    (datos), `js/robotica.js` (pantalla). Al cambiar un nivel, verificar que
+    la solución pensada funcione, que no exista un programa más corto que el
+    "reto" y que el mínimo de toques del circuito sea el real (búsqueda en
+    anchura sobre los giros).
+- Los 9 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
   patrón (página en `juegos/` + script en `js/` + tarjeta en index.html).
