@@ -1,7 +1,8 @@
 # Aprende con Ana Isabella
 
 Sitio de juegos educativos hecho a mano por su papá para una niña de 8 a 10
-años: programación, banderas, matemáticas, lectura, memoria y fracciones.
+años: programación, banderas, matemáticas, lectura, memoria, fracciones
+e inglés.
 Cada juego tiene niveles, sonidos, celebraciones y estrellas que se guardan
 en el navegador.
 
@@ -39,6 +40,10 @@ cada cambio en `main`). En local basta con abrir `index.html`.
 - **Fracciones divertidas** — aprende fracciones de forma visual: identifica la
   fracción coloreada, colorea una fracción tocando las partes, y compara cuál
   es mayor, con pizzas y barras. Niveles fácil, intermedio y difícil.
+
+- **Inglés divertido** — vocabulario en inglés por temas (animales, colores,
+  números, comida, cuerpo y mi mundo): mirar, escuchar la pronunciación,
+  traducir y deletrear, contra reloj. Al final se repasan las palabras.
 
 ## Cómo agregar un juego nuevo
 

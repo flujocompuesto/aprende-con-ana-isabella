@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inglés divertido — Aprende con Ana Isabella</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>🗣️ Inglés divertido</h1>
+    <p>Mira, escucha y escribe palabras en inglés. ¡Contra reloj!</p>
+  </header>
+
+  <main class="leccion">
+    <a class="volver" href="../index.html">← Volver al inicio</a>
+
+    <!-- Pantalla 1: elegir tema -->
+    <section id="pantalla-inicio" class="juego">
+      <h2>Choose a topic · Elige un tema</h2>
+      <p>10 retos por partida: primero mirar, luego escuchar, traducir y deletrear. 🔊 Sube el volumen.</p>
+      <div id="temas" class="temas"></div>
+    </section>
+
+    <!-- Pantalla 2: el juego -->
+    <section id="pantalla-juego" class="juego" hidden>
+      <div class="barra-superior">
+        <button class="volver-juego" data-accion="inicio" aria-label="Salir">←</button>
+        <span id="puntos" class="puntos">Puntos: 0</span>
+        <span id="racha" class="racha" hidden></span>
+        <span id="contador" class="contador">1/10</span>
+      </div>
+
+      <div class="progreso"><div id="barra-progreso" class="progreso-relleno"></div></div>
+      <div class="temporizador" aria-hidden="true"><div id="tiempo-relleno" class="temporizador-relleno"></div></div>
+
+      <span id="etiqueta-reto" class="etiqueta-reto"></span>
+      <div id="enunciado" class="enunciado"></div>
+
+      <div id="opciones-ingles" class="opciones-ingles"></div>
+
+      <div id="deletreo" hidden>
+        <div id="slots" class="slots"></div>
+        <div id="letras" class="letras"></div>
+        <div class="acciones">
+          <button id="btn-borrar-letra" class="boton borrar">⌫ Borrar</button>
+        </div>
+      </div>
+
+      <p id="mensaje-juego" class="mensaje-juego"></p>
+    </section>
+
+    <!-- Pantalla 3: resultado final -->
+    <section id="pantalla-fin" class="juego" hidden>
+      <div id="fin-estrellas" class="fin-estrellas">⭐⭐⭐</div>
+      <h2 id="fin-felicitacion">Great job!</h2>
+      <p id="fin-resumen" class="fin-puntaje">Acertaste 0 de 10</p>
+      <p id="fin-puntos" class="fin-puntos">0 puntos</p>
+      <p id="fin-nivel" class="fin-nivel">Tema</p>
+      <p id="fin-record" class="fin-record" hidden></p>
+
+      <h3>📖 Palabras de hoy <small>(toca para escuchar)</small></h3>
+      <ul id="repaso" class="repaso"></ul>
+
+      <div class="acciones">
+        <button id="btn-repetir" class="boton ejecutar">🔁 Jugar otra vez</button>
+        <button class="boton borrar" data-accion="inicio">🎚️ Cambiar tema</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Hecho con cariño para Ana Isabella 💜
+  </footer>
+
+  <script src="../js/comun.js"></script>
+  <script src="../js/ingles.js"></script>
+</body>
+</html>

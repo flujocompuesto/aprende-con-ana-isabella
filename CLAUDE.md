@@ -37,6 +37,7 @@ Inspirado en https://www.synthesis.com/ — aprendizaje **gamificado**:
 ## Capa común de los juegos (`js/comun.js`)
 Todas las páginas cargan `js/comun.js` **antes** del script del juego. Expone
 el objeto `Aprende`:
+- `Aprende.silenciado()` — si está en 🔇 (la voz del juego de inglés también lo respeta).
 - `Aprende.sonido.acierto() / error() / clic() / paso() / victoria()` —
   sonidos sintetizados con Web Audio (sin archivos). El botón 🔊/🔇 se agrega
   solo al encabezado y recuerda la preferencia.
@@ -94,5 +95,14 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
 - Nota CSS importante: se agregó una regla global `[hidden]{display:none
   !important}` porque una clase con `display` (ej. `.acciones`) le ganaba al
   atributo `hidden` y dejaba visible un botón que debía ocultarse.
-- Los 6 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
+- Juego "Inglés divertido" (`juegos/ingles-divertido.html` + `js/ingles.js`):
+  6 temas en vez de niveles (animales, colores, números, comida, cuerpo, mi
+  mundo; el progreso se guarda por tema, máximo 18 ⭐). Cada partida son 10
+  retos en orden creciente: ver ×3, escuchar ×3, traducir ×2, deletrear ×2.
+  Cada pregunta va contra reloj con bono por rapidez. La pronunciación usa la
+  voz del navegador (`speechSynthesis`, en-US); si no hay voz o está en 🔇,
+  "escuchar" se convierte en "ver". Palabras de una sola palabra, sin
+  espacios (por el deletreo). Colores se dibujan como muestras y números como
+  cifras, no con emojis.
+- Los 7 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
   patrón (página en `juegos/` + script en `js/` + tarjeta en index.html).

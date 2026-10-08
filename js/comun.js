@@ -96,6 +96,8 @@ const Aprende = (() => {
     boton.addEventListener("click", () => {
       silencio = !silencio;
       escribir(CLAVE_SILENCIO, silencio);
+      // Si se silencia, también se calla la voz que esté hablando.
+      if (silencio && window.speechSynthesis) window.speechSynthesis.cancel();
       pintar();
       sonido.clic();
     });
@@ -204,6 +206,7 @@ const Aprende = (() => {
   }
 
   return {
+    silenciado: () => silencio,
     sonido,
     efecto,
     confeti,
