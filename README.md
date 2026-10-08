@@ -1,8 +1,8 @@
 # Aprende con Ana Isabella
 
 Sitio de juegos educativos hecho a mano por su papá para una niña de 8 a 10
-años: programación, banderas, matemáticas, lectura, memoria, fracciones,
-inglés y ajedrez.
+años: programación, robótica, banderas, matemáticas, lectura, memoria,
+fracciones, inglés, portugués y ajedrez.
 Cada juego tiene niveles, sonidos, celebraciones y estrellas que se guardan
 en el navegador.
 
@@ -54,6 +54,9 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   (avanzar, girar, repetir y sensores, con programas que deben funcionar en
   varios tableros) y arma circuitos girando cables (interruptor, motor, serie,
   paralelo y cortocircuito).
+
+- **Curso de portugués** — 8 unidades con Capi: palabras con su
+  pronunciación, práctica, armar frases y una conversación en portugués.
 
 ## Cómo agregar un juego nuevo
 

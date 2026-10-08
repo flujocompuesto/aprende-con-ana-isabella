@@ -144,5 +144,14 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     la solución pensada funcione, que no exista un programa más corto que el
     "reto" y que el mínimo de toques del circuito sea el real (búsqueda en
     anchura sobre los giros).
-- Los 9 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
+- "Curso de portugués" (`juegos/portugues.html`): 8 unidades de portugués
+  de Brasil que se desbloquean en orden (saludos, números, colores, animales,
+  familia, comida, escuela y una conversación con Capi). Cada unidad:
+  tarjetas para escuchar (con una "dica" de pronunciación), práctica de 8
+  preguntas (leer / escuchar / traducir, con la palabra en español como
+  trampa cuando es distinta) y armar frases. Voz `speechSynthesis` pt-BR.
+  Datos en `js/portugues-unidades.js`, pantalla en `js/portugues.js`.
+  Progreso `portugues` → id de la unidad, máximo 24 ⭐. La conversación usa
+  el nombre de pila de Ana Isabella y sus gustos (ajedrez y robots).
+- Los 10 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
   patrón (página en `juegos/` + script en `js/` + tarjeta en index.html).

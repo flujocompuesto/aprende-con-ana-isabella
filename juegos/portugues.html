@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Curso de portugués — Aprende con Ana Isabella</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>Curso de portugués</h1>
+    <p>Olá! Aprende portugués de Brasil con Capi.</p>
+  </header>
+
+  <main class="leccion">
+    <a class="volver" href="../index.html">← Volver al inicio</a>
+
+    <!-- Mapa del curso -->
+    <section id="pantalla-mapa" class="juego">
+      <div class="burbuja">
+        <img class="guia" src="../img/capibara.svg" alt="Capi" />
+        <div>Olá! ¿Sabías que las capibaras viven en Brasil? Allá se habla <strong>portugués</strong>, que se parece mucho al español. Cada unidad tiene palabras nuevas, práctica y frases. 🔊 ¡Sube el volumen!</div>
+      </div>
+      <div id="unidades" class="capitulos"></div>
+    </section>
+
+    <!-- Una unidad -->
+    <section id="pantalla-unidad" class="juego" hidden>
+      <div class="barra-leccion">
+        <button id="btn-mapa" class="volver-juego" aria-label="Volver al curso">←</button>
+        <h2 id="titulo-unidad"></h2>
+      </div>
+      <div id="puntos-pasos" class="puntos-pasos"></div>
+      <div class="burbuja">
+        <img class="guia" src="../img/capibara.svg" alt="Capi" />
+        <div id="texto-capi"></div>
+      </div>
+      <div id="contenido-pt"></div>
+      <p id="mensaje-pt" class="mensaje-juego"></p>
+      <div id="acciones-pt" class="acciones"></div>
+    </section>
+
+    <!-- Fin de unidad -->
+    <section id="pantalla-fin" class="juego" hidden>
+      <div id="fin-estrellas" class="fin-estrellas">⭐⭐⭐</div>
+      <h2 id="fin-felicitacion">Muito bem!</h2>
+      <p id="fin-resumen" class="fin-puntaje"></p>
+      <p id="fin-record" class="fin-record" hidden></p>
+      <div class="acciones">
+        <button id="btn-siguiente-unidad" class="boton ejecutar">Siguiente unidad →</button>
+        <button id="btn-volver-mapa" class="boton siguiente">Ver el curso</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Hecho a mano por papá, para Ana Isabella.
+  </footer>
+
+  <script src="../js/comun.js"></script>
+  <script src="../js/portugues-unidades.js"></script>
+  <script src="../js/portugues.js"></script>
+</body>
+</html>
