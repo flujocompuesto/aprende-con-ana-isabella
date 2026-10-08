@@ -1,8 +1,8 @@
 # Aprende con Ana Isabella
 
 Sitio de juegos educativos hecho a mano por su papá para una niña de 8 a 10
-años: programación, banderas, matemáticas, lectura, memoria, fracciones
-e inglés.
+años: programación, banderas, matemáticas, lectura, memoria, fracciones,
+inglés y ajedrez.
 Cada juego tiene niveles, sonidos, celebraciones y estrellas que se guardan
 en el navegador.
 
@@ -44,6 +44,10 @@ cada cambio en `main`). En local basta con abrir `index.html`.
 - **Inglés divertido** — vocabulario en inglés por temas (animales, colores,
   números, comida, cuerpo y mi mundo): mirar, escuchar la pronunciación,
   traducir y deletrear, contra reloj. Al final se repasan las palabras.
+
+- **Aprende ajedrez** — 10 capítulos con el Profe Búho: para qué sirve el
+  juego, cómo se mueve cada pieza (con retos de recoger estrellas), jaque y
+  jaque mate, cómo empezar la partida, y una partida contra la compu.
 
 ## Cómo agregar un juego nuevo
 

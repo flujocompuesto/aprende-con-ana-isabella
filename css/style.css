@@ -1221,3 +1221,167 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   .boton-oir.grande { animation: none; }
 }
+
+/* ====== Aprende ajedrez ====== */
+
+.color-indigo { background: linear-gradient(135deg, #4834d4, #8c7ae6); }
+
+.capitulos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.capitulo-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 18px 10px 14px;
+  border: 3px solid transparent;
+  border-radius: 18px;
+  background: white;
+  color: var(--color-texto);
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.capitulo-card:hover { transform: translateY(-3px); }
+.capitulo-card.sugerido { border-color: var(--color-primario); }
+.capitulo-card .numero { position: absolute; top: 8px; left: 12px; font-size: 0.8rem; font-weight: bold; color: #8f8aa8; }
+.capitulo-card .emoji { font-size: 2.2rem; line-height: 1.1; }
+.capitulo-card .titulo { font-weight: bold; font-size: 1rem; }
+.capitulo-card .estrellas-cap { font-size: 0.8rem; letter-spacing: 1px; }
+
+.barra-leccion { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.barra-leccion h2 { flex: 1; margin: 0; font-size: 1.2rem; text-align: left; }
+
+.puntos-pasos { display: flex; gap: 6px; justify-content: center; margin-bottom: 14px; }
+.punto-paso { width: 10px; height: 10px; border-radius: 50%; background: #dcd6fa; transition: transform 0.2s ease; }
+.punto-paso.hecho { background: var(--color-primario); }
+.punto-paso.actual { background: var(--color-primario); transform: scale(1.5); }
+
+.burbuja {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  text-align: left;
+  background: #f8f7ff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
+.burbuja .buho { font-size: 2.4rem; line-height: 1; }
+.burbuja #texto-paso { font-size: 1.05rem; }
+.burbuja ol { margin: 6px 0 0; padding-left: 20px; }
+
+.tablero-ajedrez {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  width: min(100%, 420px);
+  margin: 0 auto 14px;
+  border: 4px solid #8d6748;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+}
+
+.casilla {
+  position: relative;
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.casilla.clara { background: #f3e3c7; }
+.casilla.oscura { background: #c49a6c; }
+.casilla.ultima { box-shadow: inset 0 0 0 100px rgba(255, 221, 87, 0.4); }
+.casilla.marcada { box-shadow: inset 0 0 0 4px #f39c12, inset 0 0 0 100px rgba(253, 203, 110, 0.35); }
+.casilla.seleccionada { box-shadow: inset 0 0 0 100px rgba(108, 92, 231, 0.45); }
+.casilla.en-jaque { box-shadow: inset 0 0 16px 8px rgba(231, 76, 60, 0.95); }
+
+.casilla.destino::after {
+  content: "";
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: rgba(45, 52, 54, 0.3);
+}
+
+.casilla.destino-captura::after {
+  content: "";
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  border: 4px solid rgba(231, 76, 60, 0.55);
+}
+
+.pieza {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(1.5rem, 7.5vw, 2.6rem);
+  line-height: 1;
+  user-select: none;
+}
+
+.pieza.blanca {
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #2d3436, -1px -1px 0 #2d3436, 1px -1px 0 #2d3436, -1px 1px 0 #2d3436, 0 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.pieza.negra { color: #2d3436; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+.pieza.mini { font-size: 1.3rem; }
+
+.objetivo { font-size: clamp(1.1rem, 5.5vw, 1.9rem); animation: pulso 1.6s ease-in-out infinite; }
+
+.coord { position: absolute; font-size: 0.6rem; font-weight: bold; pointer-events: none; }
+.coord.fila { top: 2px; left: 3px; }
+.coord.columna { bottom: 1px; right: 3px; }
+.casilla.clara .coord { color: #a87d50; }
+.casilla.oscura .coord { color: #f3e3c7; }
+
+.panel-ajedrez { max-width: 460px; margin: 0 auto 6px; }
+.contador-ajedrez { font-weight: bold; color: var(--color-primario-oscuro); }
+.estado-partida { font-weight: bold; font-size: 1.1rem; margin: 4px 0; }
+.capturadas { margin: 2px 0; min-height: 1.6rem; }
+
+.chips-piezas { display: flex; gap: 8px; justify-content: center; margin: 4px 0 10px; }
+
+.chip-pieza {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  border-radius: 12px;
+  background: #f1f0fb;
+  opacity: 0.45;
+}
+
+.chip-pieza.visto { opacity: 1; background: #d6f5e9; }
+
+.info-pieza {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  text-align: left;
+  background: #fff8e6;
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.info-pieza .glifo-grande { font-size: 3rem; line-height: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .objetivo { animation: none; }
+}

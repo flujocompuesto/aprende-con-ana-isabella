@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aprende ajedrez — Aprende con Ana Isabella</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>♟️ Aprende ajedrez</h1>
+    <p>Paso a paso con el Profe Búho 🦉</p>
+  </header>
+
+  <main class="leccion">
+    <a class="volver" href="../index.html">← Volver al inicio</a>
+
+    <!-- Mapa: el camino de capítulos -->
+    <section id="pantalla-mapa" class="juego">
+      <h2>Tu camino de ajedrez</h2>
+      <p>10 capítulos: desde conocer las piezas hasta jugar tu primera partida. ¡Empieza por el 1!</p>
+      <div id="capitulos" class="capitulos"></div>
+    </section>
+
+    <!-- Lección -->
+    <section id="pantalla-leccion" class="juego" hidden>
+      <div class="barra-leccion">
+        <button id="btn-mapa" class="volver-juego" aria-label="Volver al camino">←</button>
+        <h2 id="titulo-capitulo"></h2>
+      </div>
+      <div id="puntos-pasos" class="puntos-pasos"></div>
+
+      <div class="burbuja">
+        <span class="buho" aria-hidden="true">🦉</span>
+        <div id="texto-paso"></div>
+      </div>
+
+      <div id="tablero-ajedrez" class="tablero-ajedrez"></div>
+      <div id="panel-ajedrez" class="panel-ajedrez"></div>
+      <p id="mensaje-ajedrez" class="mensaje-juego"></p>
+      <div id="acciones-paso" class="acciones"></div>
+    </section>
+
+    <!-- Fin de capítulo -->
+    <section id="pantalla-fin" class="juego" hidden>
+      <div id="fin-estrellas" class="fin-estrellas">⭐⭐⭐</div>
+      <h2 id="fin-felicitacion">¡Capítulo completo!</h2>
+      <p id="fin-resumen" class="fin-puntaje"></p>
+      <p id="fin-record" class="fin-record" hidden></p>
+      <div class="acciones">
+        <button id="btn-siguiente-cap" class="boton ejecutar">Siguiente capítulo ➡️</button>
+        <button id="btn-volver-mapa" class="boton siguiente">🗺️ Ver el camino</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Hecho con cariño para Ana Isabella 💜
+  </footer>
+
+  <script src="../js/comun.js"></script>
+  <script src="../js/ajedrez-motor.js"></script>
+  <script src="../js/ajedrez.js"></script>
+</body>
+</html>

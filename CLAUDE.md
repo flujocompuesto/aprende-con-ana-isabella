@@ -104,5 +104,18 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
   "escuchar" se convierte en "ver". Palabras de una sola palabra, sin
   espacios (por el deletreo). Colores se dibujan como muestras y números como
   cifras, no con emojis.
-- Los 7 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
+- "Aprende ajedrez" (`juegos/ajedrez.html`): camino de 10 capítulos con el
+  Profe Búho 🦉 (meta del juego, torre, alfil, dama, rey, caballo, peón, jaque
+  y mate, cómo empezar —Italiana guiada con enroque y Mate del Pastor— y una
+  partida contra la compu). Progreso por capítulo, máximo 30 ⭐.
+  - `js/ajedrez-motor.js`: reglas completas (jaque, enroque, al paso,
+    coronación, mate/ahogado). Se valida con perft:
+    `node -e 'const A=require("./js/ajedrez-motor.js");console.log(A.perft(A.desdeFEN(A.INICIAL),4))'`
+    debe dar 197281. Si se toca el motor, correr perft antes de publicar.
+  - `js/ajedrez.js`: contenido (`CAPITULOS`, cada paso tiene un `tipo`:
+    explica, conoce, explora, estrellas, pregunta, escapa, mate, jugada, guion,
+    partida) y la compu (`elegirJugada`, heurística de 1 jugada con azar; la
+    "tranquila" a veces no revisa si deja piezas colgando). Los mates en 1 se
+    validan con el motor, no con una respuesta fija.
+- Los 8 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
   patrón (página en `juegos/` + script en `js/` + tarjeta en index.html).
