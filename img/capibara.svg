@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 210" role="img" aria-label="Capi, la capibara">
+  <!-- Capi, la mascota: capibara sentada, tranquila, con una mandarina en la cabeza. -->
+  <g stroke="#2b2118" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <!-- cuerpo y patitas -->
+    <path d="M36 152 C32 114 64 100 100 100 C136 100 168 114 164 152 C162 184 138 200 100 200 C62 200 38 184 36 152 Z" fill="#a97448"/>
+    <path d="M72 164 C72 148 85 140 100 140 C115 140 128 148 128 164 C128 182 115 192 100 192 C85 192 72 182 72 164 Z" fill="#c99665" stroke="none"/>
+    <ellipse cx="74" cy="198" rx="15" ry="8" fill="#7d5434"/>
+    <ellipse cx="126" cy="198" rx="15" ry="8" fill="#7d5434"/>
+    <!-- orejitas -->
+    <ellipse cx="62" cy="52" rx="10" ry="8" fill="#7d5434"/>
+    <ellipse cx="138" cy="52" rx="10" ry="8" fill="#7d5434"/>
+    <!-- cabeza cuadradita -->
+    <rect x="46" y="44" width="108" height="104" rx="36" fill="#a97448"/>
+    <!-- hocico grande -->
+    <rect x="60" y="98" width="80" height="46" rx="22" fill="#c08a5a"/>
+  </g>
+  <!-- ojitos con brillo y una cejita tranquila -->
+  <circle cx="74" cy="82" r="6.5" fill="#2b2118"/>
+  <circle cx="126" cy="82" r="6.5" fill="#2b2118"/>
+  <circle cx="76.5" cy="79.5" r="2.2" fill="#ffffff"/>
+  <circle cx="128.5" cy="79.5" r="2.2" fill="#ffffff"/>
+  <path d="M66 70 Q74 66 82 70 M118 70 Q126 66 134 70" fill="none" stroke="#2b2118" stroke-width="3" stroke-linecap="round"/>
+  <!-- mejillas -->
+  <ellipse cx="54" cy="100" rx="8" ry="5" fill="#e7889a" opacity="0.8"/>
+  <ellipse cx="146" cy="100" rx="8" ry="5" fill="#e7889a" opacity="0.8"/>
+  <!-- nariz y sonrisa -->
+  <rect x="84" y="104" width="32" height="13" rx="6.5" fill="#3d2a1e"/>
+  <path d="M100 117 v6 M89 127 Q100 134 111 127" fill="none" stroke="#2b2118" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- mandarina con hojita -->
+  <g stroke="#2b2118" stroke-width="4" stroke-linejoin="round">
+    <circle cx="100" cy="32" r="16" fill="#f28c38"/>
+    <path d="M100 17 C104 6 116 4 123 8 C117 16 107 19 100 17 Z" fill="#6aa66e"/>
+  </g>
+  <circle cx="94" cy="26" r="4" fill="#ffc48a"/>
+</svg>

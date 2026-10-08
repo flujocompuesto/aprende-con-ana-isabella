@@ -15,9 +15,9 @@ const CONFIG = {
 };
 
 // Colores de las figuras.
-const RELLENO = "#7c5cf0";
-const VACIO = "#f0edfb";
-const BORDE = "#b9addf";
+const RELLENO = "#ef8a3c";
+const VACIO = "#fff4dc";
+const BORDE = "#2b2118";
 
 // Estado de la partida.
 let nivelActual = null;

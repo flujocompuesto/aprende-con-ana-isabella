@@ -15,7 +15,8 @@ cada cambio en `main`). En local basta con abrir `index.html`.
 
 - `index.html` — página de inicio: los juegos y las estrellas ganadas.
 - `lecciones/` y `juegos/` — una página por juego.
-- `css/style.css` — estilos compartidos.
+- `css/style.css` — estilos compartidos (estilo libro ilustrado).
+- `img/` — Capi, la capibara mascota, y los íconos dibujados de cada juego.
 - `js/comun.js` — sonidos, confeti, animaciones y estrellas guardadas
   (lo usan todos los juegos).
 - `js/inicio.js` — muestra el progreso en la página de inicio.
@@ -45,7 +46,7 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   números, comida, cuerpo y mi mundo): mirar, escuchar la pronunciación,
   traducir y deletrear, contra reloj. Al final se repasan las palabras.
 
-- **Aprende ajedrez** — 10 capítulos con el Profe Búho: para qué sirve el
+- **Aprende ajedrez** — 10 capítulos con Capi: para qué sirve el
   juego, cómo se mueve cada pieza (con retos de recoger estrellas), jaque y
   jaque mate, cómo empezar la partida, y una partida contra la compu.
 

@@ -175,7 +175,7 @@ function empezarPartida(nivel) {
     carta.setAttribute("aria-label", "Carta de perrito");
     carta.innerHTML = `
       <span class="carta-inner">
-        <span class="carta-cara carta-frente">🐾</span>
+        <span class="carta-cara carta-frente">?</span>
         <span class="carta-cara carta-reverso">${svgPerrito(perrito.id, perrito.accent)}</span>
       </span>`;
     carta.addEventListener("click", () => voltear(carta));

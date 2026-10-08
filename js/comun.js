@@ -4,6 +4,8 @@
 
 const Aprende = (() => {
   const CLAVE_PROGRESO = "aprende:progreso";
+  // Raíz del sitio, calculada desde la ubicación de este archivo (js/comun.js).
+  const RAIZ = new URL("..", document.currentScript.src);
   const CLAVE_SILENCIO = "aprende:silencio";
 
   // ---- Guardado en el navegador (si no se puede, el juego sigue igual) ----
@@ -104,6 +106,17 @@ const Aprende = (() => {
     encabezado.appendChild(boton);
   }
 
+  // Capi, la mascota, en el encabezado de cada juego.
+  function ponerMascota() {
+    const encabezado = document.querySelector("header.hero");
+    if (!encabezado || encabezado.hasAttribute("data-sin-mascota")) return;
+    const capi = document.createElement("img");
+    capi.className = "mascota-cabecera";
+    capi.src = new URL("img/capibara.svg", RAIZ).href;
+    capi.alt = "";
+    encabezado.prepend(capi);
+  }
+
   // ---- Efectos visuales ----
 
   const reducirMovimiento = () =>
@@ -111,7 +124,7 @@ const Aprende = (() => {
 
   function confeti(cantidad = 70) {
     if (reducirMovimiento()) return;
-    const colores = ["#6c5ce7", "#00b894", "#fdcb6e", "#e84393", "#0984e3", "#e17055"];
+    const colores = ["#f0b93b", "#ef8a3c", "#2e7d8c", "#3f9a52", "#d65a46", "#e7889a"];
     const capa = document.createElement("div");
     capa.className = "confeti";
     for (let i = 0; i < cantidad; i++) {
@@ -191,6 +204,8 @@ const Aprende = (() => {
     } else {
       sonido.acierto();
     }
+    // Capi salta de alegría.
+    animar(document.querySelector(".mascota-cabecera"), "rebote");
     const aviso = document.getElementById("fin-record");
     if (aviso) {
       aviso.hidden = !record;
@@ -199,10 +214,14 @@ const Aprende = (() => {
     return record;
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", ponerBotonSonido);
-  } else {
+  const alCargar = () => {
+    ponerMascota();
     ponerBotonSonido();
+  };
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", alCargar);
+  } else {
+    alCargar();
   }
 
   return {

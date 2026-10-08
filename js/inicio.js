@@ -6,7 +6,7 @@ document.querySelectorAll(".juego-card[data-juego]").forEach((tarjeta) => {
   const etiqueta = tarjeta.querySelector(".progreso-card");
   if (!etiqueta) return;
   if (ganadas === 0) {
-    etiqueta.textContent = "✨ ¡Nuevo para ti!";
+    etiqueta.textContent = "¡Nuevo!";
   } else if (ganadas >= maximo) {
     etiqueta.textContent = `🏆 ⭐ ${ganadas} / ${maximo} ¡Completo!`;
   } else {

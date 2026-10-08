@@ -9,19 +9,32 @@ Producción: https://aprende-con-ana-isabella.pages.dev (Cloudflare Pages,
 deploy automático en cada push a `main`; build output = raíz `/`).
 
 ## Enfoque de diseño (importante)
-Inspirado en https://www.synthesis.com/ — aprendizaje **gamificado**:
-- Todo se presenta como JUEGO, no como "lección con texto". Prioridad total a
-  lo interactivo, visual y divertido.
-- Tono cálido y alentador: celebrar el progreso y el esfuerzo, no la
-  perfección. Mensajes positivos ("¡Muy bien!", "¡Vas mejorando!").
-- Paleta vibrante y energética (azules/morados), tipografía grande y clara,
-  botones grandes, animaciones suaves, mucho color y emojis.
-- Gamificación: puntos, niveles, barras de progreso, pantallas de celebración.
+Inspirado en https://www.synthesis.com/ — aprendizaje **gamificado**: todo se
+presenta como JUEGO, tono cálido y alentador, puntos, niveles y celebraciones.
+
+**Estilo visual (oct-2026): libro ilustrado / cuaderno, que NO parezca hecho
+con IA.** Ivan lo pidió explícitamente. Reglas:
+- Papel cuadriculado de fondo, contornos "de tinta" (`--tinta`) y sombras
+  sólidas desplazadas tipo sticker (`--sombra-tinta`). Nada de sombras difusas.
+- Colores planos de la paleta de `:root` (mostaza, naranja, teal, pasteles
+  `.color-*`). **Sin degradados** y sin la paleta "Flat UI" (#6c5ce7,
+  #00b894, #fdcb6e…), que es lo que delataba el diseño genérico.
+- Letras: Grandstander (títulos y botones) y Andika (texto, hecha para
+  niños que aprenden a leer), desde Google Fonts.
+- Emojis solo como contenido del juego (banderas, dibujos de inglés, etc.),
+  no como decoración de títulos, botones o encabezados. Los íconos de la
+  página de inicio son SVG dibujados en `img/iconos/`.
+- **Mascota: Capi, la capibara** (`img/capibara.svg`, con su mandarina en la
+  cabeza). `js/comun.js` la pone sola en el encabezado de cada página y la
+  hace saltar al terminar una partida; una página puede evitarlo con
+  `data-sin-mascota` en el `<header>`. En el ajedrez es la profe.
+- Pie de página: "Hecho a mano por papá, para Ana Isabella."
 
 ## Stack técnico
 - HTML/CSS/JS puro, sin build ni frameworks. Debe abrirse directo en el
   navegador o servirse con GitHub Pages / Cloudflare Pages.
-- Única dependencia externa hasta ahora: imágenes de banderas de flagcdn.com.
+- Dependencias externas: imágenes de banderas (flagcdn.com) y las dos
+  letras de Google Fonts.
 
 ## Reglas y convenciones
 - Público siempre: **nunca** incluir datos personales sensibles, fotos,
@@ -105,7 +118,7 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
   espacios (por el deletreo). Colores se dibujan como muestras y números como
   cifras, no con emojis.
 - "Aprende ajedrez" (`juegos/ajedrez.html`): camino de 10 capítulos con el
-  Profe Búho 🦉 (meta del juego, torre, alfil, dama, rey, caballo, peón, jaque
+  Capi, la capibara (meta del juego, torre, alfil, dama, rey, caballo, peón, jaque
   y mate, cómo empezar —Italiana guiada con enroque y Mate del Pastor— y una
   partida contra la compu). Progreso por capítulo, máximo 30 ⭐.
   - `js/ajedrez-motor.js`: reglas completas (jaque, enroque, al paso,

@@ -244,7 +244,7 @@ function pintarTemas() {
       <span class="emoji">${tema.emoji}</span>
       <span class="en">${tema.nombre}</span>
       <span class="es">${tema.es}</span>
-      <span class="estrellas-tema">${estrellas ? Aprende.textoEstrellas(estrellas) : "✨ ¡Nuevo!"}</span>`;
+      <span class="estrellas-tema">${estrellas ? Aprende.textoEstrellas(estrellas) : "¡Nuevo!"}</span>`;
     boton.addEventListener("click", () => empezarPartida(id));
     temasEl.appendChild(boton);
   });

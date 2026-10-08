@@ -16,10 +16,10 @@ const NIVELES = [
 ];
 
 const MOVIMIENTOS = {
-  arriba: { fila: -1, columna: 0, simbolo: "⬆️" },
-  abajo: { fila: 1, columna: 0, simbolo: "⬇️" },
-  izquierda: { fila: 0, columna: -1, simbolo: "⬅️" },
-  derecha: { fila: 0, columna: 1, simbolo: "➡️" },
+  arriba: { fila: -1, columna: 0, simbolo: "↑" },
+  abajo: { fila: 1, columna: 0, simbolo: "↓" },
+  izquierda: { fila: 0, columna: -1, simbolo: "←" },
+  derecha: { fila: 0, columna: 1, simbolo: "→" },
 };
 
 let nivelActual = 0;

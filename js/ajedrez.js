@@ -1,5 +1,5 @@
 // Aprende ajedrez — Aprende con Ana Isabella
-// Camino de 10 capítulos con el Profe Búho: para qué sirve el juego, cómo se
+// Camino de 10 capítulos con Capi, la capibara: para qué sirve el juego, cómo se
 // mueve cada pieza, jaque y jaque mate, cómo empezar la partida, y una
 // partida contra la compu. Las reglas vienen de js/ajedrez-motor.js.
 
@@ -25,7 +25,7 @@ const CAPITULOS = [
   {
     id: "meta", emoji: "🏰", titulo: "¿De qué se trata?",
     pasos: [
-      { tipo: "explica", fen: A.INICIAL, texto: "¡Hola! Soy el <strong>Profe Búho</strong> y te voy a enseñar ajedrez. Es un juego para <strong>2 jugadores</strong>: uno usa las piezas <strong>blancas</strong> y el otro las <strong>negras</strong>. Cada uno tiene <strong>16 piezas</strong>." },
+      { tipo: "explica", fen: A.INICIAL, texto: "¡Hola! Soy <strong>Capi</strong> y te voy a enseñar ajedrez. Es un juego para <strong>2 jugadores</strong>: uno usa las piezas <strong>blancas</strong> y el otro las <strong>negras</strong>. Cada uno tiene <strong>16 piezas</strong>." },
       { tipo: "explica", fen: A.INICIAL, marcas: ["e1", "e8"], texto: "La <strong>meta</strong> es atrapar al <strong>rey</strong> del otro equipo para que no pueda escapar. ¡Eso se llama <strong>JAQUE MATE</strong>! No gana quien come más piezas: gana quien atrapa al rey." },
       { tipo: "conoce", fen: A.INICIAL, texto: "Conoce a tu ejército: <strong>toca cada tipo de pieza</strong> para saber cómo se llama, cómo se mueve y cuánto vale." },
       { tipo: "explica", fen: A.INICIAL, marcas: ["h1", "d1"], texto: "Así se arma el tablero: tiene <strong>64 casillas</strong>. La esquina de abajo a la derecha siempre es clara: <strong>¡blanca a la derecha!</strong> Y la dama va en una casilla de <strong>su mismo color</strong>." },
@@ -331,7 +331,7 @@ function agregarBoton(texto, clase, accion) {
 function mostrarSiguiente() {
   if (accionesEl.querySelector(".btn-siguiente-paso")) return;
   const ultimoPaso = pasoIndice === CAPITULOS[capIndice].pasos.length - 1;
-  const boton = agregarBoton(ultimoPaso ? "Terminar capítulo 🏁" : "Siguiente ➡️", "ejecutar btn-siguiente-paso", siguientePaso);
+  const boton = agregarBoton(ultimoPaso ? "Terminar capítulo" : "Siguiente →", "ejecutar btn-siguiente-paso", siguientePaso);
   Aprende.efecto.rebote(boton);
 }
 
@@ -381,7 +381,7 @@ function siguientePaso() {
   if (errores === 0) estrellas = 3;
   else if (errores <= 2) estrellas = 2;
   const textos = {
-    3: "¡Capítulo completo! Eres una gran estudiante de ajedrez. 🦉",
+    3: "¡Capítulo completo! Eres una gran estudiante de ajedrez.",
     2: "¡Muy bien! Capítulo completo.",
     1: "¡Capítulo completo! Practica otra vez para ganar más estrellas.",
   };
@@ -780,9 +780,9 @@ function empezarPartida(lista) {
     <p class="capturadas">Comiste: <span id="comidas-blancas"></span></p>
     <p class="capturadas">Te comieron: <span id="comidas-negras"></span></p>`;
   accionesEl.innerHTML = "";
-  agregarBoton("↩️ Deshacer", "quitar", deshacer);
+  agregarBoton("↩ Deshacer", "quitar", deshacer);
   agregarBoton("💡 Ayuda", "pista", ayuda);
-  agregarBoton("🔄 Nueva partida", "borrar", () => {
+  agregarBoton("Nueva partida", "borrar", () => {
     sesion++;
     bloqueado = false;
     accionesEl.innerHTML = "";
