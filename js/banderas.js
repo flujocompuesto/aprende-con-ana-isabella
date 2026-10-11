@@ -68,10 +68,31 @@ const TOTAL_PREGUNTAS = 10;
 // Puntos que vale cada respuesta correcta.
 const PUNTOS_POR_ACIERTO = 10;
 
+// Nivel experto: banderas que se parecen. Las opciones salen del mismo grupo,
+// así hay que fijarse en los detalles (colores al revés, escudos, estrellas).
+const GRUPOS_PARECIDOS = [
+  [["ie", "Irlanda"], ["ci", "Costa de Marfil"], ["it", "Italia"], ["mx", "México"]],
+  [["no", "Noruega"], ["is", "Islandia"], ["dk", "Dinamarca"], ["se", "Suecia"], ["fi", "Finlandia"]],
+  [["au", "Australia"], ["nz", "Nueva Zelanda"], ["gb", "Reino Unido"]],
+  [["id", "Indonesia"], ["pl", "Polonia"], ["sg", "Singapur"]],
+  [["co", "Colombia"], ["ec", "Ecuador"], ["ve", "Venezuela"]],
+  [["sk", "Eslovaquia"], ["si", "Eslovenia"], ["ru", "Rusia"], ["rs", "Serbia"]],
+  [["nl", "Países Bajos"], ["lu", "Luxemburgo"], ["fr", "Francia"]],
+  [["sn", "Senegal"], ["ml", "Malí"], ["gn", "Guinea"], ["cm", "Camerún"]],
+  [["us", "Estados Unidos"], ["lr", "Liberia"], ["my", "Malasia"]],
+  [["ar", "Argentina"], ["sv", "El Salvador"], ["ni", "Nicaragua"], ["hn", "Honduras"]],
+  [["ro", "Rumania"], ["ad", "Andorra"], ["md", "Moldavia"]],
+  [["jp", "Japón"], ["bd", "Bangladés"], ["pw", "Palaos"]],
+].map((grupo) => grupo.map(([codigo, nombre]) => ({ codigo, nombre })));
+
+PAISES.experto = GRUPOS_PARECIDOS.flat();
+const GRUPO_DE = new Map(GRUPOS_PARECIDOS.flatMap((grupo) => grupo.map((p) => [p.codigo, grupo])));
+
 const NOMBRE_NIVEL = {
   facil: "Fácil",
   intermedio: "Intermedio",
   dificil: "Difícil",
+  experto: "Experto",
 };
 
 // Estado de la partida en curso.
@@ -123,7 +144,10 @@ function empezarPartida(nivel) {
 
   preguntas = seleccion.map((correcto) => {
     // Elegimos 3 países distintos del mismo nivel como respuestas incorrectas.
-    const distractores = mezclar(pool.filter((p) => p.codigo !== correcto.codigo)).slice(0, 3);
+    // En experto, primero los que tienen una bandera parecida.
+    const parecidos = nivel === "experto" ? mezclar(GRUPO_DE.get(correcto.codigo).filter((p) => p !== correcto)) : [];
+    const otros = mezclar(pool.filter((p) => p.codigo !== correcto.codigo && !parecidos.includes(p)));
+    const distractores = [...parecidos, ...otros].slice(0, 3);
     const opciones = mezclar([correcto, ...distractores]);
     return { correcto, opciones };
   });

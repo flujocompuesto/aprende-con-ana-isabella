@@ -195,6 +195,19 @@ const Aprende = (() => {
     return "⭐".repeat(n) + "☆".repeat(3 - n);
   }
 
+  // Niveles con candado: <button data-requiere="dificil"> dentro de un
+  // contenedor con data-juego. Se abren al ganar una estrella en ese nivel.
+  function actualizarCandados() {
+    document.querySelectorAll("[data-juego] [data-requiere]").forEach((boton) => {
+      const juego = boton.closest("[data-juego]").dataset.juego;
+      const abierto = ((progreso()[juego] || {})[boton.dataset.requiere] || 0) > 0;
+      boton.disabled = !abierto;
+      boton.classList.toggle("con-candado", !abierto);
+      const aviso = boton.querySelector(".candado-nivel");
+      if (aviso) aviso.hidden = abierto;
+    });
+  }
+
   // Cierre común de una partida: guarda, celebra y avisa si hubo récord.
   function finDePartida(juego, nivel, estrellas) {
     const record = guardarEstrellas(juego, nivel, estrellas);
@@ -211,12 +224,14 @@ const Aprende = (() => {
       aviso.hidden = !record;
       aviso.textContent = "🏅 ¡Nuevo récord en este nivel!";
     }
+    actualizarCandados();
     return record;
   }
 
   const alCargar = () => {
     ponerMascota();
     ponerBotonSonido();
+    actualizarCandados();
   };
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", alCargar);
@@ -236,5 +251,6 @@ const Aprende = (() => {
     estrellasPorAciertos,
     textoEstrellas,
     finDePartida,
+    actualizarCandados,
   };
 })();

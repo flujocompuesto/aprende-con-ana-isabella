@@ -9,6 +9,7 @@ const NOMBRE_NIVEL = {
   facil: "Fácil",
   intermedio: "Intermedio",
   dificil: "Difícil",
+  experto: "Experto",
 };
 
 // Emojis para los objetos que se cuentan en el nivel fácil.
@@ -38,6 +39,8 @@ const barraEl = document.getElementById("barra-progreso");
 const rachaEl = document.getElementById("racha");
 const manipulativosEl = document.getElementById("manipulativos");
 const operacionEl = document.getElementById("operacion");
+const resultadoEl = document.createElement("span"); // el total en "el número que falta"
+resultadoEl.className = "operacion";
 const respuestaEl = document.getElementById("respuesta");
 const tecladoEl = document.getElementById("teclado");
 const mensajeEl = document.getElementById("mensaje-juego");
@@ -87,6 +90,8 @@ function generarProblema(nivel) {
       b = aleatorio(2, 9);
       respuesta = a * b;
     }
+  } else if (nivel === "experto") {
+    return problemaExperto();
   } else {
     op = elegir(["+", "-", "×", "÷"]);
     if (op === "+") {
@@ -110,6 +115,47 @@ function generarProblema(nivel) {
   }
 
   return { a, b, op, respuesta };
+}
+
+// Experto: números de 3 cifras, 2 cifras × 1 cifra, divisiones hasta 100
+// y "el número que falta" (? + 15 = 40).
+function problemaExperto() {
+  const tipo = elegir(["suma", "resta", "multi", "division", "falta", "falta"]);
+  if (tipo === "suma") {
+    const a = aleatorio(120, 780);
+    const b = aleatorio(100, 950 - a);
+    return { a, b, op: "+", respuesta: a + b };
+  }
+  if (tipo === "resta") {
+    const a = aleatorio(300, 999);
+    const b = aleatorio(100, a - 50);
+    return { a, b, op: "-", respuesta: a - b };
+  }
+  if (tipo === "multi") {
+    const a = aleatorio(12, 49);
+    const b = aleatorio(3, 9);
+    return { a, b, op: "×", respuesta: a * b };
+  }
+  if (tipo === "division") {
+    const b = aleatorio(3, 9);
+    const respuesta = aleatorio(4, 12);
+    return { a: b * respuesta, b, op: "÷", respuesta };
+  }
+  // El número que falta va al principio: ? op b = total.
+  const op = elegir(["+", "-", "×"]);
+  if (op === "+") {
+    const respuesta = aleatorio(10, 60);
+    const b = aleatorio(5, 40);
+    return { b, op, respuesta, total: respuesta + b, faltante: true };
+  }
+  if (op === "-") {
+    const respuesta = aleatorio(30, 90);
+    const b = aleatorio(5, respuesta - 5);
+    return { b, op, respuesta, total: respuesta - b, faltante: true };
+  }
+  const b = aleatorio(3, 9);
+  const respuesta = aleatorio(3, 9);
+  return { b, op, respuesta, total: b * respuesta, faltante: true };
 }
 
 function empezarPartida(nivel) {
@@ -186,7 +232,17 @@ function mostrarProblema() {
 
   dibujarManipulativos(problema);
 
-  operacionEl.textContent = `${problema.a} ${problema.op} ${problema.b}`;
+  // En "el número que falta" la casilla de respuesta va al principio.
+  const problemaEl = respuestaEl.parentElement;
+  const igualEl = problemaEl.querySelector(".igual");
+  if (problema.faltante) {
+    operacionEl.textContent = `${problema.op} ${problema.b}`;
+    resultadoEl.textContent = problema.total;
+    problemaEl.replaceChildren(respuestaEl, operacionEl, igualEl, resultadoEl);
+  } else {
+    operacionEl.textContent = `${problema.a} ${problema.op} ${problema.b}`;
+    problemaEl.replaceChildren(operacionEl, igualEl, respuestaEl);
+  }
   actualizarRespuesta();
 
   respuestaEl.classList.remove("correcta", "incorrecta");

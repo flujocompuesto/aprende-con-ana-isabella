@@ -19,7 +19,7 @@
     <section id="pantalla-inicio" class="juego">
       <h2>Elige tu nivel</h2>
       <p>Voltea las cartas y encuentra los perritos iguales. 🐾</p>
-      <div class="niveles">
+      <div class="niveles" data-juego="memoria">
         <button class="nivel facil" data-nivel="facil">
           <span class="emoji">●○○</span>
           <span class="nombre">Fácil</span>
@@ -34,6 +34,11 @@
           <span class="emoji">●●●</span>
           <span class="nombre">Difícil</span>
           <span class="detalle">10 parejas de perritos</span>
+        </button>
+        <button class="nivel experto" data-nivel="experto" data-requiere="dificil">
+          <span class="emoji">●●●●</span>
+          <span class="nombre">Experto</span>
+          <span class="detalle">12 parejas con perritos gemelos <span class="candado-nivel">· 🔒 Gana una estrella en Difícil</span></span>
         </button>
       </div>
     </section>

@@ -49,13 +49,28 @@ const PALABRAS = {
     { palabra: "ESTRELLA", emoji: "⭐" },
     { palabra: "CANGREJO", emoji: "🦀" },
   ],
+  // Experto: palabras largas, algunas con Ñ.
+  experto: [
+    { palabra: "COMPUTADORA", emoji: "💻" },
+    { palabra: "DINOSAURIO", emoji: "🦕" },
+    { palabra: "CUMPLEAÑOS", emoji: "🎂" },
+    { palabra: "TELESCOPIO", emoji: "🔭" },
+    { palabra: "MICROSCOPIO", emoji: "🔬" },
+    { palabra: "ASTRONAUTA", emoji: "🧑‍🚀" },
+    { palabra: "MARIQUITA", emoji: "🐞" },
+    { palabra: "COCODRILO", emoji: "🐊" },
+    { palabra: "CALABAZA", emoji: "🎃" },
+    { palabra: "PARAGUAS", emoji: "☂️" },
+    { palabra: "FLAMENCO", emoji: "🦩" },
+    { palabra: "MONTAÑA", emoji: "⛰️" },
+  ],
 };
 
 // Cuántas palabras tiene cada partida.
 const TOTAL_PALABRAS = 8;
 const PUNTOS_POR_ACIERTO = 10;
 
-const NOMBRE_NIVEL = { facil: "Fácil", intermedio: "Intermedio", dificil: "Difícil" };
+const NOMBRE_NIVEL = { facil: "Fácil", intermedio: "Intermedio", dificil: "Difícil", experto: "Experto" };
 
 // Estado de la partida.
 let nivelActual = null;

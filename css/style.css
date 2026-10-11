@@ -761,6 +761,7 @@ footer {
 .tablero.nivel-facil { grid-template-columns: repeat(3, 1fr); max-width: 340px; }
 .tablero.nivel-intermedio { grid-template-columns: repeat(4, 1fr); max-width: 440px; }
 .tablero.nivel-dificil { grid-template-columns: repeat(5, 1fr); }
+.tablero.nivel-experto { grid-template-columns: repeat(6, 1fr); max-width: 600px; }
 
 .carta {
   position: relative;
@@ -826,7 +827,8 @@ footer {
 }
 
 @media (max-width: 520px) {
-  .tablero.nivel-dificil { grid-template-columns: repeat(4, 1fr); }
+  .tablero.nivel-dificil,
+  .tablero.nivel-experto { grid-template-columns: repeat(4, 1fr); }
   .tablero { gap: 8px; }
 }
 
@@ -1832,3 +1834,12 @@ footer {
 }
 
 .traduccion { margin-top: 6px; color: #6b5d4f; font-style: italic; }
+
+/* ====== Nivel experto (se desbloquea al ganar en Difícil) ====== */
+
+.nivel.experto { background: #d9cdf2; }
+.nivel.con-candado { opacity: 0.55; cursor: default; }
+.nivel.con-candado:active { transform: none; box-shadow: var(--sombra-tinta); }
+.candado-nivel { font-weight: 700; }
+
+.signo-mas { font-family: var(--letra-titulos); font-size: 2.2rem; font-weight: 800; }

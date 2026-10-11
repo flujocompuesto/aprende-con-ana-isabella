@@ -19,7 +19,7 @@
     <section id="pantalla-inicio" class="juego">
       <h2>Elige tu nivel</h2>
       <p>Cada partida tiene 10 operaciones. ¡Junta una racha! 🔥</p>
-      <div class="niveles">
+      <div class="niveles" data-juego="numeros">
         <button class="nivel facil" data-nivel="facil">
           <span class="emoji">●○○</span>
           <span class="nombre">Fácil</span>
@@ -34,6 +34,11 @@
           <span class="emoji">●●●</span>
           <span class="nombre">Difícil</span>
           <span class="detalle">También multiplicar y dividir</span>
+        </button>
+        <button class="nivel experto" data-nivel="experto" data-requiere="dificil">
+          <span class="emoji">●●●●</span>
+          <span class="nombre">Experto</span>
+          <span class="detalle">Números grandes y el número que falta <span class="candado-nivel">· 🔒 Gana una estrella en Difícil</span></span>
         </button>
       </div>
     </section>

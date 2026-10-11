@@ -2,9 +2,9 @@
 // Encuentra las parejas de perritos iguales. Ilustraciones SVG originales.
 
 // Cuántos pares tiene cada nivel.
-const PARES_POR_NIVEL = { facil: 3, intermedio: 6, dificil: 10 };
+const PARES_POR_NIVEL = { facil: 3, intermedio: 6, dificil: 10, experto: 12 };
 
-const NOMBRE_NIVEL = { facil: "Fácil", intermedio: "Intermedio", dificil: "Difícil" };
+const NOMBRE_NIVEL = { facil: "Fácil", intermedio: "Intermedio", dificil: "Difícil", experto: "Experto" };
 
 // Los 10 perritos, cada uno con un accesorio y color distintos para
 // diferenciarlos fácilmente. Cada uno se dibuja con SVG (arte original).
@@ -19,6 +19,17 @@ const PERRITOS = [
   { id: "gorra", accent: "#d63031", nombre: "perrito con gorra" },
   { id: "enamorado", accent: "#e84393", nombre: "perrito enamorado" },
   { id: "jugueton", accent: "#e17055", nombre: "perrito juguetón" },
+];
+
+// Nivel experto: perritos "gemelos" de otros (mismo accesorio, otro color).
+// Se juegan junto a su gemelo, así hay que fijarse bien en el color.
+const GEMELOS = [
+  { id: "mono-rojo", forma: "mono", accent: "#d63031", gemelo: "mono" },
+  { id: "gorra-azul", forma: "gorra", accent: "#0984e3", gemelo: "gorra" },
+  { id: "fiesta-verde", forma: "fiesta", accent: "#00b894", gemelo: "fiesta" },
+  { id: "audifonos-naranja", forma: "audifonos", accent: "#e17055", gemelo: "audifonos" },
+  { id: "bufanda-roja", forma: "bufanda", accent: "#d63031", gemelo: "bufanda" },
+  { id: "flor-morada", forma: "flor", accent: "#6c5ce7", gemelo: "flor" },
 ];
 
 // Partes comunes de la cara del perrito (en un lienzo de 120x120).
@@ -163,7 +174,9 @@ function empezarPartida(nivel) {
   combo = 0;
 
   // Elegimos los perritos del nivel y armamos las parejas.
-  const elegidos = mezclar(PERRITOS).slice(0, totalPares);
+  const elegidos = nivel === "experto"
+    ? [...GEMELOS, ...GEMELOS.map((g) => PERRITOS.find((p) => p.id === g.gemelo))]
+    : mezclar(PERRITOS).slice(0, totalPares);
   const cartas = mezclar([...elegidos, ...elegidos]);
 
   tableroEl.className = `tablero nivel-${nivel}`;
@@ -176,7 +189,7 @@ function empezarPartida(nivel) {
     carta.innerHTML = `
       <span class="carta-inner">
         <span class="carta-cara carta-frente">?</span>
-        <span class="carta-cara carta-reverso">${svgPerrito(perrito.id, perrito.accent)}</span>
+        <span class="carta-cara carta-reverso">${svgPerrito(perrito.forma || perrito.id, perrito.accent)}</span>
       </span>`;
     carta.addEventListener("click", () => voltear(carta));
     tableroEl.appendChild(carta);

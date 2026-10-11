@@ -5,13 +5,15 @@
 const TOTAL_PREGUNTAS = 8;
 const PUNTOS_POR_ACIERTO = 10;
 
-const NOMBRE_NIVEL = { facil: "Fácil", intermedio: "Intermedio", dificil: "Difícil" };
+const NOMBRE_NIVEL = { facil: "Fácil", intermedio: "Intermedio", dificil: "Difícil", experto: "Experto" };
 
 // Rango de denominadores y tipos de reto por nivel.
 const CONFIG = {
   facil: { min: 2, max: 4, tipos: ["identificar", "colorear"] },
   intermedio: { min: 2, max: 6, tipos: ["identificar", "colorear", "comparar"] },
   dificil: { min: 3, max: 10, tipos: ["colorear", "comparar", "identificar"] },
+  // Experto: fracciones equivalentes (1/2 = 2/4) y sumas con igual denominador.
+  experto: { min: 3, max: 12, tipos: ["equivalente", "suma", "comparar"] },
 };
 
 // Colores de las figuras.
@@ -123,6 +125,9 @@ function generarPregunta(nivel) {
   const tipo = elegir(cfg.tipos);
   const forma = elegir(["circulo", "barra"]);
 
+  if (tipo === "equivalente") return preguntaEquivalente(forma);
+  if (tipo === "suma") return preguntaSuma(cfg);
+
   if (tipo === "comparar") {
     let a, b;
     do {
@@ -141,6 +146,64 @@ function generarPregunta(nivel) {
   // identificar
   const coloreadasSet = new Set(indicesAlAzar(den, num));
   return { tipo, forma, num, den, coloreadasSet, opciones: opcionesIdentificar(num, den) };
+}
+
+const mcd = (a, b) => (b === 0 ? a : mcd(b, a % b));
+const valida = (nu, de) => Number.isInteger(nu) && Number.isInteger(de) && nu >= 1 && nu < de && de <= 24;
+
+// Completa hasta "cuantas" opciones equivocadas con fracciones que no valgan
+// lo mismo. Si con ese denominador no alcanzan, prueba con los siguientes.
+function completarTrampas(trampas, correcta, den, cuantas = 3) {
+  const [cn, cd] = correcta.split("/").map(Number);
+  const lista = [...new Set(trampas)].filter((f) => f !== correcta);
+  for (let d = den; lista.length < cuantas && d <= den + 6; d++) {
+    for (const nu of mezclar([...Array(d - 1).keys()].map((x) => x + 1))) {
+      const f = `${nu}/${d}`;
+      if (lista.length >= cuantas) break;
+      if (nu * cd !== cn * d && !lista.includes(f)) lista.push(f);
+    }
+  }
+  return mezclar(lista).slice(0, cuantas);
+}
+const primeras = (n) => new Set([...Array(n).keys()]); // partes coloreadas seguidas
+
+// ¿Qué fracción es igual a num/den? La respuesta es multiplicar arriba y abajo.
+function preguntaEquivalente(forma) {
+  let den, num, k;
+  do {
+    den = aleatorio(2, 6);
+    num = aleatorio(1, den - 1);
+    k = aleatorio(2, 3);
+  } while (mcd(num, den) !== 1 || den * k > 12);
+  const correcta = `${num * k}/${den * k}`;
+  const trampas = [
+    [num, den * k], // solo cambiar el de abajo
+    [num * k - 1, den * k],
+    [num * k + 1, den * k],
+    [num * k, den * k + 1],
+    [num + 1, den * k],
+  ].filter(([nu, de]) => valida(nu, de) && nu * den !== num * de).map(([nu, de]) => `${nu}/${de}`);
+  const opciones = mezclar([correcta, ...completarTrampas(trampas, correcta, den * k)]);
+  return { tipo: "equivalente", forma, num, den, k, correcta, opciones };
+}
+
+// num1/den + num2/den: solo se suman los de arriba.
+function preguntaSuma(cfg) {
+  const den = aleatorio(Math.max(cfg.min, 4), Math.min(cfg.max, 10));
+  const a = aleatorio(1, den - 2);
+  const b = aleatorio(1, den - 1 - a);
+  const correcta = `${a + b}/${den}`;
+  const trampas = [
+    [a + b, den * 2], // sumar también los de abajo (el error más común)
+    [a + b + 1, den],
+    [a + b - 1, den],
+    [a * b, den],
+  ].filter(([nu, de]) => valida(nu, de) && `${nu}/${de}` !== correcta).map(([nu, de]) => `${nu}/${de}`);
+  // La trampa común siempre aparece: es la que más enseña.
+  const comun = `${a + b}/${den * 2}`;
+  const otras = completarTrampas(trampas.filter((f) => f !== comun), correcta, den, 2);
+  const opciones = mezclar([correcta, comun, ...otras]);
+  return { tipo: "suma", forma: "barra", a, b, den, correcta, opciones, trampaComun: `${a + b}/${den * 2}` };
 }
 
 function nuevaFraccion(cfg) {
@@ -200,6 +263,8 @@ function mostrarPregunta() {
 
   if (pregunta.tipo === "identificar") renderIdentificar();
   else if (pregunta.tipo === "colorear") renderColorear();
+  else if (pregunta.tipo === "equivalente") renderEquivalente();
+  else if (pregunta.tipo === "suma") renderSuma();
   else renderComparar();
 }
 
@@ -227,6 +292,52 @@ function responderIdentificar(frac, boton) {
     if (b.dataset.fraccion === correcta) b.classList.add("correcta");
   });
   finalizarRespuesta(acerto, boton, `Era ${correcta}`);
+}
+
+// Opciones de fracción para los retos de experto.
+function ponerOpciones(explicarError, alAcertar) {
+  pregunta.opciones.forEach((frac) => {
+    const [nu, de] = frac.split("/");
+    const boton = document.createElement("button");
+    boton.className = "opcion-frac";
+    boton.dataset.fraccion = frac;
+    boton.innerHTML = fraccionHTML(nu, de);
+    boton.addEventListener("click", () => {
+      if (bloqueo) return;
+      bloqueo = true;
+      opcionesEl.querySelectorAll(".opcion-frac").forEach((b) => {
+        b.disabled = true;
+        if (b.dataset.fraccion === pregunta.correcta) b.classList.add("correcta");
+      });
+      const acerto = frac === pregunta.correcta;
+      if (acerto && alAcertar) alAcertar();
+      finalizarRespuesta(acerto, boton, explicarError(frac));
+    });
+    opcionesEl.appendChild(boton);
+  });
+}
+
+function renderEquivalente() {
+  const { num, den, k, forma } = pregunta;
+  instruccionEl.innerHTML = `¿Qué fracción es <strong>igual</strong> a ${fraccionHTML(num, den)}?`;
+  figuraEl.innerHTML = figuraSVG(forma, den, primeras(num), false);
+  // Al acertar dibujamos la otra fracción al lado: ¡es la misma cantidad!
+  ponerOpciones(
+    () => `${num}/${den} = ${num * k}/${den * k}: multiplica arriba y abajo por ${k}.`,
+    () => figuraEl.insertAdjacentHTML("beforeend", figuraSVG(forma, den * k, primeras(num * k), false))
+  );
+}
+
+function renderSuma() {
+  const { a, b, den } = pregunta;
+  instruccionEl.innerHTML = `¿Cuánto es ${fraccionHTML(a, den)} + ${fraccionHTML(b, den)}?`;
+  figuraEl.innerHTML = figuraSVG("barra", den, primeras(a), false) + '<span class="signo-mas">+</span>' + figuraSVG("barra", den, primeras(b), false);
+  ponerOpciones(
+    (frac) =>
+      frac === pregunta.trampaComun
+        ? `¡Ojo! Cuando el número de abajo es igual, no se suma: solo se suman los de arriba. Era ${pregunta.correcta}.`
+        : `Era ${pregunta.correcta}: ${a} + ${b} = ${a + b} partes de ${den}.`
+  );
 }
 
 function renderColorear() {
