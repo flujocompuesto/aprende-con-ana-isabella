@@ -195,5 +195,18 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
   Datos en `js/portugues-unidades.js`, pantalla en `js/portugues.js`.
   Progreso `portugues` → id de la unidad, máximo 33 ⭐. La conversación usa
   el nombre de pila de Ana Isabella y sus gustos (ajedrez y robots).
-- Los 10 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
+- "Estudio de videos" (`juegos/videos.html`, oct-2026): curso de 7 unidades
+  para hacer videos de YouTube (la idea, cuidarse en internet, el guion,
+  grabar, edición, miniatura y título, subirlo con papá). Datos en
+  `js/videos-unidades.js` (cada paso tiene un `tipo`: explica, pregunta,
+  ordena, clasifica, escribe, set, editor, miniatura, subida, plan) y el
+  motor en `js/videos.js`. Progreso `videos` → id de la unidad, máximo 21 ⭐.
+  Mientras avanza, arma **su propio plan de video** (`aprende:mi-video` en
+  localStorage, solo en ese aparato; se imprime con `window.print()` y el
+  CSS de impresión de `.pagina-videos`). Lo que escribe se muestra siempre
+  escapado (`esc`). Mensajes que no hay que perder al editar: el canal
+  propio exige 13 años (se sube en el canal de papá), "contenido para
+  niños" apaga los comentarios, primer video Privado o No listado, música
+  libre (Biblioteca de audio), miniatura sin su cara ni datos personales.
+- Los 11 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
   patrón (página en `juegos/` + script en `js/` + tarjeta en index.html).

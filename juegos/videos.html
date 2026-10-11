@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estudio de videos — Aprende con Ana Isabella</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="pagina-videos">
+  <header class="hero">
+    <h1>Estudio de videos</h1>
+    <p>Aprende a crear videos para YouTube: la idea, el guion, grabar, editar y subirlo con papá.</p>
+  </header>
+
+  <main class="leccion">
+    <a class="volver" href="../index.html">← Volver al inicio</a>
+
+    <!-- Mapa del curso -->
+    <section id="pantalla-mapa" class="juego">
+      <div class="burbuja">
+        <img class="guia" src="../img/capibara.svg" alt="Capi" />
+        <div>¡Hola, creadora! Hacer un video es como hacer una película chiquita: primero se piensa, después se graba, se edita y se comparte. En cada unidad vas armando <strong>el plan de tu propio video</strong>. 🎬</div>
+      </div>
+      <div id="unidades" class="capitulos"></div>
+      <div class="acciones">
+        <button id="btn-plan" class="boton siguiente" hidden>📋 Mi plan de video</button>
+      </div>
+    </section>
+
+    <!-- Una unidad -->
+    <section id="pantalla-unidad" class="juego" hidden>
+      <div class="barra-leccion">
+        <button id="btn-mapa" class="volver-juego" aria-label="Volver al curso">←</button>
+        <h2 id="titulo-unidad"></h2>
+      </div>
+      <div id="puntos-pasos" class="puntos-pasos"></div>
+      <div class="burbuja">
+        <img class="guia" src="../img/capibara.svg" alt="Capi" />
+        <div id="texto-capi"></div>
+      </div>
+      <div id="contenido-video"></div>
+      <p id="mensaje-video" class="mensaje-juego"></p>
+      <div id="acciones-video" class="acciones"></div>
+    </section>
+
+    <!-- Fin de unidad -->
+    <section id="pantalla-fin" class="juego" hidden>
+      <div id="fin-estrellas" class="fin-estrellas">⭐⭐⭐</div>
+      <h2 id="fin-felicitacion">¡Muy bien!</h2>
+      <p id="fin-resumen" class="fin-puntaje"></p>
+      <p id="fin-record" class="fin-record" hidden></p>
+      <div class="acciones">
+        <button id="btn-siguiente-unidad" class="boton ejecutar">Siguiente unidad →</button>
+        <button id="btn-volver-mapa" class="boton siguiente">Ver el curso</button>
+      </div>
+    </section>
+
+    <!-- Mi plan de video -->
+    <section id="pantalla-plan" class="juego" hidden>
+      <div id="contenido-plan"></div>
+      <div class="acciones">
+        <button id="btn-plan-imprimir" class="boton siguiente">🖨️ Imprimir mi plan</button>
+        <button id="btn-plan-volver" class="boton quitar">← Volver al curso</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Hecho a mano por papá, para Ana Isabella.
+  </footer>
+
+  <script src="../js/comun.js"></script>
+  <script src="../js/videos-unidades.js"></script>
+  <script src="../js/videos.js"></script>
+</body>
+</html>

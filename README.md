@@ -2,7 +2,7 @@
 
 Sitio de juegos educativos hecho a mano por su papá para una niña de 8 a 10
 años: programación, robótica, banderas, matemáticas, lectura, memoria,
-fracciones, inglés, portugués y ajedrez.
+fracciones, inglés, portugués, ajedrez y videos para YouTube.
 Cada juego tiene niveles, sonidos, celebraciones y estrellas que se guardan
 en el navegador. Los niveles más difíciles se abren al ganar estrellas en los
 anteriores.
@@ -63,6 +63,11 @@ cada cambio en `main`). En local basta con abrir `index.html`.
 - **Curso de portugués** — 11 unidades con Capi: palabras con su
   pronunciación, práctica, armar frases y conversaciones en portugués
   (presentarse y pedir comida en una cafetería).
+
+- **Estudio de videos** — 7 unidades con Capi para aprender a hacer videos
+  de YouTube: la idea, cuidarse en internet, el guion, grabar (un estudio con
+  luz, ruido y celular), editar (cortar y ordenar tomas), la miniatura y
+  subirlo con papá. En el camino se arma un plan de video para imprimir.
 
 ## Cómo agregar un juego nuevo
 
