@@ -1,7 +1,7 @@
 // Unidades del curso de portugués (de Brasil) — Aprende con Ana Isabella
 // Cada unidad: palabras (con dibujo: emoji, color o número), un consejo de
-// pronunciación de Capi ("dica"), y frases para armar. La última unidad tiene
-// además una conversación con Capi.
+// pronunciación de Capi ("dica"), y frases para armar. Las de conversación
+// (la 8 y la 11) cambian las palabras por una charla con Capi.
 // conDibujos: false → las opciones de práctica se muestran como texto en
 // español (sirve para saludos, que no se pueden dibujar bien).
 
@@ -174,6 +174,86 @@ const UNIDADES_PT = [
     frases: [
       { pt: "Eu me chamo Ana Isabella.", es: "Me llamo Ana Isabella." },
       { pt: "Eu gosto de xadrez.", es: "Me gusta el ajedrez." },
+    ],
+  },
+  // ---- Unidades difíciles: palabras engañosas y frases más largas ----
+  {
+    id: "verbos", titulo: "Ações", es: "Verbos", icono: "🏃", conDibujos: true,
+    dica: "¡Cuidado con las palabras engañosas! <strong>Brincar</strong> es jugar y <strong>acordar</strong> es despertar (¡no recordar!). Para decir lo que haces, usa <strong>eu</strong> + el verbo terminado en <strong>-o</strong>: eu corro, eu canto, eu desenho.",
+    palabras: [
+      { pt: "correr", es: "correr", emoji: "🏃" },
+      { pt: "nadar", es: "nadar", emoji: "🏊" },
+      { pt: "dançar", es: "bailar", emoji: "💃" },
+      { pt: "cantar", es: "cantar", emoji: "🎤" },
+      { pt: "ler", es: "leer", emoji: "📖" },
+      { pt: "escrever", es: "escribir", emoji: "✍️" },
+      { pt: "dormir", es: "dormir", emoji: "😴" },
+      { pt: "comer", es: "comer", emoji: "🍽️" },
+      { pt: "brincar", es: "jugar", emoji: "🧸" },
+      { pt: "desenhar", es: "dibujar", emoji: "🖍️" },
+      { pt: "acordar", es: "despertar", emoji: "⏰" },
+      { pt: "cozinhar", es: "cocinar", emoji: "🍳" },
+    ],
+    frases: [
+      { pt: "Eu gosto de dançar.", es: "Me gusta bailar." },
+      { pt: "Eu acordo muito cedo.", es: "Me despierto muy temprano." },
+      { pt: "Nós brincamos no parque.", es: "Jugamos en el parque." },
+    ],
+  },
+  {
+    id: "semana", titulo: "Dias e tempo", es: "Días y clima", icono: "📅", conDibujos: false,
+    dica: "En Brasil los días de semana se cuentan: el lunes es <strong>segunda-feira</strong> (el «segundo día»), el martes <strong>terça-feira</strong>… por eso en los calendarios dice 2ª, 3ª, 4ª. ¡Sábado y domingo son igual que en español! Y la lluvia es <strong>chuva</strong>.",
+    palabras: [
+      { pt: "segunda-feira", es: "lunes", texto: "2ª" },
+      { pt: "terça-feira", es: "martes", texto: "3ª" },
+      { pt: "quarta-feira", es: "miércoles", texto: "4ª" },
+      { pt: "quinta-feira", es: "jueves", texto: "5ª" },
+      { pt: "sexta-feira", es: "viernes", texto: "6ª" },
+      { pt: "sábado", es: "sábado", texto: "sáb" },
+      { pt: "domingo", es: "domingo", texto: "dom" },
+      { pt: "sol", es: "sol", emoji: "☀️" },
+      { pt: "chuva", es: "lluvia", emoji: "🌧️" },
+      { pt: "nuvem", es: "nube", emoji: "☁️" },
+      { pt: "vento", es: "viento", emoji: "💨" },
+      { pt: "frio", es: "frío", emoji: "🥶" },
+    ],
+    frases: [
+      { pt: "Hoje é sexta-feira!", es: "¡Hoy es viernes!" },
+      { pt: "Hoje faz muito frio.", es: "Hoy hace mucho frío." },
+      { pt: "Amanhã vai ter chuva.", es: "Mañana va a llover." },
+    ],
+  },
+  {
+    id: "lanchonete", titulo: "Na lanchonete", es: "En la cafetería", icono: "🥪", conDibujos: false,
+    dica: "Capi trabaja hoy en una <strong>lanchonete</strong> (cafetería). Pide tu comida en portugués: vas a usar números, comida y <strong>por favor</strong>. En Brasil el dinero son <strong>reais</strong>.",
+    palabras: [],
+    finConversa: "¡Pediste tu comida en portugués! 🇧🇷🥪",
+    conversa: [
+      {
+        capi: "Bem-vinda à lanchonete! O que você quer comer?", es: "¡Bienvenida a la cafetería! ¿Qué quieres comer?",
+        opciones: [{ pt: "Eu quero um sanduíche, por favor.", ok: true }, { pt: "Hoje é domingo." }, { pt: "Eu gosto de azul." }],
+      },
+      {
+        capi: "E para beber?", es: "¿Y para tomar?",
+        opciones: [{ pt: "Um suco de laranja, por favor.", ok: true }, { pt: "Eu acordo cedo." }, { pt: "Uma cadeira verde." }],
+      },
+      {
+        capi: "Quantos sanduíches você quer?", es: "¿Cuántos sándwiches quieres?",
+        opciones: [{ pt: "Dois, por favor.", ok: true }, { pt: "Está chovendo." }, { pt: "Eu me chamo Capi." }],
+      },
+      {
+        capi: "São dez reais. Mais alguma coisa?", es: "Son diez reales. ¿Algo más?",
+        opciones: [{ pt: "Não, obrigada!", ok: true }, { pt: "Sim, eu sou um gato." }, { pt: "Bom dia, professora!" }],
+      },
+      {
+        capi: "Bom apetite! Volte sempre!", es: "¡Buen provecho! ¡Vuelve pronto!",
+        opciones: [{ pt: "Obrigada, Capi! Tchau!", ok: true }, { pt: "Quarta-feira." }, { pt: "Eu quero dormir." }],
+      },
+    ],
+    frases: [
+      { pt: "Eu quero um suco, por favor.", es: "Quiero un jugo, por favor." },
+      { pt: "Quanto custa o sanduíche?", es: "¿Cuánto cuesta el sándwich?" },
+      { pt: "Não, obrigada!", es: "¡No, gracias!" },
     ],
   },
 ];

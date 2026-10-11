@@ -56,8 +56,9 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   varios tableros) y arma circuitos girando cables (interruptor, motor, serie,
   paralelo y cortocircuito). 10 niveles en cada taller.
 
-- **Curso de portugués** — 8 unidades con Capi: palabras con su
-  pronunciación, práctica, armar frases y una conversación en portugués.
+- **Curso de portugués** — 11 unidades con Capi: palabras con su
+  pronunciación, práctica, armar frases y conversaciones en portugués
+  (presentarse y pedir comida en una cafetería).
 
 ## Cómo agregar un juego nuevo
 

@@ -1,7 +1,7 @@
 // Curso de portugués — Aprende con Ana Isabella
-// 8 unidades que se desbloquean en orden. Cada una: palabras nuevas (tarjetas
+// 11 unidades que se desbloquean en orden. Cada una: palabras nuevas (tarjetas
 // para escuchar), práctica (leer, escuchar, traducir — con "trampas" en
-// español) y armar frases. La última es una conversación con Capi.
+// español) y armar frases. Las de conversación son una charla con Capi.
 // La voz es la del navegador en portugués de Brasil (pt-BR).
 
 const PREGUNTAS_POR_UNIDAD = 8;
@@ -464,7 +464,7 @@ function pasoConversa(u) {
             mensaje("");
             if (k < u.conversa.length) turno();
             else {
-              mensaje("¡Tuviste tu primera conversación en portugués! 🇧🇷🎉", "exito");
+              mensaje(u.finConversa || "¡Tuviste tu primera conversación en portugués! 🇧🇷🎉", "exito");
               mostrarSiguiente();
             }
           }, 2200);

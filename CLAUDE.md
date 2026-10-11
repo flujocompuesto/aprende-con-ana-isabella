@@ -159,14 +159,17 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     accidente, y el programa de 4 bloques de los niveles 6–7 ya no sirve.
     Por eso la estrella está en una cueva en medio del campo: en la orilla,
     seguir la pared con 4 bloques la resolvía.
-- "Curso de portugués" (`juegos/portugues.html`): 8 unidades de portugués
+- "Curso de portugués" (`juegos/portugues.html`): 11 unidades de portugués
   de Brasil que se desbloquean en orden (saludos, números, colores, animales,
-  familia, comida, escuela y una conversación con Capi). Cada unidad:
+  familia, comida, escuela, una conversación con Capi y tres difíciles:
+  verbos con palabras engañosas —brincar, acordar—, días de la semana y
+  clima, y pedir comida en una lanchonete). Las de conversación tienen
+  `conversa` (y `finConversa`) en vez de palabras. Cada unidad:
   tarjetas para escuchar (con una "dica" de pronunciación), práctica de 8
   preguntas (leer / escuchar / traducir, con la palabra en español como
   trampa cuando es distinta) y armar frases. Voz `speechSynthesis` pt-BR.
   Datos en `js/portugues-unidades.js`, pantalla en `js/portugues.js`.
-  Progreso `portugues` → id de la unidad, máximo 24 ⭐. La conversación usa
+  Progreso `portugues` → id de la unidad, máximo 33 ⭐. La conversación usa
   el nombre de pila de Ana Isabella y sus gustos (ajedrez y robots).
 - Los 10 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
   patrón (página en `juegos/` + script en `js/` + tarjeta en index.html).
