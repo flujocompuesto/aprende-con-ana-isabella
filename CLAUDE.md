@@ -71,8 +71,8 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
 
 ## Estado actual
 - "Robot Programador" (`lecciones/leccion-01-que-es-programar.html` +
-  `js/leccion-01.js`, la URL se mantuvo): 5 niveles con rocas, se desbloquean
-  en orden; el programa se ve como fichas que se iluminan al ejecutarse; las
+  `js/leccion-01.js`, la URL se mantuvo): 8 niveles con rocas, se desbloquean
+  en orden (6–8 son laberintos de un solo camino de 16 instrucciones); el programa se ve como fichas que se iluminan al ejecutarse; las
   estrellas comparan las instrucciones usadas con el camino más corto
   (búsqueda en anchura). Su tablero usa `.tablero-robot` (no `.tablero`, que
   es el de Memoria). Flechas del teclado, Enter y Borrar también funcionan.
@@ -131,19 +131,31 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     "tranquila" a veces no revisa si deja piezas colgando). Los mates en 1 se
     validan con el motor, no con una respuesta fija.
 - "Robótica" (`juegos/robotica.html`), con Capi ingeniera
-  (`img/capibara-ingeniera.svg`, con casco). Dos talleres de 7 niveles
-  (progreso `robotica` → `robot-N` y `circuito-N`, máximo 42 ⭐):
+  (`img/capibara-ingeniera.svg`, con casco). Dos talleres de 10 niveles
+  (progreso `robotica` → `robot-N` y `circuito-N`, máximo 60 ⭐):
   - Robot con sensores: programación por bloques con orientación (avanzar,
     girar), Repetir N, Repetir hasta llegar y Si hay algo adelante / si no.
     Niveles con varios tableros: el mismo programa debe funcionar en todos.
+    8–10 son los difíciles: la aspiradora (repetir dentro de repetir), rodear
+    rocas (varios pasos dentro del Si) y una espiral gigante. En los
+    recorridos largos la animación acelera (~25 s por tablero como mucho).
   - Taller de circuitos: girar cables (recta, curva, T) e interruptores;
     focos y motores se prenden solo si están en un camino de + a −; detecta
     cortocircuitos. Serie, paralelo, y el circuito final del robot.
+    Opcionales del nivel: `apagados` (focos que deben quedar apagados; hay
+    pista si se prenden), `color` en un foco (`verde`/`rojo`) y `fija: true`
+    en un cable que no se puede girar (se dibuja con tornillos).
   - `js/robotica-motor.js` (puro, probado en Node), `js/robotica-niveles.js`
     (datos), `js/robotica.js` (pantalla). Al cambiar un nivel, verificar que
     la solución pensada funcione, que no exista un programa más corto que el
     "reto" y que el mínimo de toques del circuito sea el real (búsqueda en
     anchura sobre los giros).
+    Excepción conocida: en "Rodea las rocas" (robot 9) la fuerza bruta llega
+    hasta 7 bloques sin encontrar atajos, pero existen programas raros de 8
+    (barridos que encuentran la cueva). Se aceptan porque no salen por
+    accidente, y el programa de 4 bloques de los niveles 6–7 ya no sirve.
+    Por eso la estrella está en una cueva en medio del campo: en la orilla,
+    seguir la pared con 4 bloques la resolvía.
 - "Curso de portugués" (`juegos/portugues.html`): 8 unidades de portugués
   de Brasil que se desbloquean en orden (saludos, números, colores, animales,
   familia, comida, escuela y una conversación con Capi). Cada unidad:

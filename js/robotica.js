@@ -335,8 +335,10 @@ async function animar(tablero, resultado, s) {
   pintarTablero(tablero, estado);
   // Si el programa nunca termina, mostramos solo el comienzo.
   const cuadros = resultado.fin === "cansado" ? resultado.cuadros.slice(0, 30) : resultado.cuadros;
+  // En los recorridos largos el robot acelera: cada tablero dura ~25 s como mucho.
+  const pausa = Math.max(110, Math.min(VELOCIDAD, 25000 / cuadros.length));
   for (const cuadro of cuadros) {
-    await espera(VELOCIDAD);
+    await espera(pausa);
     if (s !== sesion) return false;
     resaltarBloque(cuadro.bloque);
     if (cuadro.robot.f !== estado.robot.f || cuadro.robot.c !== estado.robot.c) {
@@ -436,9 +438,12 @@ let piezas = [];
 let toques = 0;
 let cortosCausados = 0;
 let habiaCorto = false;
+let habiaCasi = false;
 let resuelto = false;
 
 const TINTA = "#2b2118";
+// Focos de color (opcional en el nivel): [apagado, prendido]. Sin color, amarillo.
+const FOCOS = { amarillo: ["#fff8e6", "#ffe066"], verde: ["#d9eed5", "#86d873"], rojo: ["#f6d5cd", "#ff8a70"] };
 const PUNTAS = [[50, 0], [100, 50], [50, 100], [0, 50]];
 
 // Cables desde el centro hacia cada lado abierto, con contorno de tinta.
@@ -466,9 +471,10 @@ function piezaSVG(p, res) {
       <text x="50" y="72" text-anchor="middle" font-size="26" font-weight="800" fill="#fffdf8">−</text>`;
   } else if (p.tipo === "foco") {
     const prendido = res.encendidos.has(p.id);
+    const [apagado, luz] = FOCOS[p.color || "amarillo"];
     dibujo = `${cablesSVG(lados, color)}
-      ${prendido ? '<circle cx="50" cy="50" r="40" fill="#ffe066" opacity="0.45"/>' : ""}
-      <circle cx="50" cy="50" r="23" fill="${prendido ? "#ffe066" : "#fff8e6"}" stroke="${TINTA}" stroke-width="4"/>
+      ${prendido ? `<circle cx="50" cy="50" r="40" fill="${luz}" opacity="0.45"/>` : ""}
+      <circle cx="50" cy="50" r="23" fill="${prendido ? luz : apagado}" stroke="${TINTA}" stroke-width="4"/>
       <path d="M38 54 l4 -10 l4 10 l4 -10 l4 10 l4 -10" fill="none" stroke="${TINTA}" stroke-width="3" stroke-linejoin="round"/>`;
   } else if (p.tipo === "motor") {
     const girando = res.encendidos.has(p.id);
@@ -488,6 +494,13 @@ function piezaSVG(p, res) {
       <circle cx="50" cy="70" r="7" fill="#fffdf8" stroke="${TINTA}" stroke-width="4"/>
     </g>`;
   }
+  // Una pieza fija lleva tornillos en las esquinas: no se puede girar.
+  if (p.fija) {
+    dibujo += [[14, 14], [86, 14], [14, 86], [86, 86]]
+      .map(([x, y]) => `<circle cx="${x}" cy="${y}" r="6" fill="#d9cdb8" stroke="${TINTA}" stroke-width="2.5"/>
+        <path d="M${x - 3.5} ${y + 3.5} L${x + 3.5} ${y - 3.5}" stroke="${TINTA}" stroke-width="2.5"/>`)
+      .join("");
+  }
   return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${dibujo}</svg>`;
 }
 
@@ -501,6 +514,7 @@ function abrirNivelCircuito(i) {
   piezas = nivel.piezas.map((p) => ({ ...p }));
   toques = 0;
   cortosCausados = 0;
+  habiaCasi = false;
   resuelto = false;
   mostrarPantalla("circuito");
   document.getElementById("titulo-circuito").textContent = `Nivel ${i + 1}: ${nivel.titulo}`;
@@ -533,7 +547,7 @@ function pintarPlaca(res) {
         celda.disabled = !tocable || resuelto;
         if (res.encendidos.has(p.id)) celda.classList.add("prendida");
         celda.innerHTML = piezaSVG(p, res);
-        celda.setAttribute("aria-label", p.tipo === "interruptor" ? (p.cerrado ? "Interruptor cerrado" : "Interruptor abierto") : p.tipo);
+        celda.setAttribute("aria-label", p.tipo === "interruptor" ? (p.cerrado ? "Interruptor cerrado" : "Interruptor abierto") : p.color ? `${p.tipo} ${p.color}` : p.tipo);
         celda.addEventListener("click", () => tocarPieza(p));
       }
       placaEl.appendChild(celda);
@@ -568,7 +582,13 @@ function evaluarYPintar() {
   }
   habiaCorto = res.corto;
 
-  const listo = !res.corto && nivel.objetivo.every((id) => res.encendidos.has(id));
+  const listo = R.cumpleObjetivo(nivel, piezas);
+  // Prendió lo que se pedía, pero también un foco que debía quedar apagado.
+  const sobran = (nivel.apagados || []).filter((id) => res.encendidos.has(id));
+  const casi = !listo && !res.corto && sobran.length > 0 && nivel.objetivo.every((id) => res.encendidos.has(id));
+  if (casi) mensaje(mensajeCircuitoEl, `¡Casi! Pero el foco ${sobran.join(" y ")} también se prendió, y tiene que quedar apagado.`);
+  else if (habiaCasi && !res.corto) mensaje(mensajeCircuitoEl, "");
+  habiaCasi = casi;
   if (listo && !resuelto) {
     resuelto = true;
     let estrellas = 1;

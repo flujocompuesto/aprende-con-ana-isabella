@@ -199,7 +199,11 @@ const Robotica = (() => {
 
   function cumpleObjetivo(nivel, piezas) {
     const r = evaluarCircuito(nivel, piezas);
-    return !r.corto && nivel.objetivo.every((id) => r.encendidos.has(id));
+    return (
+      !r.corto &&
+      nivel.objetivo.every((id) => r.encendidos.has(id)) &&
+      (nivel.apagados || []).every((id) => !r.encendidos.has(id))
+    );
   }
 
   // Toques para llegar a la solución pensada (girar cables y cerrar interruptores).

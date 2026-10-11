@@ -25,8 +25,8 @@ cada cambio en `main`). En local basta con abrir `index.html`.
 ## Juegos disponibles
 
 - **Robot Programador** — arma un programa de flechas para que el robot
-  llegue a la estrella esquivando rocas. 5 niveles que se desbloquean en
-  orden; 3 estrellas si usas el camino más corto.
+  llegue a la estrella esquivando rocas. 8 niveles que se desbloquean en
+  orden (los últimos son laberintos); 3 estrellas si usas el camino más corto.
 - **Banderas del mundo** — adivina el país por su bandera, con niveles
   fácil, intermedio y difícil. Las banderas se cargan desde flagcdn.com.
 - **Números mágicos** — resuelve operaciones con un teclado interactivo,
@@ -53,7 +53,7 @@ cada cambio en `main`). En local basta con abrir `index.html`.
 - **Robótica** — con Capi, la ingeniera: programa un robot con bloques
   (avanzar, girar, repetir y sensores, con programas que deben funcionar en
   varios tableros) y arma circuitos girando cables (interruptor, motor, serie,
-  paralelo y cortocircuito).
+  paralelo y cortocircuito). 10 niveles en cada taller.
 
 - **Curso de portugués** — 8 unidades con Capi: palabras con su
   pronunciación, práctica, armar frases y una conversación en portugués.

@@ -1,9 +1,9 @@
 // Robot programador — Aprende con Ana Isabella
 // Arma un programa (lista de instrucciones en orden) para que el robot llegue
-// a la estrella sin chocar con las rocas. 5 niveles cada vez más difíciles.
+// a la estrella sin chocar con las rocas. 8 niveles cada vez más difíciles.
 
 const TAMANO = 5;
-const MAX_INSTRUCCIONES = 16;
+const MAX_INSTRUCCIONES = 20;
 const VELOCIDAD = 420; // milisegundos por paso
 
 // Posiciones como [fila, columna]. Las rocas son obstáculos.
@@ -13,6 +13,10 @@ const NIVELES = [
   { inicio: [4, 2], meta: [0, 2], rocas: [[2, 1], [2, 2], [2, 3]] },
   { inicio: [4, 0], meta: [0, 0], rocas: [[3, 0], [3, 1], [1, 1], [1, 2], [1, 3], [1, 4]] },
   { inicio: [0, 0], meta: [4, 4], rocas: [[0, 1], [1, 1], [2, 1], [2, 3], [3, 3], [4, 3]] },
+  // Difíciles: laberintos con un solo camino de 16 instrucciones.
+  { inicio: [4, 4], meta: [2, 2], rocas: [[3, 1], [3, 2], [3, 3], [3, 4], [1, 1], [1, 2], [1, 3], [2, 1]] }, // espiral
+  { inicio: [4, 0], meta: [0, 4], rocas: [[3, 0], [3, 1], [3, 2], [3, 3], [1, 1], [1, 2], [1, 3], [1, 4]] }, // serpiente
+  { inicio: [2, 2], meta: [0, 0], rocas: [[1, 0], [1, 1], [1, 2], [1, 3], [2, 3], [3, 1], [3, 2], [3, 3]] }, // anillo
 ];
 
 const MOVIMIENTOS = {

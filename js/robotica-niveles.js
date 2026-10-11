@@ -6,6 +6,25 @@
 // Circuitos: cada pieza tiene "rot" (giro inicial) y "sol" (giro de la
 //   solución pensada). Los interruptores tienen "cerrado" y "solCerrado".
 
+// Arma un tablero a partir de un camino. Movimientos: "D5" = 5 a la derecha,
+// "B" abajo, "I" izquierda, "A" arriba. Todo lo que no es camino es roca.
+function tableroDeCamino({ filas, cols, inicio, dir, movimientos, estrellas }) {
+  const PASOS = { D: [0, 1], B: [1, 0], I: [0, -1], A: [-1, 0] };
+  const camino = new Set([`${inicio[0]},${inicio[1]}`]);
+  let [f, c] = inicio;
+  for (const mov of movimientos.split(" ")) {
+    const [df, dc] = PASOS[mov[0]];
+    for (let k = 0; k < Number(mov.slice(1)); k++) {
+      f += df;
+      c += dc;
+      camino.add(`${f},${c}`);
+    }
+  }
+  const rocas = [];
+  for (let i = 0; i < filas; i++) for (let j = 0; j < cols; j++) if (!camino.has(`${i},${j}`)) rocas.push([i, j]);
+  return { filas, cols, robot: { f: inicio[0], c: inicio[1], dir }, estrellas, rocas };
+}
+
 const NIVELES_ROBOT = [
   {
     titulo: "Avanzar y girar",
@@ -78,6 +97,49 @@ const NIVELES_ROBOT = [
       { filas: 6, cols: 6, robot: { f: 5, c: 0, dir: 0 }, estrellas: [[5, 5]], rocas: [] },
       { filas: 6, cols: 6, robot: { f: 5, c: 1, dir: 0 }, estrellas: [[4, 3]], rocas: [[1, 1], [2, 4]] },
       { filas: 6, cols: 6, robot: { f: 4, c: 0, dir: 1 }, estrellas: [[5, 0]], rocas: [[4, 3]] },
+    ],
+  },
+  {
+    titulo: "La aspiradora",
+    bloques: ["avanzar", "izq", "der", "repetir"],
+    reto: 11,
+    maxBloques: 14,
+    texto: "Las aspiradoras robot limpian en <strong>zigzag</strong>: van a la derecha, bajan, van a la izquierda, bajan… Recoge las 4 estrellas. Pista: ¡un Repetir grande con dos Repetir adentro!",
+    tableros: [{ filas: 5, cols: 6, robot: { f: 0, c: 0, dir: 1 }, estrellas: [[0, 5], [1, 0], [2, 5], [3, 0]], rocas: [] }],
+  },
+  {
+    titulo: "Rodea las rocas",
+    bloques: ["avanzar", "izq", "der", "hasta", "si"],
+    reto: 11,
+    maxBloques: 13,
+    texto: "¡Hay rocas en el camino! Cuando el sensor vea una, el robot tiene que <strong>rodearla por arriba</strong>: girar, subir, avanzar dos, bajar y volver a mirar a la derecha. Pon todos esos pasos dentro del Si. La estrella está en su cueva: solo se entra por la izquierda. ¡4 tableros!",
+    // La estrella vive en una cueva de rocas en medio del campo (solo se
+    // entra por la izquierda) y cambia de lugar: así no se llega siguiendo
+    // la pared ni barriendo el tablero, hay que rodear cada roca del camino.
+    tableros: [
+      [5, [2]],
+      [5, [1, 3]],
+      [4, [2]],
+      [5, [3]],
+    ].map(([cueva, rocasCamino]) => ({
+      filas: 5,
+      cols: 8,
+      robot: { f: 2, c: 0, dir: 1 },
+      estrellas: [[2, cueva]],
+      rocas: [[1, cueva], [3, cueva], [2, cueva + 1], ...rocasCamino.map((c) => [2, c])],
+    })),
+  },
+  {
+    titulo: "Espiral gigante",
+    bloques: ["avanzar", "izq", "der", "repetir", "hasta", "si"],
+    reto: 4,
+    maxBloques: 5,
+    texto: "¡El laberinto más grande! Una espiral con 5 estrellas, y solo caben 5 bloques. Piensa como una ingeniera: ¿qué programa que ya conoces sigue los pasillos solito?",
+    tableros: [
+      tableroDeCamino({ filas: 7, cols: 7, inicio: [0, 0], dir: 1, movimientos: "D6 B6 I6 A4 D4 B2 I2 A1",
+        estrellas: [[0, 6], [6, 6], [6, 0], [2, 4], [3, 2]] }),
+      tableroDeCamino({ filas: 6, cols: 6, inicio: [0, 0], dir: 1, movimientos: "D5 B5 I5 A3 D3 B1 I2",
+        estrellas: [[0, 5], [5, 5], [5, 0], [2, 3], [3, 1]] }),
     ],
   },
 ];
@@ -208,6 +270,69 @@ const NIVELES_CIRCUITO = [
       { f: 3, c: 2, tipo: "recta", rot: 1, sol: 1 },
       { f: 3, c: 3, tipo: "t", rot: 3, sol: 0 },
       { f: 3, c: 4, tipo: "curva", rot: 1, sol: 3 },
+    ],
+  },
+  {
+    titulo: "Solo el verde",
+    filas: 3, cols: 5, objetivo: ["verde"], apagados: ["rojo"],
+    texto: "Ahora el reto es prender <strong>solo el foco verde</strong>: el rojo tiene que quedar <strong>apagado</strong>. Arregla el camino del verde y usa el interruptor para apagar el rojo.",
+    piezas: [
+      { f: 0, c: 0, tipo: "curva", rot: 0, sol: 1 },
+      { f: 0, c: 1, tipo: "recta", rot: 0, sol: 1 },
+      { f: 0, c: 2, tipo: "t", rot: 2 },
+      { f: 0, c: 3, tipo: "interruptor", rot: 1, cerrado: true, solCerrado: false },
+      { f: 0, c: 4, tipo: "curva", rot: 2 },
+      { f: 1, c: 0, tipo: "bateria", rot: 0 },
+      { f: 1, c: 2, tipo: "foco", id: "verde", color: "verde", rot: 0 },
+      { f: 1, c: 4, tipo: "foco", id: "rojo", color: "rojo", rot: 0 },
+      { f: 2, c: 0, tipo: "curva", rot: 0 },
+      { f: 2, c: 1, tipo: "recta", rot: 0, sol: 1 },
+      { f: 2, c: 2, tipo: "t", rot: 0 },
+      { f: 2, c: 3, tipo: "recta", rot: 1 },
+      { f: 2, c: 4, tipo: "curva", rot: 3 },
+    ],
+  },
+  {
+    titulo: "El mega circuito",
+    filas: 4, cols: 5, objetivo: ["foco1", "motor", "foco2"],
+    texto: "¡El más grande! Un foco <strong>en serie</strong> y, después, un motor y otro foco <strong>en paralelo</strong>. Prende las tres cosas.",
+    piezas: [
+      { f: 0, c: 0, tipo: "curva", rot: 3, sol: 1 },
+      { f: 0, c: 1, tipo: "foco", id: "foco1", rot: 1 },
+      { f: 0, c: 2, tipo: "recta", rot: 0, sol: 1 },
+      { f: 0, c: 3, tipo: "t", rot: 0, sol: 2 },
+      { f: 0, c: 4, tipo: "curva", rot: 2, sol: 2 },
+      { f: 1, c: 0, tipo: "recta", rot: 1, sol: 0 },
+      { f: 1, c: 3, tipo: "motor", id: "motor", rot: 0 },
+      { f: 1, c: 4, tipo: "recta", rot: 1, sol: 0 },
+      { f: 2, c: 0, tipo: "bateria", rot: 0 },
+      { f: 2, c: 3, tipo: "recta", rot: 1, sol: 0 },
+      { f: 2, c: 4, tipo: "foco", id: "foco2", rot: 0 },
+      { f: 3, c: 0, tipo: "curva", rot: 0, sol: 0 },
+      { f: 3, c: 1, tipo: "recta", rot: 0, sol: 1 },
+      { f: 3, c: 2, tipo: "recta", rot: 1, sol: 1 },
+      { f: 3, c: 3, tipo: "t", rot: 3, sol: 0 },
+      { f: 3, c: 4, tipo: "curva", rot: 1, sol: 3 },
+    ],
+  },
+  {
+    titulo: "La cruz",
+    filas: 3, cols: 5, objetivo: ["foco"],
+    texto: "Esta pieza en <strong>cruz</strong> une sus 4 lados y está atornillada: no se puede girar. Si los cables la conectan arriba y abajo… ¡cortocircuito! Prende el foco sin que la electricidad se escape por la cruz. <strong>Piensa en qué orden girar</strong> antes de tocar.",
+    piezas: [
+      { f: 0, c: 0, tipo: "curva", rot: 1 },
+      { f: 0, c: 1, tipo: "recta", rot: 0, sol: 1 },
+      { f: 0, c: 2, tipo: "t", rot: 2, sol: 0 },
+      { f: 0, c: 3, tipo: "recta", rot: 1 },
+      { f: 0, c: 4, tipo: "curva", rot: 2 },
+      { f: 1, c: 0, tipo: "bateria", rot: 0 },
+      { f: 1, c: 2, tipo: "cruz", rot: 0, fija: true },
+      { f: 1, c: 4, tipo: "foco", id: "foco", rot: 0 },
+      { f: 2, c: 0, tipo: "curva", rot: 0 },
+      { f: 2, c: 1, tipo: "recta", rot: 1 },
+      { f: 2, c: 2, tipo: "t", rot: 0 },
+      { f: 2, c: 3, tipo: "recta", rot: 0, sol: 1 },
+      { f: 2, c: 4, tipo: "curva", rot: 1, sol: 3 },
     ],
   },
 ];
