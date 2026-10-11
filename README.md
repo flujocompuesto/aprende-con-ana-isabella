@@ -43,8 +43,9 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   es mayor, con pizzas y barras. Niveles fácil, intermedio y difícil.
 
 - **Inglés divertido** — vocabulario en inglés por temas (animales, colores,
-  números, comida, cuerpo y mi mundo): mirar, escuchar la pronunciación,
-  traducir y deletrear, contra reloj. Al final se repasan las palabras.
+  números, comida, cuerpo, mi mundo, acciones y ropa): mirar, escuchar la
+  pronunciación, traducir y deletrear, contra reloj. Al final se repasan las
+  palabras. Con estrellas en 4 temas se abre el Desafío final.
 
 - **Aprende ajedrez** — 10 capítulos con Capi: para qué sirve el
   juego, cómo se mueve cada pieza (con retos de recoger estrellas), jaque y

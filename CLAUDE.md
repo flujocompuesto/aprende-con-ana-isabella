@@ -109,8 +109,11 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
   !important}` porque una clase con `display` (ej. `.acciones`) le ganaba al
   atributo `hidden` y dejaba visible un botón que debía ocultarse.
 - Juego "Inglés divertido" (`juegos/ingles-divertido.html` + `js/ingles.js`):
-  6 temas en vez de niveles (animales, colores, números, comida, cuerpo, mi
-  mundo; el progreso se guarda por tema, máximo 18 ⭐). Cada partida son 10
+  8 temas en vez de niveles (animales, colores, números, comida, cuerpo, mi
+  mundo, acciones y ropa; el progreso se guarda por tema) y el **Desafío
+  final** (`desafio`): palabras de todos los temas con trampas del mismo
+  tema, 4 deletreos de palabras de 5+ letras y 70 % del tiempo. Se abre con
+  estrellas en 4 temas. Máximo 27 ⭐. Cada partida son 10
   retos en orden creciente: ver ×3, escuchar ×3, traducir ×2, deletrear ×2.
   Cada pregunta va contra reloj con bono por rapidez. La pronunciación usa la
   voz del navegador (`speechSynthesis`, en-US); si no hay voz o está en 🔇,

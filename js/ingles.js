@@ -1,6 +1,8 @@
 // Inglés divertido — Aprende con Ana Isabella
 // Vocabulario en inglés por temas. Cada partida mezcla retos de ver, escuchar,
 // traducir y deletrear, contra reloj y con la pronunciación del navegador.
+// El "Desafío final" mezcla palabras de todos los temas, con más deletreo y
+// menos tiempo; se abre al ganar estrellas en varios temas.
 
 const TOTAL_PREGUNTAS = 10;
 const PUNTOS_BASE = 10;
@@ -12,6 +14,15 @@ const SECUENCIA = ["ver", "ver", "ver", "escucha", "escucha", "escucha", "traduc
 // Segundos para responder. Deletrear depende del largo de la palabra.
 const TIEMPO = { ver: 12, escucha: 14, traduce: 12 };
 const tiempoDeletreo = (palabra) => 12 + palabra.length * 3;
+
+// Desafío final: casi la mitad es deletreo, con palabras largas y menos tiempo.
+const DESAFIO = {
+  nombre: "Final challenge", es: "Desafío final", emoji: "🏆", color: "color-amarillo",
+  temasParaAbrir: 4, // temas con al menos 1 estrella
+  secuencia: ["ver", "escucha", "escucha", "traduce", "traduce", "traduce", "deletrea", "deletrea", "deletrea", "deletrea"],
+  factorTiempo: 0.7,
+  largoDeletreo: 5, // letras mínimas de las palabras para deletrear
+};
 
 const ETIQUETAS = {
   ver: "👀 What is it? · ¿Qué es?",
@@ -131,10 +142,51 @@ const TEMAS = {
       { en: "rain", es: "lluvia", emoji: "🌧️" },
     ],
   },
+  acciones: {
+    nombre: "Actions", es: "Acciones", emoji: "🏃", color: "color-lima",
+    palabras: [
+      { en: "run", es: "correr", emoji: "🏃" },
+      { en: "swim", es: "nadar", emoji: "🏊" },
+      { en: "sing", es: "cantar", emoji: "🎤" },
+      { en: "dance", es: "bailar", emoji: "💃" },
+      { en: "read", es: "leer", emoji: "📖" },
+      { en: "write", es: "escribir", emoji: "✍️" },
+      { en: "sleep", es: "dormir", emoji: "😴" },
+      { en: "cry", es: "llorar", emoji: "😭" },
+      { en: "laugh", es: "reír", emoji: "😂" },
+      { en: "paint", es: "pintar", emoji: "🎨" },
+      { en: "cook", es: "cocinar", emoji: "🍳" },
+      { en: "climb", es: "escalar", emoji: "🧗" },
+      { en: "surf", es: "surfear", emoji: "🏄" },
+      { en: "ski", es: "esquiar", emoji: "⛷️" },
+    ],
+  },
+  ropa: {
+    nombre: "Clothes", es: "Ropa", emoji: "👕", color: "color-morado",
+    palabras: [
+      { en: "shirt", es: "camisa", emoji: "👕" },
+      { en: "pants", es: "pantalón", emoji: "👖" },
+      { en: "dress", es: "vestido", emoji: "👗" },
+      { en: "shoes", es: "zapatos", emoji: "👟" },
+      { en: "hat", es: "sombrero", emoji: "🎩" },
+      { en: "cap", es: "gorra", emoji: "🧢" },
+      { en: "socks", es: "medias", emoji: "🧦" },
+      { en: "coat", es: "abrigo", emoji: "🧥" },
+      { en: "scarf", es: "bufanda", emoji: "🧣" },
+      { en: "gloves", es: "guantes", emoji: "🧤" },
+      { en: "boots", es: "botas", emoji: "🥾" },
+      { en: "glasses", es: "lentes", emoji: "👓" },
+      { en: "swimsuit", es: "traje de baño", emoji: "🩱" },
+    ],
+  },
 };
 
+// Palabras de todos los temas, cada una sabe de qué tema viene.
+const TODAS = Object.entries(TEMAS).flatMap(([tema, t]) => t.palabras.map((p) => ({ ...p, tema })));
+
 // Estado de la partida.
-let temaActual = null;
+let temaActual = null; // id del tema, o "desafio"
+let factorTiempo = 1;
 let ronda = [];
 let indice = 0;
 let puntos = 0;
@@ -248,19 +300,58 @@ function pintarTemas() {
     boton.addEventListener("click", () => empezarPartida(id));
     temasEl.appendChild(boton);
   });
+
+  // El desafío se abre con estrellas en varios temas.
+  const conEstrellas = Object.keys(TEMAS).filter((id) => guardado[id] > 0).length;
+  const abierto = conEstrellas >= DESAFIO.temasParaAbrir;
+  const desafio = document.createElement("button");
+  desafio.className = `tema tema-desafio ${DESAFIO.color}`;
+  desafio.disabled = !abierto;
+  const estrellas = guardado.desafio || 0;
+  const faltan = DESAFIO.temasParaAbrir - conEstrellas;
+  desafio.innerHTML = `
+    <span class="emoji">${abierto ? DESAFIO.emoji : "🔒"}</span>
+    <span class="en">${DESAFIO.nombre}</span>
+    <span class="es">${DESAFIO.es}: palabras de todos los temas, más deletreo y menos tiempo</span>
+    <span class="estrellas-tema">${
+      !abierto
+        ? `Gana estrellas en ${faltan} ${faltan === 1 ? "tema más" : "temas más"} para abrirlo`
+        : estrellas ? Aprende.textoEstrellas(estrellas) : "¡Abierto!"
+    }</span>`;
+  desafio.addEventListener("click", () => empezarPartida("desafio"));
+  temasEl.appendChild(desafio);
+}
+
+// Elige las 10 palabras del desafío: las del final (deletreo) deben ser largas.
+function rondaDesafio() {
+  const sec = DESAFIO.secuencia;
+  const nDeletreo = sec.filter((tipo) => tipo === "deletrea").length;
+  const largas = mezclar(TODAS.filter((p) => p.en.length >= DESAFIO.largoDeletreo)).slice(0, nDeletreo);
+  const resto = mezclar(TODAS.filter((p) => !largas.includes(p))).slice(0, sec.length - nDeletreo);
+  return [...resto, ...largas].map((item, i) => {
+    // Las trampas salen del mismo tema: así se parecen más (colores con colores…).
+    const mismoTema = TEMAS[item.tema].palabras.filter((p) => p.en !== item.en);
+    return { tipo: sec[i], item, opciones: mezclar([item, ...mezclar(mismoTema).slice(0, 3)]) };
+  });
 }
 
 // ---- Partida ----
 
 function empezarPartida(tema) {
   temaActual = tema;
-  const palabras = TEMAS[tema].palabras;
-  ronda = mezclar(palabras)
-    .slice(0, TOTAL_PREGUNTAS)
-    .map((item, i) => {
-      const distractores = mezclar(palabras.filter((p) => p.en !== item.en)).slice(0, 3);
-      return { tipo: SECUENCIA[i], item, opciones: mezclar([item, ...distractores]) };
-    });
+  if (tema === "desafio") {
+    factorTiempo = DESAFIO.factorTiempo;
+    ronda = rondaDesafio();
+  } else {
+    factorTiempo = 1;
+    const palabras = TEMAS[tema].palabras;
+    ronda = mezclar(palabras)
+      .slice(0, TOTAL_PREGUNTAS)
+      .map((item, i) => {
+        const distractores = mezclar(palabras.filter((p) => p.en !== item.en)).slice(0, 3);
+        return { tipo: SECUENCIA[i], item, opciones: mezclar([item, ...distractores]) };
+      });
+  }
   indice = 0;
   puntos = 0;
   aciertos = 0;
@@ -316,7 +407,7 @@ function mostrarPregunta() {
   if (oir) oir.addEventListener("click", () => hablar(item.en));
 
   const segundos = tipo === "deletrea" ? tiempoDeletreo(item.en) : TIEMPO[tipo];
-  iniciarTemporizador(segundos);
+  iniciarTemporizador(Math.round(segundos * factorTiempo));
 }
 
 function crearOpcion(op, i) {
@@ -484,12 +575,13 @@ function terminarPartida() {
   else if (estrellas === 2) felicitacion = "Great job! ¡Muy bien, ya sabes muchas palabras!";
   else if (estrellas === 1) felicitacion = "Good try! ¡Buen intento, cada vez mejor!";
 
-  const tema = TEMAS[temaActual];
+  const tema = temaActual === "desafio" ? DESAFIO : TEMAS[temaActual];
   document.getElementById("fin-estrellas").textContent = Aprende.textoEstrellas(estrellas);
   document.getElementById("fin-felicitacion").textContent = felicitacion;
   document.getElementById("fin-resumen").textContent = `Acertaste ${aciertos} de ${TOTAL_PREGUNTAS}`;
   document.getElementById("fin-puntos").textContent = `${puntos} puntos`;
-  document.getElementById("fin-nivel").textContent = `Tema: ${tema.nombre} (${tema.es})`;
+  document.getElementById("fin-nivel").textContent =
+    temaActual === "desafio" ? `🏆 ${tema.nombre} (${tema.es})` : `Tema: ${tema.nombre} (${tema.es})`;
   Aprende.finDePartida("ingles", temaActual, estrellas);
 
   // Repaso: todas las palabras de la partida, se pueden tocar para oírlas.

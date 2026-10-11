@@ -1086,7 +1086,7 @@ footer {
 
 .temas {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 14px;
   margin-top: 20px;
 }
@@ -1110,6 +1110,9 @@ footer {
 .tema .en { font-size: 1.25rem; font-weight: bold; }
 .tema .es { font-size: 0.9rem; opacity: 0.95; }
 .tema .estrellas-tema { margin-top: 6px; font-size: 0.85rem; letter-spacing: 1px; }
+.tema-desafio { grid-column: 1 / -1; }
+.tema-desafio .es { max-width: 34ch; text-align: center; }
+.tema:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
 .temporizador {
   height: 8px;
