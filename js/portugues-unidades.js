@@ -42,7 +42,7 @@ const UNIDADES_PT = [
       { pt: "dez", es: "diez", texto: "10" },
     ],
     frases: [
-      { pt: "Eu tenho nove anos.", es: "Tengo nueve años." },
+      { pt: "A Capi tem quatro patas.", es: "Capi tiene cuatro patas." },
       { pt: "Eu tenho dois gatos.", es: "Tengo dos gatos." },
     ],
   },
@@ -156,11 +156,11 @@ const UNIDADES_PT = [
     conversa: [
       {
         capi: "Oi! Eu sou a Capi. Como você se chama?", es: "¡Hola! Soy Capi. ¿Cómo te llamas?",
-        opciones: [{ pt: "Eu me chamo Ana Isabella.", ok: true }, { pt: "Eu tenho nove anos." }, { pt: "Boa noite!" }],
+        opciones: [{ pt: "Eu me chamo Ana Isabella.", ok: true }, { pt: "Sim, um pouquinho!" }, { pt: "Boa noite!" }],
       },
       {
-        capi: "Que nome bonito! Quantos anos você tem?", es: "¡Qué nombre tan bonito! ¿Cuántos años tienes?",
-        opciones: [{ pt: "Eu tenho nove anos.", ok: true }, { pt: "Eu gosto de gatos." }, { pt: "Obrigada!" }],
+        capi: "Que nome bonito! Você fala português?", es: "¡Qué nombre tan bonito! ¿Hablas portugués?",
+        opciones: [{ pt: "Sim, um pouquinho!", ok: true }, { pt: "Eu gosto de gatos." }, { pt: "Obrigada!" }],
       },
       {
         capi: "Legal! Do que você gosta?", es: "¡Genial! ¿Qué te gusta?",

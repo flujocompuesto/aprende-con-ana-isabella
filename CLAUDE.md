@@ -38,8 +38,9 @@ con IA.** Ivan lo pidió explícitamente. Reglas:
 
 ## Reglas y convenciones
 - Público siempre: **nunca** incluir datos personales sensibles, fotos,
-  ubicación, escuela, apellidos completos, ni nada que identifique a Ana
-  Isabella más allá de su nombre de pila.
+  ubicación, escuela, apellidos completos, su edad exacta, ni nada que
+  identifique a Ana Isabella más allá de su nombre de pila. (En oct-2026 se
+  quitó "Eu tenho nove anos" del curso de portugués por eso.)
 - Contenido y comentarios en español, con lenguaje simple y cercano para
   una niña de 8 a 10 años.
 - Cada juego/lección es autocontenido: una página (en `juegos/` o
