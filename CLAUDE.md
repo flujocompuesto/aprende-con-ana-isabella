@@ -105,6 +105,21 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
   comparar cuál es mayor) con pizzas (círculos) y barras SVG divididas en
   partes iguales. Vive en `juegos/fracciones-divertidas.html` +
   `js/fracciones.js`. Puntos y pantalla final con estrellas.
+- **Nivel Experto** (oct-2026) en Banderas, Números, Lectura, Memoria y
+  Fracciones: un cuarto botón que se abre con al menos 1 ⭐ en Difícil
+  (`data-requiere="dificil"` dentro del contenedor con `data-juego`;
+  `Aprende.actualizarCandados()` de `comun.js` los abre o cierra al cargar y
+  al terminar cada partida). Cada juego da hasta 12 ⭐.
+  - Banderas: banderas que se parecen (`GRUPOS_PARECIDOS`), y las trampas
+    salen del mismo grupo.
+  - Números: sumas y restas de 3 cifras, multiplicaciones 2×1, divisiones
+    hasta 100 y "el número que falta" (`□ + 27 = 85`).
+  - Lectura: palabras largas (con Ñ) y un botón de pista que pone la primera
+    letra.
+  - Memoria: 12 pares en 6 columnas con perritos "gemelos" (`GEMELOS`: misma
+    forma, otro color) que confunden.
+  - Fracciones: fracciones equivalentes y sumas con el mismo denominador (la
+    trampa común `a+b / 2·den` siempre está entre las opciones).
 - Nota CSS importante: se agregó una regla global `[hidden]{display:none
   !important}` porque una clase con `display` (ej. `.acciones`) le ganaba al
   atributo `hidden` y dejaba visible un botón que debía ocultarse.
@@ -123,7 +138,10 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
 - "Aprende ajedrez" (`juegos/ajedrez.html`): camino de 10 capítulos con el
   Capi, la capibara (meta del juego, torre, alfil, dama, rey, caballo, peón, jaque
   y mate, cómo empezar —Italiana guiada con enroque y Mate del Pastor— y una
-  partida contra la compu). Progreso por capítulo, máximo 30 ⭐.
+  partida contra la compu), más 3 expertos que se abren con `requiere` (el id
+  del capítulo que hay que terminar): mates difíciles (escalera, árabe,
+  Boden…), mate en 2 (paso `mate2`) y una partida contra la compu experta.
+  Progreso por capítulo, máximo 39 ⭐.
   - `js/ajedrez-motor.js`: reglas completas (jaque, enroque, al paso,
     coronación, mate/ahogado). Se valida con perft:
     `node -e 'const A=require("./js/ajedrez-motor.js");console.log(A.perft(A.desdeFEN(A.INICIAL),4))'`
@@ -131,8 +149,13 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
   - `js/ajedrez.js`: contenido (`CAPITULOS`, cada paso tiene un `tipo`:
     explica, conoce, explora, estrellas, pregunta, escapa, mate, jugada, guion,
     partida) y la compu (`elegirJugada`, heurística de 1 jugada con azar; la
-    "tranquila" a veces no revisa si deja piezas colgando). Los mates en 1 se
-    validan con el motor, no con una respuesta fija.
+    "tranquila" a veces no revisa si deja piezas colgando). La **experta**
+    (`elegirJugadaExperta`) mira 2 jugadas (la suya y la mejor respuesta) y
+    al final la mejor captura que queda; ~30 ms por jugada y le gana casi
+    siempre a la "lista". Los mates en 1 y en 2 se validan con el motor, no
+    con una respuesta fija: en `mate2` sirve cualquier jugada tras la que
+    toda defensa deja un mate en 1, y la compu defiende con la que deja
+    menos mates. Al agregar un problema, comprobar que no tenga mate en 1.
 - "Robótica" (`juegos/robotica.html`), con Capi ingeniera
   (`img/capibara-ingeniera.svg`, con casco). Dos talleres de 10 niveles
   (progreso `robotica` → `robot-N` y `circuito-N`, máximo 60 ⭐):

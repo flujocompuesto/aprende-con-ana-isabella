@@ -145,6 +145,35 @@ const CAPITULOS = [
       { tipo: "partida" },
     ],
   },
+  // ---- Nivel experto: se abren al terminar el capítulo que piden ----
+  {
+    id: "mates", emoji: "🎯", titulo: "Mates difíciles", requiere: "jaque",
+    pasos: [
+      { tipo: "explica", fen: "7k/R7/8/8/8/8/8/1R4K1 w - - 0 1", texto: "Ya sabes dar jaque mate. Ahora vienen <strong>mates famosos</strong> que usan los campeones desde hace siglos. A veces la jugada ganadora no es la más obvia: antes de mover, <strong>revisa todos los jaques</strong> que puedes dar." },
+      { tipo: "mate", fen: "6k1/5ppp/8/q7/8/8/3B1PPP/4R1K1 w - - 0 1", texto: "¡La dama negra está suelta! Pero hay algo <strong>mejor</strong> que comérsela… Da jaque mate en 1." },
+      { tipo: "mate", fen: "7k/R7/8/8/8/8/8/1R4K1 w - - 0 1", texto: "<strong>Mate de la escalera</strong>: una torre cierra una fila y la otra da el mate. ¡Encuéntralo!" },
+      { tipo: "mate", fen: "7k/8/5N2/8/8/8/8/6RK w - - 0 1", texto: "El <strong>mate árabe</strong> tiene más de mil años: el caballo y la torre trabajan juntos. ¡Da jaque mate!" },
+      { tipo: "mate", fen: "6k1/5p1p/5PpQ/8/8/8/8/6K1 w - - 0 1", texto: "La dama necesita una <strong>amiga</strong> que la cuide… ¡un peón! Da jaque mate." },
+      { tipo: "mate", fen: "2kr4/3p4/8/8/5B2/8/4B3/6K1 w - - 0 1", texto: "<strong>Mate de Boden</strong>: dos alfiles que se cruzan como tijeras ✂️. Uno ya está en su lugar… ¿dónde va el otro?" },
+    ],
+  },
+  {
+    id: "mate2", emoji: "🧠", titulo: "Mate en 2", requiere: "mates",
+    pasos: [
+      { tipo: "explica", fen: "7k/8/8/8/8/8/R7/1R4K1 w - - 0 1", texto: "En el <strong>mate en 2</strong> haces una jugada, la compu se defiende como pueda, y después das el mate. La pregunta es: ¿qué jugada deja al rey <strong>sin salida, haga lo que haga</strong>?" },
+      { tipo: "mate2", fen: "7k/8/8/8/8/8/R7/1R4K1 w - - 0 1", texto: "Mate en 2 con las dos torres: la primera <strong>encierra</strong> al rey y la segunda da el mate." },
+      { tipo: "mate2", fen: "2r3k1/5ppp/8/8/8/8/3Q1PPP/3R2K1 w - - 0 1", texto: "¡Un truco de campeona! A veces hay que <strong>regalar la dama</strong> para dar mate. La torre negra no puede cuidar todo a la vez…" },
+      { tipo: "mate2", fen: "5r1k/6pp/7N/3Q4/8/8/8/6K1 w - - 0 1", texto: "El <strong>mate ahogado</strong>: el rey negro queda encerrado por sus propias piezas. Primero un sacrificio, después el caballo… 🐴" },
+      { tipo: "mate2", fen: "4kb1r/p2n1ppp/4q3/4p1B1/4P3/1Q6/PPP2PPP/2KR4 w k - 1 18", texto: "El mate más famoso de la historia: Paul Morphy lo dio en 1858 jugando en un palco de la <strong>ópera de París</strong> 🎭. ¡Regala la dama y da mate en 2!" },
+    ],
+  },
+  {
+    id: "experta", emoji: "🦉", titulo: "Reto: la compu experta", requiere: "partida",
+    pasos: [
+      { tipo: "explica", fen: A.INICIAL, texto: "El último reto: la <strong>compu experta</strong>. Piensa <strong>2 jugadas adelante</strong>: casi nunca regala piezas y aprovecha las que tú dejes sueltas. Antes de cada jugada pregúntate: <em>¿qué me puede comer?</em> Ganarle vale ⭐⭐⭐ y empatar ⭐⭐." },
+      { tipo: "partida", rival: "experta" },
+    ],
+  },
 ];
 
 // ---- Estado ----
@@ -207,23 +236,37 @@ function buscarMovimiento(posicion, clave) {
 
 function pintarMapa() {
   const guardado = Aprende.progreso().ajedrez || {};
-  const sugerido = CAPITULOS.findIndex((c) => !guardado[c.id]);
+  // Los capítulos expertos se abren al terminar el que piden.
+  const abierto = (cap) => !cap.requiere || (guardado[cap.requiere] || 0) > 0;
+  const sugerido = CAPITULOS.findIndex((c) => !guardado[c.id] && abierto(c));
   capitulosEl.innerHTML = "";
   CAPITULOS.forEach((cap, i) => {
     const boton = document.createElement("button");
     boton.className = "capitulo-card" + (i === sugerido ? " sugerido" : "");
+    boton.disabled = !abierto(cap);
     const estrellas = guardado[cap.id] || 0;
+    const previo = cap.requiere && CAPITULOS.find((c) => c.id === cap.requiere);
+    const estado = !abierto(cap)
+      ? `🔒 Termina «${previo.titulo}»`
+      : estrellas ? Aprende.textoEstrellas(estrellas) : i === sugerido ? "👉 ¡Sigue aquí!" : "&nbsp;";
     boton.innerHTML = `
       <span class="numero">${i + 1}</span>
       <span class="emoji">${cap.emoji}</span>
       <span class="titulo">${cap.titulo}</span>
-      <span class="estrellas-cap">${estrellas ? Aprende.textoEstrellas(estrellas) : i === sugerido ? "👉 ¡Sigue aquí!" : "&nbsp;"}</span>`;
+      <span class="estrellas-cap">${estado}</span>`;
     boton.addEventListener("click", () => abrirCapitulo(i));
     capitulosEl.appendChild(boton);
   });
 }
 
 function abrirCapitulo(i) {
+  // Un capítulo experto cerrado (por ejemplo, desde "Siguiente capítulo") lleva al mapa.
+  const req = CAPITULOS[i].requiere;
+  if (req && !((Aprende.progreso().ajedrez || {})[req] > 0)) {
+    pintarMapa();
+    mostrarPantalla(pantallaMapa);
+    return;
+  }
   capIndice = i;
   pasoIndice = 0;
   erroresPaso = [];
@@ -422,6 +465,71 @@ function minimoMovimientos(inicio, estrellas) {
   return Infinity;
 }
 
+// Jugadas de las blancas que dan jaque mate ya mismo.
+const matesEn1 = (p) => A.todosLegales(p, "w").filter((x) => A.situacion(A.mover(p, x), "b") === "mate");
+
+// ¿La jugada m fuerza el mate en 2? Sí, si toda defensa negra deja un mate en 1.
+function fuerzaMateEn2(p, m) {
+  const n = A.mover(p, m);
+  const defensas = A.todosLegales(n, "b");
+  return defensas.length > 0 && defensas.every((d) => matesEn1(A.mover(n, d)).length > 0);
+}
+
+// Pide dar jaque mate en 1 desde la posición actual. Si la jugada no es
+// mate, se ve un momento y se devuelve; con 2 fallos aparece la pista.
+// Devuelve la función que muestra la pista.
+function pedirMate(textoExito = "¡JAQUE MATE! 🎉 El rey negro no tiene escape.") {
+  let fallos = 0;
+  const darPista = () => {
+    const m = matesEn1(pos)[0];
+    if (!m) return;
+    marcas = new Set([m.desde]);
+    pintarTablero();
+    mensaje(`💡 Pista: la jugada ganadora es con ${INFO_PIEZAS[A.tipoDe(m.pieza)].articulo}. ¡Está marcada!`);
+  };
+  alMover = (m) => {
+    const nueva = A.mover(pos, m);
+    const resultado = A.situacion(nueva, "b");
+    if (resultado === "mate") {
+      pos = nueva;
+      ultimo = { desde: m.desde, hasta: m.hasta };
+      marcas = new Set();
+      alMover = null;
+      pintarTablero();
+      mensaje(textoExito, "exito");
+      Aprende.sonido.victoria();
+      Aprende.confeti(40);
+      mostrarSiguiente();
+      return;
+    }
+    // Mostramos la jugada un momento y la devolvemos.
+    fallos++;
+    contarError();
+    const antes = pos;
+    pos = nueva;
+    ultimo = { desde: m.desde, hasta: m.hasta };
+    bloqueado = true;
+    pintarTablero();
+    Aprende.sonido.error();
+    mensaje(
+      resultado === "jaque"
+        ? "Es jaque, pero el rey todavía puede escapar. ¡Busca otra jugada!"
+        : "Eso no es jaque mate. ¡Intenta otra!",
+      "error"
+    );
+    const s = sesion;
+    setTimeout(() => {
+      if (s !== sesion) return;
+      pos = antes;
+      ultimo = null;
+      bloqueado = false;
+      if (fallos >= 2) darPista();
+      pintarTablero();
+    }, 1300);
+  };
+  return darPista;
+}
+
 // ---- Tipos de paso ----
 
 const PASOS = {
@@ -560,55 +668,73 @@ const PASOS = {
   },
 
   mate() {
+    const darPista = pedirMate();
+    agregarBoton("💡 Pista", "pista", () => darPista());
+  },
+
+  // Mate en 2: una jugada que deja al rey sin salida haga lo que haga, la
+  // defensa de la compu, y el mate. Se valida con el motor, no con una
+  // respuesta fija: sirve cualquier jugada que fuerce el mate.
+  mate2() {
     let fallos = 0;
-    alMover = (m) => {
-      const nueva = A.mover(pos, m);
-      const resultado = A.situacion(nueva, "b");
-      if (resultado === "mate") {
-        pos = nueva;
-        ultimo = { desde: m.desde, hasta: m.hasta };
-        marcas = new Set();
-        alMover = null;
-        pintarTablero();
-        mensaje("¡JAQUE MATE! 🎉 El rey negro no tiene escape.", "exito");
-        Aprende.sonido.victoria();
-        Aprende.confeti(40);
-        mostrarSiguiente();
-        return;
-      }
-      // Mostramos la jugada un momento y la devolvemos.
-      fallos++;
-      contarError();
-      const antes = pos;
-      pos = nueva;
-      ultimo = { desde: m.desde, hasta: m.hasta };
-      bloqueado = true;
-      pintarTablero();
-      Aprende.sonido.error();
-      mensaje(
-        resultado === "jaque"
-          ? "Es jaque, pero el rey todavía puede escapar. ¡Busca otra jugada!"
-          : "Eso no es jaque mate. ¡Intenta otra!",
-        "error"
-      );
-      const s = sesion;
-      setTimeout(() => {
-        if (s !== sesion) return;
-        pos = antes;
-        ultimo = null;
-        bloqueado = false;
-        if (fallos >= 2) darPista();
-        pintarTablero();
-      }, 1300);
-    };
-    const darPista = () => {
-      const m = A.todosLegales(pos, "w").find((x) => A.situacion(A.mover(pos, x), "b") === "mate");
+    let darPista = () => {
+      const m = A.todosLegales(pos, "w").find((x) => fuerzaMateEn2(pos, x));
       if (!m) return;
       marcas = new Set([m.desde]);
       pintarTablero();
-      mensaje(`💡 Pista: la jugada ganadora es con ${INFO_PIEZAS[A.tipoDe(m.pieza)].articulo}. ¡Está marcada!`);
+      mensaje(`💡 Pista: la primera jugada es con ${INFO_PIEZAS[A.tipoDe(m.pieza)].articulo}. ¡Está marcada!`);
     };
-    agregarBoton("💡 Pista", "pista", darPista);
+    agregarBoton("💡 Pista", "pista", () => darPista());
+    mensaje("Jugada 1 de 2. ¡Piensa antes de mover! 🤔");
+
+    alMover = (m) => {
+      const s = sesion;
+      if (fuerzaMateEn2(pos, m)) {
+        aplicar(m); // ahora le toca a la compu
+        marcas = new Set();
+        alMover = null;
+        bloqueado = true;
+        Aprende.sonido.acierto();
+        mensaje("¡Buena jugada! ✅ La compu se defiende…", "exito");
+        setTimeout(() => {
+          if (s !== sesion) return;
+          // La compu elige la defensa que deja menos mates.
+          const defensas = A.todosLegales(pos, "b");
+          const cuantos = (d) => matesEn1(A.mover(pos, d)).length;
+          aplicar(defensas.reduce((a, b) => (cuantos(b) < cuantos(a) ? b : a)));
+          bloqueado = false;
+          mensaje("Jugada 2 de 2: ¡ahora da jaque mate!");
+          darPista = pedirMate("¡JAQUE MATE EN 2! 🏆 ¡Pensaste como una campeona!");
+        }, 1000);
+        return;
+      }
+      // No alcanza: mostramos la jugada y cómo se salva la compu, y volvemos.
+      fallos++;
+      contarError();
+      const antes = pos;
+      aplicar(m);
+      bloqueado = true;
+      Aprende.sonido.error();
+      const salvada = A.todosLegales(pos, "b").find((d) => !matesEn1(A.mover(pos, d)).length);
+      mensaje(
+        salvada
+          ? "Mira cómo se salva la compu con esa jugada… ¡Busca otra!"
+          : "¡Cuidado! Así el rey negro no está en jaque pero no puede mover: eso es <strong>ahogado</strong> (empate).",
+        "error"
+      );
+      setTimeout(() => {
+        if (s !== sesion) return;
+        if (salvada) aplicar(salvada);
+        setTimeout(() => {
+          if (s !== sesion) return;
+          pos = antes;
+          ultimo = null;
+          bloqueado = false;
+          if (fallos >= 2) darPista();
+          pintarTablero();
+        }, 1300);
+      }, 800);
+    };
   },
 
   jugada(paso) {
@@ -670,15 +796,19 @@ const PASOS = {
     };
   },
 
-  partida() {
-    elegirRival();
+  partida(paso) {
+    rivalFijo = paso.rival || null;
+    if (rivalFijo) empezarPartida(rivalFijo);
+    else elegirRival();
   },
 };
 
 // ---- Partida contra la compu ----
 
 const VALOR = { P: 1, N: 3, B: 3, R: 5, Q: 9, K: 0 };
-let compuLista = false;
+const RIVALES = { tranquila: "🐢 compu tranquila", lista: "🦊 compu lista", experta: "🦉 compu experta" };
+let rival = "tranquila";
+let rivalFijo = null; // el capítulo del reto juega siempre contra la experta
 let historial = [];
 let capturadas = { w: [], b: [] };
 let jugadasHechas = 0;
@@ -726,19 +856,87 @@ function elegirJugada(p, color, lista) {
     if (m.captura) puntos += VALOR[A.tipoDe(m.captura)] * 10;
     if (m.promocion) puntos += 80;
     if (cuidadosa) puntos -= riesgo(nueva, color) * 9;
-    const filaDesde = Math.floor(m.desde / 8);
-    if ((tipo === "N" || tipo === "B") && (filaDesde === 0 || filaDesde === 7)) {
-      puntos += 3;
-      // Mejor si la pieza sale mirando al centro (columnas c-f, filas 3 a 6).
-      const fila = Math.floor(m.hasta / 8);
-      const columna = m.hasta % 8;
-      if (columna >= 2 && columna <= 5 && fila >= 2 && fila <= 5) puntos += 3;
-    }
-    if (m.enroque) puntos += 6;
-    if (tipo === "P" && ["d4", "e4", "d5", "e5"].includes(A.nombreCasilla(m.hasta))) puntos += 3;
-    if (tipo === "Q" && jugadasHechas < 10) puntos -= 3;
-    if (tipo === "K" && !m.enroque && jugadasHechas < 30) puntos -= 4;
+    puntos += bonoEstilo(m);
     puntos += Math.random() * (lista ? 3 : 10);
+    if (puntos > mejorPuntos) {
+      mejorPuntos = puntos;
+      mejor = m;
+    }
+  }
+  return mejor;
+}
+
+// Las reglas de oro, en puntos: sacar caballos y alfiles al centro, enrocar,
+// peones al centro, no sacar la dama ni pasear al rey muy pronto.
+function bonoEstilo(m) {
+  const tipo = A.tipoDe(m.pieza);
+  let puntos = 0;
+  const filaDesde = Math.floor(m.desde / 8);
+  if ((tipo === "N" || tipo === "B") && (filaDesde === 0 || filaDesde === 7)) {
+    puntos += 3;
+    // Mejor si la pieza sale mirando al centro (columnas c-f, filas 3 a 6).
+    const fila = Math.floor(m.hasta / 8);
+    const columna = m.hasta % 8;
+    if (columna >= 2 && columna <= 5 && fila >= 2 && fila <= 5) puntos += 3;
+  }
+  if (m.enroque) puntos += 6;
+  if (tipo === "P" && ["d4", "e4", "d5", "e5"].includes(A.nombreCasilla(m.hasta))) puntos += 3;
+  if (tipo === "Q" && jugadasHechas < 10) puntos -= 3;
+  if (tipo === "K" && !m.enroque && jugadasHechas < 30) puntos -= 4;
+  return puntos;
+}
+
+// ---- La compu experta: piensa 2 jugadas ----
+// Prueba cada jugada suya, mira la mejor respuesta de la rival y, al final,
+// si ella todavía puede comer algo gratis. Así casi nunca regala piezas y
+// aprovecha las que le dejan sueltas. Cuenta en peones (VALOR).
+
+// Material: positivo si las blancas tienen más.
+function materialBlancas(p) {
+  let s = 0;
+  for (const x of p.tablero) if (x) s += (A.colorDe(x) === "w" ? 1 : -1) * VALOR[A.tipoDe(x)];
+  return s;
+}
+
+// Cuánto vale la posición para "color" cuando le toca mover, con sus jugadas
+// legales ya calculadas: mate, ahogado, o material + su mejor captura.
+function valorConTurno(p, color, jugadas) {
+  if (!jugadas.length) return A.enJaque(p, color) ? -10000 : 0;
+  const signo = color === "w" ? 1 : -1;
+  const rival = color === "w" ? "b" : "w";
+  let captura = 0;
+  for (const m of jugadas) {
+    if (!m.captura) continue;
+    let gana = VALOR[A.tipoDe(m.captura)];
+    // Si la pieza que come queda atacada, contamos que la pierde.
+    if (A.atacada(A.mover(p, m), m.hasta, rival)) gana -= VALOR[A.tipoDe(m.pieza)];
+    if (gana > captura) captura = gana;
+  }
+  return signo * materialBlancas(p) + captura;
+}
+
+function elegirJugadaExperta(p, color) {
+  const rival = color === "w" ? "b" : "w";
+  let mejor = null;
+  let mejorPuntos = -Infinity;
+  for (const m of A.todosLegales(p, color)) {
+    if (m.promocion && A.tipoDe(m.promocion) !== "Q") continue;
+    const n1 = A.mover(p, m);
+    const respuestas = A.todosLegales(n1, rival);
+    let puntos;
+    if (!respuestas.length) {
+      puntos = A.enJaque(n1, rival) ? 100000 : 0; // mate, o tablas por ahogado
+    } else {
+      // La rival elige la respuesta que más le conviene.
+      puntos = Infinity;
+      for (const r of respuestas) {
+        if (r.promocion && A.tipoDe(r.promocion) !== "Q") continue;
+        const n2 = A.mover(n1, r);
+        const v = valorConTurno(n2, color, A.todosLegales(n2, color));
+        if (v < puntos) puntos = v;
+      }
+    }
+    puntos += bonoEstilo(m) * 0.05 + Math.random() * 0.2;
     if (puntos > mejorPuntos) {
       mejorPuntos = puntos;
       mejor = m;
@@ -753,20 +951,20 @@ function elegirRival() {
   panelEl.innerHTML = '<div class="opciones" id="rivales"></div>';
   const rivales = document.getElementById("rivales");
   [
-    { t: "🐢 Compu tranquila (para empezar)", lista: false },
-    { t: "🦊 Compu lista (más difícil)", lista: true },
+    { t: "🐢 Compu tranquila (para empezar)", rival: "tranquila" },
+    { t: "🦊 Compu lista (más difícil)", rival: "lista" },
   ].forEach((r) => {
     const boton = document.createElement("button");
     boton.className = "opcion";
     boton.textContent = r.t;
-    boton.addEventListener("click", () => empezarPartida(r.lista));
+    boton.addEventListener("click", () => empezarPartida(r.rival));
     rivales.appendChild(boton);
   });
 }
 
-function empezarPartida(lista) {
+function empezarPartida(quien) {
   sesion++;
-  compuLista = lista;
+  rival = quien;
   pos = A.desdeFEN(A.INICIAL);
   historial = [];
   capturadas = { w: [], b: [] };
@@ -774,7 +972,7 @@ function empezarPartida(lista) {
   ultimo = null;
   marcas = new Set();
   bloqueado = false;
-  textoEl.innerHTML = `Juegas con las <strong>blancas</strong> contra la ${lista ? "🦊 compu lista" : "🐢 compu tranquila"}. ¡Buena suerte!`;
+  textoEl.innerHTML = `Juegas con las <strong>blancas</strong> contra la ${RIVALES[rival]}. ¡Buena suerte!`;
   panelEl.innerHTML = `
     <p id="estado-partida" class="estado-partida"></p>
     <p class="capturadas">Comiste: <span id="comidas-blancas"></span></p>
@@ -787,7 +985,8 @@ function empezarPartida(lista) {
     bloqueado = false;
     accionesEl.innerHTML = "";
     mensaje("");
-    elegirRival();
+    if (rivalFijo) empezarPartida(rivalFijo);
+    else elegirRival();
     pintarTablero();
   });
   alMover = jugarBlancas;
@@ -823,7 +1022,7 @@ function jugarBlancas(m) {
   const s = sesion;
   setTimeout(() => {
     if (s !== sesion) return;
-    const respuesta = elegirJugada(pos, "b", compuLista);
+    const respuesta = rival === "experta" ? elegirJugadaExperta(pos, "b") : elegirJugada(pos, "b", rival === "lista");
     if (respuesta.captura) capturadas.b.push(respuesta.captura);
     aplicar(respuesta);
     jugadasHechas++;
@@ -840,20 +1039,20 @@ function revisarFin() {
   let estrellas;
   let texto;
   if (sit === "mate" && pos.turno === "b") {
-    estrellas = compuLista ? 3 : 2;
-    texto = "¡JAQUE MATE! 🏆 ¡Le ganaste a la compu!";
+    estrellas = rival === "tranquila" ? 2 : 3;
+    texto = rival === "experta" ? "¡JAQUE MATE! 🏆🦉 ¡Le ganaste a la compu experta!" : "¡JAQUE MATE! 🏆 ¡Le ganaste a la compu!";
   } else if (sit === "mate") {
     estrellas = 0;
     texto = "Jaque mate… esta vez ganó la compu. ¡Cada partida te hace mejor, inténtalo otra vez!";
   } else {
-    estrellas = 1;
+    estrellas = rival === "experta" ? 2 : 1;
     texto = sit === "ahogado"
       ? "¡Tablas por ahogado! El rey no estaba en jaque, pero no tenía ninguna jugada."
       : "¡Tablas! Solo quedaron los dos reyes.";
   }
   actualizarEstado(texto);
   const s = sesion;
-  setTimeout(() => s === sesion && terminarCapitulo(estrellas, texto, compuLista ? "Contra la 🦊 compu lista" : "Contra la 🐢 compu tranquila"), 1800);
+  setTimeout(() => s === sesion && terminarCapitulo(estrellas, texto, `Contra la ${RIVALES[rival]}`), 1800);
   return true;
 }
 

@@ -4,7 +4,8 @@ Sitio de juegos educativos hecho a mano por su papá para una niña de 8 a 10
 años: programación, robótica, banderas, matemáticas, lectura, memoria,
 fracciones, inglés, portugués y ajedrez.
 Cada juego tiene niveles, sonidos, celebraciones y estrellas que se guardan
-en el navegador.
+en el navegador. Los niveles más difíciles se abren al ganar estrellas en los
+anteriores.
 
 ## Cómo verlo
 
@@ -28,19 +29,21 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   llegue a la estrella esquivando rocas. 8 niveles que se desbloquean en
   orden (los últimos son laberintos); 3 estrellas si usas el camino más corto.
 - **Banderas del mundo** — adivina el país por su bandera, con niveles
-  fácil, intermedio y difícil. Las banderas se cargan desde flagcdn.com.
+  fácil, intermedio, difícil y experto (banderas que se parecen). Las banderas se cargan desde flagcdn.com.
 - **Números mágicos** — resuelve operaciones con un teclado interactivo,
   con objetos para contar en el nivel fácil, rachas y estrellas. Niveles
-  fácil (sumas/restas), intermedio (+/-/×) y difícil (+/-/×/÷).
+  fácil (sumas/restas), intermedio (+/-/×), difícil (+/-/×/÷) y experto
+  (números de 3 cifras y "el número que falta").
 - **Memoria de perritos** — encuentra las parejas de perritos iguales, con
-  ilustraciones SVG originales. Niveles fácil (3 pares), intermedio (6 pares)
-  y difícil (10 pares).
+  ilustraciones SVG originales. Niveles fácil (3 pares), intermedio (6 pares),
+  difícil (10 pares) y experto (12 pares con perritos gemelos).
 - **Aventura de lectura** — ordena las letras revueltas para formar la palabra,
   con una pista de emoji. Niveles fácil (palabras cortas), intermedio
-  (medianas) y difícil (largas).
+  (medianas), difícil (largas) y experto (muy largas, con Ñ).
 - **Fracciones divertidas** — aprende fracciones de forma visual: identifica la
   fracción coloreada, colorea una fracción tocando las partes, y compara cuál
-  es mayor, con pizzas y barras. Niveles fácil, intermedio y difícil.
+  es mayor, con pizzas y barras. Niveles fácil, intermedio, difícil y experto
+  (fracciones equivalentes y sumas).
 
 - **Inglés divertido** — vocabulario en inglés por temas (animales, colores,
   números, comida, cuerpo, mi mundo, acciones y ropa): mirar, escuchar la
@@ -49,7 +52,8 @@ cada cambio en `main`). En local basta con abrir `index.html`.
 
 - **Aprende ajedrez** — 10 capítulos con Capi: para qué sirve el
   juego, cómo se mueve cada pieza (con retos de recoger estrellas), jaque y
-  jaque mate, cómo empezar la partida, y una partida contra la compu.
+  jaque mate, cómo empezar la partida, y una partida contra la compu. Después,
+  3 retos expertos: mates famosos, mate en 2 y la compu experta.
 
 - **Robótica** — con Capi, la ingeniera: programa un robot con bloques
   (avanzar, girar, repetir y sensores, con programas que deben funcionar en
