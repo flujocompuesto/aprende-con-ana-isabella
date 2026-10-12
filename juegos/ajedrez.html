@@ -18,8 +18,9 @@
 
     <!-- Mapa: el camino de capítulos -->
     <section id="pantalla-mapa" class="juego">
+      <div id="practica-diaria"></div>
       <h2>Tu camino de ajedrez</h2>
-      <p>10 capítulos: desde conocer las piezas hasta jugar tu primera partida. ¡Empieza por el 1! Después se abren 3 retos expertos: mates difíciles, mate en 2 y la compu experta.</p>
+      <p>Empieza por lo básico. Al avanzar se abren la táctica, los mates de campeona, los finales y los retos.</p>
       <div id="capitulos" class="capitulos"></div>
     </section>
 
@@ -49,6 +50,7 @@
       <p id="fin-resumen" class="fin-puntaje"></p>
       <p id="fin-record" class="fin-record" hidden></p>
       <div class="acciones">
+        <button id="btn-revisar" class="boton pista" hidden>🔍 ¿Dónde me equivoqué?</button>
         <button id="btn-siguiente-cap" class="boton ejecutar">Siguiente capítulo →</button>
         <button id="btn-volver-mapa" class="boton siguiente">Ver el camino</button>
       </div>
@@ -61,6 +63,9 @@
 
   <script src="../js/comun.js"></script>
   <script src="../js/ajedrez-motor.js"></script>
+  <script src="../js/ajedrez-busqueda.js"></script>
+  <script src="../js/ajedrez-finales.js"></script>
+  <script src="../js/ajedrez-problemas.js"></script>
   <script src="../js/ajedrez.js"></script>
 </body>
 </html>

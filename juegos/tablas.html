@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tablas de multiplicar — Aprende con Ana Isabella</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>Tablas de multiplicar</h1>
+    <p>Un repaso que se acuerda de lo que te cuesta y te lo pregunta más.</p>
+  </header>
+
+  <main class="leccion">
+    <a class="volver" href="../index.html">← Volver al inicio</a>
+
+    <!-- Inicio: repaso inteligente, tablas y mapa -->
+    <section id="pantalla-inicio" class="juego">
+      <div class="burbuja">
+        <img class="guia" src="../img/capibara.svg" alt="Capi" />
+        <div id="saludo-tablas"></div>
+      </div>
+      <button id="btn-repaso" class="boton ejecutar boton-grande">✨ Repaso inteligente</button>
+      <h2>Practica una tabla</h2>
+      <div id="lista-tablas" class="lista-tablas"></div>
+      <h2>Tu mapa de las tablas</h2>
+      <p class="pista-suave">Gris: todavía no la ves · Rojo: te cuesta · Amarillo: casi · Verde: ¡la dominas! Toca una casilla para ver el truco.</p>
+      <div id="mapa-tablas" class="mapa-tablas"></div>
+      <p id="truco-mapa" class="truco-mapa"></p>
+    </section>
+
+    <!-- Juego -->
+    <section id="pantalla-juego" class="juego" hidden>
+      <div class="barra-superior">
+        <button class="volver-juego" data-accion="inicio" aria-label="Salir">←</button>
+        <span id="titulo-ronda" class="puntos"></span>
+        <span id="racha" class="racha" hidden></span>
+        <span id="contador" class="contador">1/12</span>
+      </div>
+      <div class="progreso"><div id="barra-progreso" class="progreso-relleno"></div></div>
+      <div class="problema">
+        <span id="operacion" class="operacion">7 × 8</span>
+        <span class="igual">=</span>
+        <span id="respuesta" class="respuesta">?</span>
+      </div>
+      <div id="teclado" class="teclado"></div>
+      <p id="mensaje-juego" class="mensaje-juego"></p>
+      <p id="truco" class="truco-mapa" hidden></p>
+    </section>
+
+    <!-- Fin -->
+    <section id="pantalla-fin" class="juego" hidden>
+      <div id="fin-estrellas" class="fin-estrellas">⭐⭐⭐</div>
+      <h2 id="fin-felicitacion">¡Muy bien!</h2>
+      <p id="fin-puntaje" class="fin-puntaje"></p>
+      <p id="fin-detalle" class="fin-nivel"></p>
+      <p id="fin-record" class="fin-record" hidden></p>
+      <div class="acciones">
+        <button id="btn-repetir" class="boton ejecutar">Jugar otra vez</button>
+        <button class="boton borrar" data-accion="inicio">Volver</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Hecho a mano por papá, para Ana Isabella.
+  </footer>
+
+  <script src="../js/comun.js"></script>
+  <script src="../js/tablas.js"></script>
+</body>
+</html>

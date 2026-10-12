@@ -136,20 +136,42 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
   "escuchar" se convierte en "ver". Palabras de una sola palabra, sin
   espacios (por el deletreo). Colores se dibujan como muestras y números como
   cifras, no con emojis.
-- "Aprende ajedrez" (`juegos/ajedrez.html`): camino de 10 capítulos con el
-  Capi, la capibara (meta del juego, torre, alfil, dama, rey, caballo, peón, jaque
-  y mate, cómo empezar —Italiana guiada con enroque y Mate del Pastor— y una
-  partida contra la compu), más 3 expertos que se abren con `requiere` (el id
-  del capítulo que hay que terminar): mates difíciles (escalera, árabe,
-  Boden…), mate en 2 (paso `mate2`) y una partida contra la compu experta.
-  Progreso por capítulo, máximo 39 ⭐.
+- "Aprende ajedrez" (`juegos/ajedrez.html`): el juego que más usa. Camino
+  de 21 capítulos con Capi en secciones (`SECCIONES`): lo básico (meta,
+  piezas, jaque y mate, cómo empezar, partida), táctica (pieza sola, tenedor,
+  clavada, descubierta: paso `tactica`), mates de campeona (mates difíciles,
+  mate en 2), finales (mate con dama, con torre y la regla del cuadrado: paso
+  `final`) y retos (coordenadas y notación: pasos `nombrar` y `coordenadas`;
+  la compu experta). Los capítulos con `requiere` se abren al terminar el que
+  nombran. Progreso por capítulo, máximo 63 ⭐.
+  - **Práctica diaria** (arriba del camino): el **problema del día** (todos
+    los días otro del banco `js/ajedrez-problemas.js`, que da la vuelta), con
+    racha 🔥 en `aprende:ajedrez-diario` (sigue viva si resolvió hoy o ayer;
+    la página de inicio la muestra en la tarjeta), "Otro problema" para
+    practicar y el reto de coordenadas de 30 s con récord.
+  - **"¿Dónde me equivoqué?"**: al terminar una partida, revisa cada jugada a
+    2 jugadas (`Busqueda.valorarJugadas`) y muestra hasta 3 momentos donde
+    perdió 2+ puntos o dejó pasar un mate; en cada uno busca una jugada mejor.
+  - `js/ajedrez-busqueda.js`: alfa-beta + capturas al final (quiescencia),
+    contando material. `js/ajedrez-finales.js`: la defensa del rey negro y la
+    pista de los finales ("la caja": achicar el espacio del rey sin ahogarlo).
+  - `herramientas/generar-problemas-ajedrez.js` genera el banco: juega
+    partidas entre compus principiantes y guarda posiciones con solución
+    única (mate en 1, mate en 2 con 1–2 soluciones, o una táctica que gana
+    2+ puntos muy por encima de las demás jugadas), con el tablero volteado
+    si les tocaba a las negras. ~15 min para 100 problemas; misma semilla,
+    mismo banco.
+  - **`node herramientas/probar-ajedrez.js`** verifica todo con el motor
+    (perft, cada mate y mate en 2, cada táctica con su línea y sus `buenas`,
+    los finales siguiendo la pista y el banco entero). Correrlo antes de
+    publicar cualquier cambio del ajedrez.
   - `js/ajedrez-motor.js`: reglas completas (jaque, enroque, al paso,
     coronación, mate/ahogado). Se valida con perft:
     `node -e 'const A=require("./js/ajedrez-motor.js");console.log(A.perft(A.desdeFEN(A.INICIAL),4))'`
     debe dar 197281. Si se toca el motor, correr perft antes de publicar.
   - `js/ajedrez.js`: contenido (`CAPITULOS`, cada paso tiene un `tipo`:
-    explica, conoce, explora, estrellas, pregunta, escapa, mate, jugada, guion,
-    partida) y la compu (`elegirJugada`, heurística de 1 jugada con azar; la
+    explica, conoce, explora, estrellas, pregunta, escapa, mate, mate2,
+    tactica, final, nombrar, coordenadas, jugada, guion, partida) y la compu (`elegirJugada`, heurística de 1 jugada con azar; la
     "tranquila" a veces no revisa si deja piezas colgando). La **experta**
     (`elegirJugadaExperta`) mira 2 jugadas (la suya y la mejor respuesta) y
     al final la mejor captura que queda; ~30 ms por jugada y le gana casi
@@ -208,5 +230,39 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
   propio exige 13 años (se sube en el canal de papá), "contenido para
   niños" apaga los comentarios, primer video Privado o No listado, música
   libre (Biblioteca de audio), miniatura sin su cara ni datos personales.
-- Los 11 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
+- "Explora el mundo" (`juegos/geografia.html` + `js/geografia.js`): mapa
+  SVG de verdad (Natural Earth, dominio público) en `js/mapa-mundo.js`,
+  generado por `herramientas/generar-mapa.js` (proyección de Miller, nombres
+  en español). Niveles: continentes (5, como en la escuela latinoamericana:
+  América es uno), países famosos, capitales (lista `CAPITALES`, sin países
+  con capital discutida) y experto América Latina (el mapa se acerca a la
+  región; México va en América del Norte). Rusia se dibuja dos veces con
+  recorte en los Urales para que la parte asiática cuente como Asia. Hay un
+  modo para explorar libremente. Progreso `geografia`, máximo 12 ⭐.
+- "Mi alcancía" (`juegos/alcancia.html` + `js/alcancia.js`): educación
+  financiera en 4 misiones: necesidades y deseos, los tres frascos (gastar,
+  ahorrar, compartir), una meta de ahorro semana a semana con tentaciones
+  (estrellas por semanas: 7 o menos = 3) y el interés compuesto con un
+  gráfico de barras que ella mueve (con $10 al mes al 10 % anual, el interés
+  supera a lo puesto a los 13 años). Cifras de juego, no consejos de
+  inversión. Progreso `alcancia`, máximo 12 ⭐.
+- "Cuentos de Capi" (`juegos/cuentos.html` + `js/cuentos.js`, cuentos en
+  `js/cuentos-datos.js`): 6 cuentos ORIGINALES en 3 niveles, para leer o
+  escuchar (voz del navegador en español), con preguntas literales, de
+  deducción, de vocabulario, de idea principal y de ordenar los hechos.
+  Progreso `cuentos` → id del cuento, máximo 18 ⭐.
+- "Tablas de multiplicar" (`juegos/tablas.html` + `js/tablas.js`): repaso
+  que se adapta (cajas de Leitner en `aprende:tablas`: bien y rápido sube de
+  caja, error vuelve a la 0 y la pregunta reaparece en la partida), práctica
+  por tabla con trucos y un mapa de colores de lo dominado. Progreso
+  `tablas` (`tabla-2` … `tabla-10` y `repaso`), máximo 30 ⭐.
+- **Pasar el progreso a otro aparato** (`progreso.html` + `js/progreso.js`,
+  enlazado desde el inicio): todo lo guardado (`aprende:*` menos el
+  silencio) se vuelve un código `ANA1-` + base64 o un archivo. Al cargar se
+  **combina**, nunca se pisa: mejores estrellas, la racha más reciente, la
+  caja más alta de cada multiplicación.
+- Herramientas de desarrollo en `herramientas/` (Node): generadores
+  (problemas de ajedrez, mapa) y pruebas del ajedrez. Se suben con el resto
+  del repo (el deploy publica la raíz), pero ninguna página las usa.
+- Los 15 juegos están completos. Si se agregan juegos nuevos, seguir el mismo
   patrón (página en `juegos/` + script en `js/` + tarjeta en index.html).

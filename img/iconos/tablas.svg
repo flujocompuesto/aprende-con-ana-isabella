@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Una pizarrita cuadriculada con el signo de multiplicar. -->
+  <g stroke="#2b2118" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="7" y="9" width="50" height="46" rx="6" fill="#c7e9d6"/>
+    <path d="M7 24 h50 M7 39 h50 M24 9 v46 M40 9 v46" fill="none" stroke-width="2"/>
+    <rect x="25.5" y="25.5" width="13" height="12" fill="#f0b93b" stroke-width="2.4"/>
+    <path d="M28 28 l8 7 M36 28 l-8 7" fill="none" stroke-width="2.6"/>
+  </g>
+</svg>

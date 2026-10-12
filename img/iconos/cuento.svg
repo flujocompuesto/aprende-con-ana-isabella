@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Un libro de cuentos abierto, con una estrella saliendo de sus páginas. -->
+  <g stroke="#2b2118" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M32 22 c-6 -4 -15 -5 -24 -3 v30 c9 -2 18 -1 24 3 z" fill="#fffdf8"/>
+    <path d="M32 22 c6 -4 15 -5 24 -3 v30 c-9 -2 -18 -1 -24 3 z" fill="#e6d4ee"/>
+    <path d="M14 28 c4 -1 9 -1 12 1 M14 35 c4 -1 9 -1 12 1 M14 42 c4 -1 9 -1 12 1" fill="none" stroke-width="2.4"/>
+    <path d="M44 4 l2.6 5.6 l6.2 0.7 l-4.6 4.2 l1.3 6.1 l-5.5 -3.1 l-5.5 3.1 l1.3 -6.1 l-4.6 -4.2 l6.2 -0.7 z" fill="#f0b93b" stroke-width="2.4"/>
+  </g>
+</svg>

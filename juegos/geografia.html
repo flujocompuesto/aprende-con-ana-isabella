@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explora el mundo — Aprende con Ana Isabella</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>Explora el mundo</h1>
+    <p>Continentes, países y capitales en el mapa.</p>
+  </header>
+
+  <main class="leccion">
+    <a class="volver" href="../index.html">← Volver al inicio</a>
+
+    <!-- Pantalla 1: elegir nivel -->
+    <section id="pantalla-inicio" class="juego">
+      <h2>Elige tu nivel</h2>
+      <p>Cada partida tiene 10 preguntas. Toca el mapa para contestar.</p>
+      <div class="niveles" data-juego="geografia">
+        <button class="nivel facil" data-nivel="facil">
+          <span class="emoji">●○○</span>
+          <span class="nombre">Continentes</span>
+          <span class="detalle">¿Dónde está cada continente?</span>
+        </button>
+        <button class="nivel intermedio" data-nivel="intermedio">
+          <span class="emoji">●●○</span>
+          <span class="nombre">Países</span>
+          <span class="detalle">Encuentra países famosos</span>
+        </button>
+        <button class="nivel dificil" data-nivel="dificil">
+          <span class="emoji">●●●</span>
+          <span class="nombre">Capitales</span>
+          <span class="detalle">¿Cuál es la capital?</span>
+        </button>
+        <button class="nivel experto" data-nivel="experto" data-requiere="dificil">
+          <span class="emoji">●●●●</span>
+          <span class="nombre">América Latina</span>
+          <span class="detalle">Hasta los países más pequeños <span class="candado-nivel">· 🔒 Gana una estrella en Capitales</span></span>
+        </button>
+      </div>
+      <div class="acciones">
+        <button id="btn-explorar" class="boton siguiente">🔍 Explorar el mapa libremente</button>
+      </div>
+    </section>
+
+    <!-- Pantalla 2: el juego (y el modo explorar) -->
+    <section id="pantalla-juego" class="juego" hidden>
+      <div class="barra-superior">
+        <button class="volver-juego" data-accion="inicio" aria-label="Salir">←</button>
+        <span id="puntos" class="puntos">Puntos: 0</span>
+        <span id="contador" class="contador">1/10</span>
+      </div>
+      <div id="barra-juego" class="progreso"><div id="barra-progreso" class="progreso-relleno"></div></div>
+
+      <div id="pregunta-geo" class="pregunta-geo"></div>
+      <div id="mapa" class="mapa-geo"></div>
+      <div id="opciones-geo" class="opciones"></div>
+      <p id="mensaje-juego" class="mensaje-juego"></p>
+    </section>
+
+    <!-- Pantalla 3: resultado final -->
+    <section id="pantalla-fin" class="juego" hidden>
+      <div id="fin-estrellas" class="fin-estrellas">⭐⭐⭐</div>
+      <h2 id="fin-felicitacion">¡Muy bien!</h2>
+      <p id="fin-puntaje" class="fin-puntaje">Acertaste 0 de 10</p>
+      <p id="fin-nivel" class="fin-nivel">Nivel</p>
+      <p id="fin-record" class="fin-record" hidden></p>
+      <div class="acciones">
+        <button id="btn-repetir" class="boton ejecutar">Jugar otra vez</button>
+        <button class="boton borrar" data-accion="inicio">Cambiar nivel</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Hecho a mano por papá, para Ana Isabella.
+  </footer>
+
+  <script src="../js/comun.js"></script>
+  <script src="../js/mapa-mundo.js"></script>
+  <script src="../js/geografia.js"></script>
+</body>
+</html>

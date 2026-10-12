@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi alcancía — Aprende con Ana Isabella</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>Mi alcancía</h1>
+    <p>Aprende a cuidar tu dinero con Capi: ahorrar, decidir y hacerlo crecer.</p>
+  </header>
+
+  <main class="leccion">
+    <a class="volver" href="../index.html">← Volver al inicio</a>
+
+    <!-- Mapa de misiones -->
+    <section id="pantalla-mapa" class="juego">
+      <div class="burbuja">
+        <img class="guia" src="../img/capibara.svg" alt="Capi" />
+        <div>¡Hola! El dinero se gana con trabajo, así que vale la pena cuidarlo. En estas misiones vas a aprender los secretos de las personas que saben manejar su dinero. 🐷</div>
+      </div>
+      <div id="misiones" class="capitulos"></div>
+    </section>
+
+    <!-- Una misión -->
+    <section id="pantalla-mision" class="juego" hidden>
+      <div class="barra-leccion">
+        <button id="btn-mapa" class="volver-juego" aria-label="Volver a las misiones">←</button>
+        <h2 id="titulo-mision"></h2>
+      </div>
+      <div id="puntos-pasos" class="puntos-pasos"></div>
+      <div class="burbuja">
+        <img class="guia" src="../img/capibara.svg" alt="Capi" />
+        <div id="texto-capi"></div>
+      </div>
+      <div id="contenido-alcancia"></div>
+      <p id="mensaje-alcancia" class="mensaje-juego"></p>
+      <div id="acciones-alcancia" class="acciones"></div>
+    </section>
+
+    <!-- Fin de misión -->
+    <section id="pantalla-fin" class="juego" hidden>
+      <div id="fin-estrellas" class="fin-estrellas">⭐⭐⭐</div>
+      <h2 id="fin-felicitacion">¡Muy bien!</h2>
+      <p id="fin-resumen" class="fin-puntaje"></p>
+      <p id="fin-record" class="fin-record" hidden></p>
+      <div class="acciones">
+        <button id="btn-siguiente-mision" class="boton ejecutar">Siguiente misión →</button>
+        <button id="btn-volver-mapa" class="boton siguiente">Ver las misiones</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Hecho a mano por papá, para Ana Isabella.
+  </footer>
+
+  <script src="../js/comun.js"></script>
+  <script src="../js/alcancia.js"></script>
+</body>
+</html>

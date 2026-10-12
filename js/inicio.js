@@ -20,3 +20,23 @@ if (totalEl && total > 0) {
   totalEl.hidden = false;
   totalEl.textContent = `⭐ Tienes ${total} ${total === 1 ? "estrella" : "estrellas"}`;
 }
+
+// Racha del problema del día de ajedrez (la guarda js/ajedrez.js): sigue
+// viva si lo resolvió hoy o ayer.
+(() => {
+  const etiqueta = document.querySelector('.juego-card[data-juego="ajedrez"] .progreso-card');
+  if (!etiqueta) return;
+  let diario = {};
+  try {
+    diario = JSON.parse(localStorage.getItem("aprende:ajedrez-diario")) || {};
+  } catch {
+    return;
+  }
+  const fecha = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const hoy = new Date();
+  const ayer = new Date();
+  ayer.setDate(ayer.getDate() - 1);
+  const racha = diario.dia === fecha(hoy) || diario.dia === fecha(ayer) ? diario.racha || 0 : 0;
+  if (racha > 0) etiqueta.textContent += ` · 🔥 ${racha}`;
+  if (diario.dia !== fecha(hoy)) etiqueta.textContent += " · 🧩 ¡Problema del día!";
+})();

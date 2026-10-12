@@ -2,7 +2,8 @@
 
 Sitio de juegos educativos hecho a mano por su papá para una niña de 8 a 10
 años: programación, robótica, banderas, matemáticas, lectura, memoria,
-fracciones, inglés, portugués, ajedrez y videos para YouTube.
+fracciones, inglés, portugués, ajedrez, videos para YouTube, geografía,
+finanzas para niños, cuentos y tablas de multiplicar.
 Cada juego tiene niveles, sonidos, celebraciones y estrellas que se guardan
 en el navegador. Los niveles más difíciles se abren al ganar estrellas en los
 anteriores.
@@ -50,10 +51,22 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   pronunciación, traducir y deletrear, contra reloj. Al final se repasan las
   palabras. Con estrellas en 4 temas se abre el Desafío final.
 
-- **Aprende ajedrez** — 10 capítulos con Capi: para qué sirve el
-  juego, cómo se mueve cada pieza (con retos de recoger estrellas), jaque y
-  jaque mate, cómo empezar la partida, y una partida contra la compu. Después,
-  3 retos expertos: mates famosos, mate en 2 y la compu experta.
+- **Aprende ajedrez** — 21 capítulos con Capi: lo básico (piezas, jaque y
+  mate, cómo empezar, una partida), táctica (pieza sola, tenedor, clavada,
+  descubierta), mates de campeona, finales (mate con dama, con torre, regla
+  del cuadrado) y retos (coordenadas, la compu experta). Cada día hay un
+  **problema del día** con racha 🔥, y después de cada partida se puede ver
+  **«¿Dónde me equivoqué?»**.
+- **Explora el mundo** — continentes, países y capitales tocando un mapa de
+  verdad; en experto, toda América Latina.
+- **Mi alcancía** — necesidades y deseos, los tres frascos, una meta de
+  ahorro con tentaciones y el interés compuesto con un gráfico.
+- **Cuentos de Capi** — 6 cuentos originales para leer o escuchar, con
+  preguntas de comprensión.
+- **Tablas de multiplicar** — un repaso que pregunta más las que cuestan,
+  con trucos y un mapa de lo que ya domina.
+- **Mi progreso** (`progreso.html`) — pasar las estrellas a otro aparato con
+  un código o un archivo.
 
 - **Robótica** — con Capi, la ingeniera: programa un robot con bloques
   (avanzar, girar, repetir y sensores, con programas que deben funcionar en
@@ -68,6 +81,14 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   de YouTube: la idea, cuidarse en internet, el guion, grabar (un estudio con
   luz, ruido y celular), editar (cortar y ordenar tomas), la miniatura y
   subirlo con papá. En el camino se arma un plan de video para imprimir.
+
+## Herramientas (Node)
+
+- `node herramientas/probar-ajedrez.js` — verifica el ajedrez con el motor.
+- `node herramientas/generar-problemas-ajedrez.js` — genera el banco del
+  problema del día.
+- `node herramientas/generar-mapa.js <geojson>` — genera el mapa del mundo
+  (datos de Natural Earth, dominio público).
 
 ## Cómo agregar un juego nuevo
 

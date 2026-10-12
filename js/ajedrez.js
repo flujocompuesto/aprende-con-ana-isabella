@@ -1,7 +1,12 @@
 // Aprende ajedrez — Aprende con Ana Isabella
-// Camino de 10 capítulos con Capi, la capibara: para qué sirve el juego, cómo se
-// mueve cada pieza, jaque y jaque mate, cómo empezar la partida, y una
-// partida contra la compu. Las reglas vienen de js/ajedrez-motor.js.
+// Camino de capítulos con Capi, la capibara, en secciones: lo básico (cómo se
+// mueve cada pieza, jaque y mate, cómo empezar y una partida), táctica
+// (pieza sola, tenedor, clavada, descubierta), mates de campeona, finales y
+// retos. Arriba del camino está la práctica diaria: el problema del día con
+// su racha, problemas extra y el reto de coordenadas. Después de cada
+// partida se puede revisar "¿Dónde me equivoqué?".
+// Reglas: js/ajedrez-motor.js · búsqueda de jugadas: js/ajedrez-busqueda.js ·
+// finales: js/ajedrez-finales.js · banco de problemas: js/ajedrez-problemas.js.
 
 const A = Ajedrez;
 const GLIFO = { K: "♚", Q: "♛", R: "♜", B: "♝", N: "♞", P: "♟" };
@@ -19,7 +24,9 @@ const INFO_PIEZAS = {
 
 // ---- Contenido del camino ----
 // Tipos de paso: explica, conoce, explora, estrellas, pregunta, escapa, mate,
-// jugada, guion y partida. Las posiciones se dan con "fen" o con "piezas".
+// mate2, tactica, final, nombrar, coordenadas, jugada, guion y partida. Las
+// posiciones se dan con "fen" o con "piezas". Un capítulo con "requiere" se
+// abre al ganar al menos 1 ⭐ en el capítulo que nombra.
 
 const CAPITULOS = [
   {
@@ -146,8 +153,50 @@ const CAPITULOS = [
     ],
   },
   // ---- Nivel experto: se abren al terminar el capítulo que piden ----
+  // ---- Táctica: trucos para ganar piezas ----
+  // En "tactica", la niña juega las blancas de "linea" y la compu las negras;
+  // "buenas" son otras primeras jugadas que también ganan. Todo verificado
+  // con el motor (herramientas/probar-ajedrez.js).
   {
-    id: "mates", emoji: "🎯", titulo: "Mates difíciles", requiere: "jaque",
+    id: "colgada", emoji: "🎯", titulo: "¡Pieza sola!", requiere: "jaque",
+    pasos: [
+      { tipo: "explica", fen: "6k1/2p2ppp/3b4/n7/8/8/3Q1PPP/6K1 w - - 0 1", marcas: ["a5", "d6"], texto: "Una pieza está <strong>sola</strong> (o «colgada») cuando nadie la cuida: si la atacas, ¡te la comes gratis! Pero si está <strong>cuidada</strong>, al comerla te comen a ti. Aquí el caballo de a5 está solo y el alfil de d6 lo cuida un peón. Antes de cada jugada, pregúntate: <em>¿qué pieza del otro está sola?</em>" },
+      { tipo: "tactica", fen: "6k1/8/8/3r4/8/8/8/3R2K1 w - - 0 1", linea: ["d1d5"], gana: "una torre", texto: "La torre negra está sola. ¡Cómetela!" },
+      { tipo: "tactica", fen: "6k1/5pp1/5n2/8/r2Q4/8/5PPP/6K1 w - - 0 1", linea: ["d4a4"], gana: "una torre", texto: "La torre negra ataca a tu dama… pero, ¿quién la cuida a ella?" },
+      { tipo: "tactica", fen: "6k1/2p2ppp/3b4/n7/8/8/3Q1PPP/6K1 w - - 0 1", linea: ["d2a5"], gana: "un caballo", texto: "Tu dama puede comer dos piezas: una está sola y la otra la cuida un peón. ¿Cuál te comes?" },
+      { tipo: "tactica", fen: "r5k1/5ppp/8/8/2b5/8/3N1PPP/3R2K1 w - - 0 1", linea: ["d2c4"], gana: "un alfil", texto: "¿Hay alguna pieza negra sola? Ojo con la trampa: la casilla d8 la cuida la torre negra." },
+    ],
+  },
+  {
+    id: "tenedor", emoji: "🍴", titulo: "El tenedor", requiere: "colgada",
+    pasos: [
+      { tipo: "explica", fen: "r3k3/2N5/8/8/8/8/8/4K3 w - - 0 1", marcas: ["e8", "a8"], texto: "Un <strong>tenedor</strong> 🍴 es cuando UNA pieza ataca a DOS al mismo tiempo. El otro solo puede salvar una… ¡y tú te comes la otra! El caballo es el campeón de los tenedores: aquí ataca al rey y a la torre a la vez." },
+      { tipo: "tactica", fen: "r3k3/8/8/3N4/8/8/8/4K3 w - - 0 1", linea: ["d5c7", "e8d7", "c7a8"], gana: "una torre", texto: "¡Tu turno! Busca el salto del caballo que ataca al rey y a la torre." },
+      { tipo: "tactica", fen: "2q3k1/5ppp/8/3N4/8/8/5PPP/6K1 w - - 0 1", linea: ["d5e7", "g8f8", "e7c8"], gana: "la dama", texto: "¿Ves al rey y a la dama negra? Un salto del caballo los ataca a los dos." },
+      { tipo: "tactica", fen: "7k/8/2n1b3/8/2PP4/8/8/4K3 w - - 0 1", linea: ["d4d5", "c6d8", "d5e6"], gana: "un alfil", texto: "¡Hasta un peón puede hacer tenedor! Avánzalo para atacar a dos piezas." },
+      { tipo: "tactica", fen: "4k3/8/8/8/7n/8/8/3QK3 w - - 0 1", linea: ["d1a4", "e8f7", "a4h4"], buenas: ["d1a4", "d1g4", "d1h5"], gana: "un caballo", texto: "Tenedor de dama: da jaque y, al mismo tiempo, ataca al caballo." },
+    ],
+  },
+  {
+    id: "clavada", emoji: "📌", titulo: "La clavada", requiere: "tenedor",
+    pasos: [
+      { tipo: "explica", fen: "4k3/8/8/4q3/8/8/3K4/4R3 w - - 0 1", marcas: ["e5", "e8"], texto: "Una <strong>clavada</strong> 📌: la dama negra no se puede salir de la columna porque detrás está su rey (si se sale, el rey quedaría en jaque). Las torres, los alfiles y la dama pueden clavar." },
+      { tipo: "tactica", fen: "4k3/8/8/4q3/8/8/3K4/R7 w - - 0 1", linea: ["a1e1", "e5e7", "e1e7"], gana: "la dama", texto: "Clava a la dama contra su rey con la torre." },
+      { tipo: "tactica", fen: "4k3/3q4/8/8/P7/8/8/4KB2 w - - 0 1", linea: ["f1b5", "e8e7", "b5d7"], gana: "la dama", texto: "Ahora con el alfil: clava a la dama contra el rey. Tu peón cuida la casilla." },
+      { tipo: "tactica", fen: "4k3/1p6/2n5/1B6/3P4/8/8/4K3 w - - 0 1", linea: ["d4d5", "e8d7", "d5c6"], gana: "un caballo", texto: "El caballo negro está clavado: no se puede mover. ¡Atácalo con algo pequeño!" },
+    ],
+  },
+  {
+    id: "descubierta", emoji: "🎭", titulo: "Ataque a la descubierta", requiere: "clavada",
+    pasos: [
+      { tipo: "explica", fen: "4k3/8/8/7q/4B3/8/8/4R1K1 w - - 0 1", marcas: ["e1", "e4", "e8"], texto: "En el <strong>ataque a la descubierta</strong> 🎭 una pieza se mueve y «destapa» a otra que estaba detrás. Aquí, si el alfil se quita, la torre da jaque… ¡y el alfil puede atacar otra cosa en la misma jugada!" },
+      { tipo: "tactica", fen: "4k3/8/8/7q/4B3/8/8/4R1K1 w - - 0 1", linea: ["e4g6", "e8d7", "g6h5"], buenas: ["e4g6", "e4f3"], gana: "la dama", texto: "Mueve el alfil para que la torre dé jaque… y que el alfil ataque a la dama." },
+      { tipo: "tactica", fen: "3qk3/8/8/8/8/3B4/8/3RK3 w - - 0 1", linea: ["d3b5", "e8e7", "d1d8"], buenas: ["d3b5", "d3g6"], gana: "la dama", texto: "Tu torre mira a la dama negra, pero tu alfil está en medio. ¡Quítalo dando jaque!" },
+    ],
+  },
+  // ---- Mates de campeona ----
+  {
+    id: "mates", emoji: "🏹", titulo: "Mates difíciles", requiere: "jaque",
     pasos: [
       { tipo: "explica", fen: "7k/R7/8/8/8/8/8/1R4K1 w - - 0 1", texto: "Ya sabes dar jaque mate. Ahora vienen <strong>mates famosos</strong> que usan los campeones desde hace siglos. A veces la jugada ganadora no es la más obvia: antes de mover, <strong>revisa todos los jaques</strong> que puedes dar." },
       { tipo: "mate", fen: "6k1/5ppp/8/q7/8/8/3B1PPP/4R1K1 w - - 0 1", texto: "¡La dama negra está suelta! Pero hay algo <strong>mejor</strong> que comérsela… Da jaque mate en 1." },
@@ -167,6 +216,58 @@ const CAPITULOS = [
       { tipo: "mate2", fen: "4kb1r/p2n1ppp/4q3/4p1B1/4P3/1Q6/PPP2PPP/2KR4 w k - 1 18", texto: "El mate más famoso de la historia: Paul Morphy lo dio en 1858 jugando en un palco de la <strong>ópera de París</strong> 🎭. ¡Regala la dama y da mate en 2!" },
     ],
   },
+  // ---- Finales: con poquitas piezas ----
+  {
+    id: "final-dama", emoji: "👑", titulo: "Mate con la dama", requiere: "jaque",
+    pasos: [
+      { tipo: "explica", fen: "8/8/3k4/8/8/8/8/Q3K3 w - - 0 1", texto: "Con rey y dama contra el rey solo, ¡siempre se gana! El truco es <strong>la caja</strong> 📦: la dama encierra al rey negro en un espacio cada vez más chico, y tu rey se acerca a ayudar. ⚠️ Si el rey negro <strong>no</strong> está en jaque y no puede moverse, es <strong>ahogado</strong>: ¡empate! Déjale siempre una casilla." },
+      { tipo: "final", fen: "4k3/8/8/8/8/8/8/3QK3 w - - 0 1", objetivo: "mate", max: 20, texto: "El rey negro ya está en la orilla. ¡Dale jaque mate! Si te trabas, pide una pista 💡." },
+      { tipo: "final", fen: "8/8/8/4k3/8/8/8/K6Q w - - 0 1", objetivo: "mate", max: 25, texto: "Ahora el rey negro está en el centro. Achica la caja con la dama y acerca tu rey." },
+    ],
+  },
+  {
+    id: "final-torre", emoji: "🗼", titulo: "Mate con la torre", requiere: "final-dama",
+    pasos: [
+      { tipo: "explica", fen: "8/8/8/4k3/8/8/8/R5K1 w - - 0 1", texto: "Con la torre también se gana, pero tu rey tiene que trabajar más. La torre <strong>corta</strong> al rey negro (no lo deja cruzar su fila o su columna) y tu rey se le pone de frente. El mate es siempre en la <strong>orilla</strong>." },
+      { tipo: "final", fen: "4k3/8/8/8/8/8/8/R3K3 w - - 0 1", objetivo: "mate", max: 30, texto: "El rey negro está en la orilla. ¡Dale jaque mate con la torre!" },
+      { tipo: "final", fen: "8/8/8/4k3/8/8/8/R5K1 w - - 0 1", objetivo: "mate", max: 40, texto: "Desde el centro: corta con la torre, acerca tu rey y empuja al rey negro hasta la orilla." },
+    ],
+  },
+  {
+    id: "cuadrado", emoji: "🔲", titulo: "La regla del cuadrado", requiere: "peon",
+    pasos: [
+      { tipo: "explica", fen: "8/8/8/P6k/8/8/8/7K w - - 0 1", marcas: ["a5", "b5", "c5", "d5", "a6", "b6", "c6", "d6", "a7", "b7", "c7", "d7", "a8", "b8", "c8", "d8"], texto: "¿El rey negro alcanza a tu peón antes de que corone? Dibuja un <strong>cuadrado</strong> desde el peón hasta la orilla donde corona (el marcado). Si el rey negro puede <strong>meterse en el cuadrado</strong> en su jugada, alcanza al peón. Si no… ¡el peón corona!" },
+      { tipo: "pregunta", fen: "8/8/8/P6k/8/8/8/7K w - - 0 1", marcas: ["a5", "b5", "c5", "d5", "a6", "b6", "c6", "d6", "a7", "b7", "c7", "d7", "a8", "b8", "c8", "d8"], texto: "Le toca al rey negro. ¿Puede meterse en el cuadrado y alcanzar al peón?", opciones: [
+        { t: "No: está muy lejos", ok: true, explica: "¡Exacto! Aunque camine, no llega a tiempo: el peón corona." },
+        { t: "Sí, lo alcanza" },
+      ] },
+      { tipo: "pregunta", fen: "8/8/8/P7/4k3/8/8/7K w - - 0 1", marcas: ["a5", "b5", "c5", "d5", "a6", "b6", "c6", "d6", "a7", "b7", "c7", "d7", "a8", "b8", "c8", "d8"], texto: "¿Y ahora? Le toca al rey negro.", opciones: [
+        { t: "Sí: con un paso se mete en el cuadrado", ok: true, explica: "¡Sí! Va a d5, entra al cuadrado y atrapa al peón." },
+        { t: "No, el peón corona" },
+      ] },
+      { tipo: "final", fen: "8/8/8/8/1k6/8/7P/7K w - - 0 1", objetivo: "corona", max: 8, texto: "¡Corona el peón! El rey negro va a correr… Recuerda: desde la fila 2 el peón puede avanzar <strong>dos</strong> casillas." },
+    ],
+  },
+  // ---- Retos ----
+  {
+    id: "coordenadas", emoji: "🧭", titulo: "Coordenadas", requiere: "meta",
+    pasos: [
+      { tipo: "explica", fen: A.INICIAL, marcas: ["e4"], texto: "Cada casilla tiene <strong>nombre</strong>: una letra (la columna, de la <strong>a</strong> a la <strong>h</strong>) y un número (la fila, del <strong>1</strong> al <strong>8</strong>). La casilla marcada es la <strong>e4</strong>. Mira las letras abajo y los números a la izquierda del tablero." },
+      { tipo: "nombrar", cantidad: 8, texto: "¿Cómo se llama la casilla marcada? Busca su letra abajo y su número a la izquierda." },
+      { tipo: "explica", fen: A.INICIAL, texto: "Las jugadas se escriben con la letra de la pieza y la casilla adonde va: <strong>R</strong> rey, <strong>D</strong> dama, <strong>T</strong> torre, <strong>A</strong> alfil, <strong>C</strong> caballo (el peón no lleva letra).<br>Ejemplos: <strong>e4</strong> = un peón va a e4 · <strong>Cf3</strong> = un caballo va a f3 · <strong>Axe5</strong> = un alfil <em>come</em> en e5 · <strong>+</strong> es jaque y <strong>#</strong> es mate." },
+      { tipo: "pregunta", fen: A.INICIAL, texto: "¿Qué quiere decir <strong>Cf3</strong>?", opciones: [
+        { t: "Un caballo va a f3", ok: true, explica: "¡Sí! C es caballo y f3 es la casilla." },
+        { t: "El rey va a f3", explica: "El rey se escribe con R." },
+        { t: "Un peón come en f3", explica: "El peón no lleva letra, y «come» se escribe con x." },
+      ] },
+      { tipo: "pregunta", fen: A.INICIAL, texto: "¿Y qué quiere decir <strong>Dxh7#</strong>?", opciones: [
+        { t: "La dama come en h7 y es jaque mate", ok: true, explica: "D = dama, x = come, # = ¡mate!" },
+        { t: "La dama va a h7 y es jaque", explica: "La x quiere decir que come, y # es mate (el jaque es +)." },
+        { t: "Un caballo come en h7", explica: "El caballo es C; la D es la dama." },
+      ] },
+      { tipo: "coordenadas", segundos: 30, texto: "¡Reto contra reloj! Toca la casilla que te pido. Esta vez el tablero <strong>no tiene letras</strong>: ¡usa la memoria! Tienes 30 segundos." },
+    ],
+  },
   {
     id: "experta", emoji: "🦉", titulo: "Reto: la compu experta", requiere: "partida",
     pasos: [
@@ -174,6 +275,15 @@ const CAPITULOS = [
       { tipo: "partida", rival: "experta" },
     ],
   },
+];
+
+// Secciones del camino: cada una empieza en el capítulo "desde".
+const SECCIONES = [
+  { desde: "meta", titulo: "Lo básico" },
+  { desde: "colgada", titulo: "Táctica: trucos para ganar piezas" },
+  { desde: "mates", titulo: "Mates de campeona" },
+  { desde: "final-dama", titulo: "Finales" },
+  { desde: "coordenadas", titulo: "Retos" },
 ];
 
 // ---- Estado ----
@@ -191,6 +301,10 @@ let ocultarJaque = false;
 let bloqueado = false;
 let alMover = null; // qué hacer cuando la niña mueve una pieza
 let alTocar = null; // pasos donde tocar una casilla hace otra cosa
+let casillasError = new Set(); // la jugada equivocada que se revisa
+// Problema del día / práctica / revisión: fuera de los capítulos. Si existe,
+// mostrarSiguiente() le avisa a él en vez de pasar al siguiente paso.
+let modoSuelto = null;
 // Cambia al salir de un paso; los temporizadores viejos lo comparan y no hacen nada.
 let sesion = 0;
 
@@ -205,6 +319,8 @@ const tableroEl = document.getElementById("tablero-ajedrez");
 const panelEl = document.getElementById("panel-ajedrez");
 const mensajeEl = document.getElementById("mensaje-ajedrez");
 const accionesEl = document.getElementById("acciones-paso");
+const practicaEl = document.getElementById("practica-diaria");
+const botonRevisar = document.getElementById("btn-revisar");
 
 function mostrarPantalla(p) {
   [pantallaMapa, pantallaLeccion, pantallaFin].forEach((x) => (x.hidden = x !== p));
@@ -221,6 +337,29 @@ function posDePaso(paso) {
   if (paso.fen) return A.desdeFEN(paso.fen);
   if (paso.piezas) return posicionCon(paso.piezas);
   return null;
+}
+
+function mezclar(lista) {
+  const c = [...lista];
+  for (let i = c.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [c[i], c[j]] = [c[j], c[i]];
+  }
+  return c;
+}
+
+// Tres casillas que se confunden con "i": misma columna, misma fila, y la
+// fila "dada vuelta" (contar desde arriba es el error más común).
+function parecidas(i) {
+  const f = Math.floor(i / 8);
+  const c = i % 8;
+  const opciones = new Set([(7 - f) * 8 + c, f * 8 + ((c + 1 + Math.floor(Math.random() * 6)) % 8), ((f + 1 + Math.floor(Math.random() * 6)) % 8) * 8 + c]);
+  opciones.delete(i);
+  while (opciones.size < 3) {
+    const otra = Math.floor(Math.random() * 64);
+    if (otra !== i) opciones.add(otra);
+  }
+  return [...opciones].slice(0, 3);
 }
 
 const quedanNegras = () => pos.tablero.some((p) => p && A.colorDe(p) === "b");
@@ -241,6 +380,13 @@ function pintarMapa() {
   const sugerido = CAPITULOS.findIndex((c) => !guardado[c.id] && abierto(c));
   capitulosEl.innerHTML = "";
   CAPITULOS.forEach((cap, i) => {
+    const seccion = SECCIONES.find((s) => s.desde === cap.id);
+    if (seccion) {
+      const titulo = document.createElement("h3");
+      titulo.className = "seccion-ajedrez";
+      titulo.textContent = seccion.titulo;
+      capitulosEl.appendChild(titulo);
+    }
     const boton = document.createElement("button");
     boton.className = "capitulo-card" + (i === sugerido ? " sugerido" : "");
     boton.disabled = !abierto(cap);
@@ -257,6 +403,7 @@ function pintarMapa() {
     boton.addEventListener("click", () => abrirCapitulo(i));
     capitulosEl.appendChild(boton);
   });
+  pintarPractica();
 }
 
 function abrirCapitulo(i) {
@@ -291,6 +438,7 @@ function pintarTablero() {
     casilla.className = "casilla " + ((f + c) % 2 === 0 ? "clara" : "oscura");
     if (ultimo && (i === ultimo.desde || i === ultimo.hasta)) casilla.classList.add("ultima");
     if (marcas.has(i)) casilla.classList.add("marcada");
+    if (casillasError.has(i)) casilla.classList.add("jugada-error");
     if (i === seleccion) casilla.classList.add("seleccionada");
     if (reyesEnJaque.includes(i)) casilla.classList.add("en-jaque");
     const destino = destinos.find((d) => d.hasta === i);
@@ -372,6 +520,10 @@ function agregarBoton(texto, clase, accion) {
 }
 
 function mostrarSiguiente() {
+  if (modoSuelto) {
+    modoSuelto.alResolver();
+    return;
+  }
   if (accionesEl.querySelector(".btn-siguiente-paso")) return;
   const ultimoPaso = pasoIndice === CAPITULOS[capIndice].pasos.length - 1;
   const boton = agregarBoton(ultimoPaso ? "Terminar capítulo" : "Siguiente →", "ejecutar btn-siguiente-paso", siguientePaso);
@@ -390,8 +542,16 @@ function pintarPuntosPasos() {
 }
 
 function mostrarPaso() {
-  const paso = CAPITULOS[capIndice].pasos[pasoIndice];
+  modoSuelto = null;
+  prepararPaso(CAPITULOS[capIndice].pasos[pasoIndice]);
+  pintarPuntosPasos();
+}
+
+// Deja la pantalla limpia y arma el paso (de un capítulo o suelto).
+function prepararPaso(paso) {
   sesion++;
+  tableroEl.classList.remove("sin-coordenadas");
+  casillasError = new Set();
   pos = posDePaso(paso);
   seleccion = null;
   destinos = [];
@@ -406,7 +566,6 @@ function mostrarPaso() {
   accionesEl.innerHTML = "";
   mensaje("");
   textoEl.innerHTML = paso.texto || "";
-  pintarPuntosPasos();
   PASOS[paso.tipo](paso);
   pintarTablero();
 }
@@ -434,6 +593,7 @@ function siguientePaso() {
 
 function terminarCapitulo(estrellas, felicitacion, resumen = "") {
   mostrarPantalla(pantallaFin);
+  botonRevisar.hidden = true;
   document.getElementById("fin-estrellas").textContent = Aprende.textoEstrellas(estrellas);
   document.getElementById("fin-felicitacion").textContent = felicitacion;
   document.getElementById("fin-resumen").textContent = resumen;
@@ -533,6 +693,9 @@ function pedirMate(textoExito = "¡JAQUE MATE! 🎉 El rey negro no tiene escape
 // ---- Tipos de paso ----
 
 const PASOS = {
+  // Pantalla en blanco (para el reto de coordenadas y la revisión).
+  nada() {},
+
   explica() {
     mostrarSiguiente();
   },
@@ -796,6 +959,205 @@ const PASOS = {
     };
   },
 
+  // Ganar material: la niña juega las blancas de "linea" y la compu las
+  // negras. Sirven también otras primeras jugadas de "buenas" y cualquier mate.
+  tactica(paso) {
+    let k = 0;
+    let fallos = 0;
+    const desdeDe = (clave) => A.indiceCasilla(clave.slice(0, 2));
+    const ganar = (texto) => {
+      alMover = null;
+      marcas = new Set();
+      pintarTablero();
+      mensaje(texto, "exito");
+      Aprende.sonido.victoria();
+      Aprende.confeti(35);
+      mostrarSiguiente();
+    };
+    const darPista = () => {
+      if (!alMover) return;
+      const desde = desdeDe(paso.linea[k]);
+      marcas = new Set([desde]);
+      pintarTablero();
+      mensaje(`💡 Pista: juega con ${INFO_PIEZAS[A.tipoDe(pos.tablero[desde])].articulo}. ¡Está marcada!`);
+    };
+    agregarBoton("💡 Pista", "pista", darPista);
+    alMover = (m) => {
+      const clave = claveMovimiento(m);
+      const nueva = A.mover(pos, m);
+      const esMate = A.situacion(nueva, "b") === "mate";
+      const otraBuena = k === 0 && clave !== paso.linea[0] && (paso.buenas || []).includes(clave);
+      const s = sesion;
+      if (clave !== paso.linea[k] && !esMate && !otraBuena) {
+        // Se ve la jugada un momento y se devuelve.
+        fallos++;
+        contarError();
+        const antes = pos;
+        pos = nueva;
+        ultimo = { desde: m.desde, hasta: m.hasta };
+        bloqueado = true;
+        pintarTablero();
+        Aprende.sonido.error();
+        mensaje(k === 0 ? "Con esa no ganas nada… ¡busca otra jugada!" : "Casi… ¡hay una jugada mejor para rematar!", "error");
+        setTimeout(() => {
+          if (s !== sesion) return;
+          pos = antes;
+          ultimo = null;
+          bloqueado = false;
+          if (fallos >= 2) darPista();
+          pintarTablero();
+        }, 1300);
+        return;
+      }
+      marcas = new Set();
+      aplicar(m);
+      Aprende.sonido.acierto();
+      const premio = `¡Muy bien! Ganaste ${paso.gana || "material"}. 🎉`;
+      if (esMate) return ganar("¡JAQUE MATE! 🎉 Mejor imposible.");
+      if (otraBuena) return ganar(`¡Esa también funciona! Ganas ${paso.gana || "material"}. 🎉`);
+      k++;
+      if (k >= paso.linea.length) return ganar(premio);
+      // La compu responde con la jugada de la línea.
+      bloqueado = true;
+      mensaje("¡Buena jugada! ✅ La compu responde…", "exito");
+      setTimeout(() => {
+        if (s !== sesion) return;
+        aplicar(buscarMovimiento(pos, paso.linea[k]));
+        k++;
+        bloqueado = false;
+        if (k >= paso.linea.length) return ganar(premio);
+        mensaje("¡Ahora remata! ¿Qué te puedes comer?");
+      }, 900);
+    };
+  },
+
+  // Final contra el rey negro: dar mate (o coronar) antes de "max" jugadas.
+  // La compu defiende con Finales.defensa y la pista es Finales.pista.
+  final(paso) {
+    let jugadas = 0;
+    const contador = () =>
+      (panelEl.innerHTML = `<p class="contador-ajedrez">Jugadas: <strong>${jugadas}</strong> de ${paso.max}</p>`);
+    const reiniciar = () => {
+      sesion++;
+      pos = posDePaso(paso);
+      ultimo = null;
+      marcas = new Set();
+      jugadas = 0;
+      bloqueado = false;
+      alMover = jugar;
+      contador();
+      mensaje("");
+      pintarTablero();
+    };
+    const fallar = (texto) => {
+      contarError();
+      alMover = null;
+      mensaje(`${texto} ¡Vamos otra vez!`, "error");
+      Aprende.sonido.error();
+      const s = sesion;
+      setTimeout(() => s === sesion && reiniciar(), 2800);
+    };
+    const ganar = (texto) => {
+      alMover = null;
+      mensaje(texto, "exito");
+      Aprende.sonido.victoria();
+      Aprende.confeti(45);
+      mostrarSiguiente();
+    };
+    function jugar(m) {
+      marcas = new Set();
+      aplicar(m);
+      jugadas++;
+      contador();
+      const sit = A.situacion(pos, "b");
+      if (sit === "mate") return ganar(`¡JAQUE MATE en ${jugadas} jugadas! 🏆`);
+      if (sit === "ahogado") return fallar("¡Ahogado! 😮 El rey negro no está en jaque y no puede moverse: es empate.");
+      if (paso.objetivo === "corona" && m.promocion) {
+        if (Finales.piezaSuelta(pos)) return fallar("Coronaste, pero el rey negro se come la dama nueva.");
+        return ganar("¡Coronaste! 👑 Tu peón ya es dama: ¡la partida está ganada!");
+      }
+      if (jugadas >= paso.max) return fallar(`Se acabaron las ${paso.max} jugadas.`);
+      bloqueado = true;
+      const s = sesion;
+      setTimeout(() => {
+        if (s !== sesion) return;
+        const r = Finales.defensa(pos);
+        aplicar(r);
+        bloqueado = false;
+        if (r.captura) fallar(`¡El rey negro se comió ${INFO_PIEZAS[A.tipoDe(r.captura)].articulo}! Cuida tus piezas con tu rey.`);
+      }, 550);
+    }
+    agregarBoton("💡 Pista", "pista", () => {
+      if (bloqueado || !alMover) return;
+      const m = Finales.pista(pos, paso.objetivo);
+      if (!m) return;
+      marcas = new Set([m.desde, m.hasta]);
+      pintarTablero();
+      mensaje(`💡 Prueba mover ${INFO_PIEZAS[A.tipoDe(m.pieza)].articulo} a ${A.nombreCasilla(m.hasta)}.`);
+    });
+    agregarBoton("↺ Empezar otra vez", "quitar", reiniciar);
+    reiniciar();
+  },
+
+  // ¿Cómo se llama la casilla marcada? Con las letras del tablero a la vista.
+  nombrar(paso) {
+    pos = posicionCon({});
+    const ronda = mezclar([...Array(64).keys()]).slice(0, paso.cantidad || 8);
+    let k = 0;
+    const mostrar = () => {
+      const casilla = ronda[k];
+      marcas = new Set([casilla]);
+      pintarTablero();
+      panelEl.innerHTML = `<p class="contador-ajedrez">Casilla ${k + 1} de ${ronda.length}</p><div class="opciones opciones-coord"></div>`;
+      const caja = panelEl.querySelector(".opciones-coord");
+      mezclar([casilla, ...parecidas(casilla)]).forEach((i) => {
+        const boton = document.createElement("button");
+        boton.className = "opcion";
+        boton.textContent = A.nombreCasilla(i);
+        boton.addEventListener("click", () => {
+          if (i !== casilla) {
+            contarError();
+            boton.classList.add("incorrecta");
+            boton.disabled = true;
+            mensaje(`Esa es la ${A.nombreCasilla(i)}. La letra está abajo y el número a la izquierda.`, "error");
+            Aprende.sonido.error();
+            return;
+          }
+          boton.classList.add("correcta");
+          caja.querySelectorAll("button").forEach((b) => (b.disabled = true));
+          Aprende.sonido.acierto();
+          mensaje(`¡Sí! Es la ${A.nombreCasilla(casilla)}.`, "exito");
+          const s = sesion;
+          setTimeout(() => {
+            if (s !== sesion) return;
+            k++;
+            if (k < ronda.length) {
+              mensaje("");
+              mostrar();
+            } else {
+              marcas = new Set();
+              pintarTablero();
+              panelEl.innerHTML = "";
+              mensaje("¡Muy bien! Ya sabes leer el tablero. 🧭", "exito");
+              mostrarSiguiente();
+            }
+          }, 700);
+        });
+        caja.appendChild(boton);
+      });
+    };
+    mostrar();
+  },
+
+  // Reto contra reloj del capítulo: las estrellas salen de cuántas acierta.
+  coordenadas(paso) {
+    juegoCoordenadas(paso.segundos || 30, (aciertos) => {
+      const estrellas = aciertos >= 18 ? 3 : aciertos >= 12 ? 2 : aciertos >= 6 ? 1 : 0;
+      const texto = estrellas === 3 ? "¡Eres rapidísima con las coordenadas!" : estrellas ? "¡Muy bien! Sigue practicando para ir más rápido." : "¡Buen intento! Practica un poco y vuelve a probar.";
+      terminarCapitulo(estrellas, texto, `Encontraste ${aciertos} ${aciertos === 1 ? "casilla" : "casillas"} en ${paso.segundos || 30} segundos.`);
+    });
+  },
+
   partida(paso) {
     rivalFijo = paso.rival || null;
     if (rivalFijo) empezarPartida(rivalFijo);
@@ -809,6 +1171,8 @@ const VALOR = { P: 1, N: 3, B: 3, R: 5, Q: 9, K: 0 };
 const RIVALES = { tranquila: "🐢 compu tranquila", lista: "🦊 compu lista", experta: "🦉 compu experta" };
 let rival = "tranquila";
 let rivalFijo = null; // el capítulo del reto juega siempre contra la experta
+// Cada jugada de la niña: la posición antes, su jugada y la respuesta de la compu.
+let registro = [];
 let historial = [];
 let capturadas = { w: [], b: [] };
 let jugadasHechas = 0;
@@ -969,6 +1333,7 @@ function empezarPartida(quien) {
   historial = [];
   capturadas = { w: [], b: [] };
   jugadasHechas = 0;
+  registro = [];
   ultimo = null;
   marcas = new Set();
   bloqueado = false;
@@ -1011,6 +1376,7 @@ function actualizarEstado(texto) {
 
 function jugarBlancas(m) {
   historial.push({ pos, capturadas: { w: [...capturadas.w], b: [...capturadas.b] }, ultimo, jugadasHechas });
+  registro.push({ antes: pos, m, respuesta: null });
   if (m.captura) capturadas.w.push(m.captura);
   marcas = new Set();
   mensaje("");
@@ -1023,6 +1389,7 @@ function jugarBlancas(m) {
   setTimeout(() => {
     if (s !== sesion) return;
     const respuesta = rival === "experta" ? elegirJugadaExperta(pos, "b") : elegirJugada(pos, "b", rival === "lista");
+    registro[registro.length - 1].respuesta = respuesta;
     if (respuesta.captura) capturadas.b.push(respuesta.captura);
     aplicar(respuesta);
     jugadasHechas++;
@@ -1052,13 +1419,18 @@ function revisarFin() {
   }
   actualizarEstado(texto);
   const s = sesion;
-  setTimeout(() => s === sesion && terminarCapitulo(estrellas, texto, `Contra la ${RIVALES[rival]}`), 1800);
+  setTimeout(() => {
+    if (s !== sesion) return;
+    terminarCapitulo(estrellas, texto, `Contra la ${RIVALES[rival]}`);
+    botonRevisar.hidden = registro.length < 3;
+  }, 1800);
   return true;
 }
 
 function deshacer() {
   if (bloqueado || !historial.length) return;
   const h = historial.pop();
+  registro.pop();
   pos = h.pos;
   capturadas = h.capturadas;
   ultimo = h.ultimo;
@@ -1081,15 +1453,335 @@ function ayuda() {
   mensaje(`💡 Idea: mueve ${INFO_PIEZAS[A.tipoDe(m.pieza)].articulo} de ${A.nombreCasilla(m.desde)} a ${A.nombreCasilla(m.hasta)}.`);
 }
 
-// ---- Eventos ----
+// ================= Notación (como en los libros, en español) =================
 
-document.getElementById("btn-mapa").addEventListener("click", () => {
+const LETRA = { K: "R", Q: "D", R: "T", B: "A", N: "C", P: "" };
+
+function notacion(p, m) {
+  if (m.enroque) return m.enroque === "corto" ? "O-O" : "O-O-O";
+  const tipo = A.tipoDe(m.pieza);
+  const come = m.captura || m.alPaso;
+  let texto = LETRA[tipo];
+  if (tipo === "P" && come) texto += "abcdefgh"[m.desde % 8];
+  texto += (come ? "x" : "") + A.nombreCasilla(m.hasta);
+  if (m.promocion) texto += "=D";
+  const rival = A.colorDe(m.pieza) === "w" ? "b" : "w";
+  const sit = A.situacion(A.mover(p, m), rival);
+  return texto + (sit === "mate" ? "#" : sit === "jaque" ? "+" : "");
+}
+
+// ================= Práctica diaria: problema del día, racha y coordenadas =================
+
+const CLAVE_DIARIO = "aprende:ajedrez-diario";
+
+function leerDiario() {
+  try {
+    return JSON.parse(localStorage.getItem(CLAVE_DIARIO)) || {};
+  } catch {
+    return {};
+  }
+}
+
+function guardarDiario(d) {
+  try {
+    localStorage.setItem(CLAVE_DIARIO, JSON.stringify(d));
+  } catch {
+    // Sin almacenamiento: la racha no se guarda, pero se puede jugar igual.
+  }
+}
+
+function fechaLocal(d = new Date()) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function fechaAyer() {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return fechaLocal(d);
+}
+
+// La racha sigue viva si resolvió hoy o ayer.
+const rachaViva = (d) => (d.dia === fechaLocal() || d.dia === fechaAyer() ? d.racha || 0 : 0);
+
+// Todos ven el mismo problema el mismo día; el banco da la vuelta.
+function problemaDeHoy() {
+  const hoy = new Date();
+  const dias = Math.round((Date.UTC(hoy.getFullYear(), hoy.getMonth(), hoy.getDate()) - Date.UTC(2026, 0, 1)) / 86400000);
+  return PROBLEMAS[((dias % PROBLEMAS.length) + PROBLEMAS.length) % PROBLEMAS.length];
+}
+
+function pintarPractica() {
+  if (!practicaEl) return;
+  const d = leerDiario();
+  const racha = rachaViva(d);
+  const hecho = d.dia === fechaLocal();
+  practicaEl.innerHTML = `
+    <div class="problema-dia">
+      <span class="icono-dia">🧩</span>
+      <div class="texto-dia">
+        <strong>Problema del día</strong>
+        <span>${hecho ? "✅ ¡Hoy ya lo resolviste! Mañana hay otro." : "¡Hay un problema nuevo esperándote!"}</span>
+        <span class="racha-dia">🔥 Racha: ${racha} ${racha === 1 ? "día" : "días"}${d.mejor ? ` · Récord: ${d.mejor}` : ""}${d.resueltos ? ` · Problemas resueltos: ${d.resueltos}` : ""}</span>
+      </div>
+      <div class="botones-dia">
+        <button class="boton ejecutar" data-a="hoy">${hecho ? "Verlo otra vez" : "Resolver"}</button>
+        <button class="boton siguiente" data-a="otro">Otro problema</button>
+        <button class="boton pista" data-a="coord">🧭 Coordenadas</button>
+      </div>
+    </div>`;
+  practicaEl.querySelector('[data-a="hoy"]').addEventListener("click", () => abrirProblema(problemaDeHoy(), true));
+  practicaEl.querySelector('[data-a="otro"]').addEventListener("click", () => abrirProblema(problemaAlAzar(), false));
+  practicaEl.querySelector('[data-a="coord"]').addEventListener("click", abrirRetoCoordenadas);
+}
+
+function problemaAlAzar() {
+  const hoy = problemaDeHoy();
+  let p;
+  do p = PROBLEMAS[Math.floor(Math.random() * PROBLEMAS.length)];
+  while (p === hoy && PROBLEMAS.length > 1);
+  return p;
+}
+
+const ENUNCIADOS = {
+  mate: "Juegan las blancas. ¡Hay un <strong>jaque mate en 1</strong>!",
+  mate2: "Juegan las blancas: <strong>mate en 2</strong>. Tu jugada, la compu se defiende… y mate.",
+  colgada: "Juegan las blancas. Hay una pieza negra <strong>sola</strong>… ¿la encuentras? Ojo con las que están cuidadas.",
+  tenedor: "Juegan las blancas. Busca un <strong>tenedor</strong> 🍴: una pieza que ataque a dos a la vez.",
+  jaque: "Juegan las blancas y pueden ganar material. Pista: empieza con un <strong>jaque</strong>.",
+  tranquila: "Juegan las blancas y pueden ganar material. ¿Cuál es la mejor jugada?",
+};
+
+// Abre un problema suelto (del día o de práctica) en la pantalla de lección.
+function abrirProblema(problema, diario) {
+  mostrarPantalla(pantallaLeccion);
+  tituloEl.textContent = diario ? "🧩 Problema del día" : "🧩 Problema de práctica";
+  puntosPasosEl.innerHTML = "";
+  erroresPaso = [];
+  pasoIndice = 0;
+  const paso = { ...problema, texto: ENUNCIADOS[problema.tema] || ENUNCIADOS.tranquila };
+  modoSuelto = null;
+  prepararPaso(paso);
+  modoSuelto = {
+    alResolver() {
+      modoSuelto = null;
+      const d = leerDiario();
+      d.resueltos = (d.resueltos || 0) + 1;
+      let extra = "";
+      if (diario && d.dia !== fechaLocal()) {
+        d.racha = d.dia === fechaAyer() ? (d.racha || 0) + 1 : 1;
+        d.mejor = Math.max(d.mejor || 0, d.racha);
+        d.dia = fechaLocal();
+        extra = ` 🔥 ¡Racha de ${d.racha} ${d.racha === 1 ? "día" : "días"}!`;
+      }
+      guardarDiario(d);
+      if (extra) mensajeEl.innerHTML += extra;
+      accionesEl.innerHTML = "";
+      agregarBoton("Otro problema 🧩", "ejecutar", () => abrirProblema(problemaAlAzar(), false));
+      agregarBoton("Volver al camino", "siguiente", volverAlMapa);
+    },
+  };
+}
+
+// Reto de coordenadas suelto (desde la práctica diaria), con récord.
+function abrirRetoCoordenadas() {
+  mostrarPantalla(pantallaLeccion);
+  tituloEl.textContent = "🧭 Reto de coordenadas";
+  puntosPasosEl.innerHTML = "";
+  modoSuelto = null;
+  prepararPaso({ tipo: "nada", texto: "Toca la casilla que te pido, lo más rápido que puedas. El tablero no tiene letras: ¡usa la memoria! Tienes 30 segundos." });
+  juegoCoordenadas(30, (aciertos) => {
+    const d = leerDiario();
+    const record = aciertos > (d.coordenadas || 0);
+    if (record) {
+      d.coordenadas = aciertos;
+      guardarDiario(d);
+    }
+    mensaje(`¡${aciertos} ${aciertos === 1 ? "casilla" : "casillas"} en 30 segundos!${record ? " 🏅 ¡Nuevo récord!" : ` Tu récord: ${d.coordenadas}.`}`, "exito");
+    if (record) Aprende.confeti(30);
+    agregarBoton("Otra vez", "ejecutar", abrirRetoCoordenadas);
+    agregarBoton("Volver al camino", "siguiente", volverAlMapa);
+  });
+}
+
+// El juego de coordenadas: tocar la casilla pedida contra reloj.
+function juegoCoordenadas(segundos, alTerminar) {
+  pos = posicionCon({});
+  marcas = new Set();
+  ultimo = null;
+  tableroEl.classList.add("sin-coordenadas");
+  pintarTablero();
+  let aciertos = 0;
+  let objetivo = -1;
+  let reloj = null;
+  const s = sesion;
+  panelEl.innerHTML = `<div class="reto-coordenadas">
+      <span class="casilla-pedida" id="casilla-pedida">¿Lista?</span>
+      <span id="tiempo-coord">⏱️ ${segundos}</span>
+      <span id="aciertos-coord">✅ 0</span>
+    </div>`;
+  const pedida = document.getElementById("casilla-pedida");
+  const nueva = () => {
+    let i;
+    do i = Math.floor(Math.random() * 64);
+    while (i === objetivo);
+    objetivo = i;
+    pedida.textContent = A.nombreCasilla(i);
+  };
+  alTocar = (i) => {
+    if (!reloj) return;
+    const casilla = tableroEl.children[i];
+    if (i === objetivo) {
+      aciertos++;
+      document.getElementById("aciertos-coord").textContent = `✅ ${aciertos}`;
+      Aprende.sonido.clic();
+      casilla.classList.remove("toque-mal");
+      casilla.classList.add("toque-bien");
+      setTimeout(() => casilla.classList.remove("toque-bien"), 350);
+      nueva();
+    } else {
+      Aprende.sonido.error();
+      // Muestra un momento dónde estaba la casilla pedida.
+      const correcta = tableroEl.children[objetivo];
+      casilla.classList.add("toque-mal");
+      correcta.classList.add("toque-pedida");
+      setTimeout(() => {
+        casilla.classList.remove("toque-mal");
+        correcta.classList.remove("toque-pedida");
+      }, 600);
+    }
+  };
+  const empezar = agregarBoton("▶ ¡Empezar!", "ejecutar", () => {
+    empezar.remove();
+    const fin = Date.now() + segundos * 1000;
+    nueva();
+    reloj = setInterval(() => {
+      if (s !== sesion) {
+        clearInterval(reloj);
+        return;
+      }
+      const resta = Math.max(0, Math.ceil((fin - Date.now()) / 1000));
+      document.getElementById("tiempo-coord").textContent = `⏱️ ${resta}`;
+      if (resta > 0) return;
+      clearInterval(reloj);
+      reloj = null;
+      alTocar = null;
+      pedida.textContent = "¡Tiempo!";
+      tableroEl.classList.remove("sin-coordenadas");
+      pintarTablero();
+      alTerminar(aciertos);
+    }, 200);
+  });
+}
+
+function volverAlMapa() {
   sesion++;
+  modoSuelto = null;
   bloqueado = false;
+  alTocar = null;
   pintarMapa();
   mostrarPantalla(pantallaMapa);
-});
-document.getElementById("btn-volver-mapa").addEventListener("click", () => mostrarPantalla(pantallaMapa));
+}
+
+// ================= Revisión: "¿Dónde me equivoqué?" =================
+// Mira cada jugada de la partida a 2 jugadas (Busqueda) y elige hasta 3
+// momentos donde se perdió material (2+ puntos) o se dejó pasar un mate.
+// En cada uno, la niña busca una jugada mejor.
+
+async function revisarPartida() {
+  const jugadas = registro.slice();
+  mostrarPantalla(pantallaLeccion);
+  tituloEl.textContent = "🔍 ¿Dónde me equivoqué?";
+  puntosPasosEl.innerHTML = "";
+  modoSuelto = { alResolver() {} };
+  prepararPaso({ tipo: "nada", fen: A.INICIAL, texto: "Capi está mirando tu partida, jugada por jugada… 🤔" });
+  const s = sesion;
+  const momentos = [];
+  for (let i = 0; i < jugadas.length; i++) {
+    mensaje(`Revisando la jugada ${i + 1} de ${jugadas.length}…`);
+    await new Promise((r) => setTimeout(r, 0));
+    if (s !== sesion) return;
+    const { antes, m, respuesta } = jugadas[i];
+    const valores = Busqueda.valorarJugadas(antes, "w", 2);
+    const hecha = valores.find((v) => claveMovimiento(v.m) === claveMovimiento(m) && (!m.promocion || v.m.promocion === m.promocion));
+    if (!hecha || !valores.length) continue;
+    const mejor = valores[0];
+    const perdida = mejor.valor - hecha.valor;
+    const mateDejado = Busqueda.esMate(mejor.valor) && mejor.valor > 0 && !(Busqueda.esMate(hecha.valor) && hecha.valor > 0);
+    if (perdida >= 2 || mateDejado) momentos.push({ i, antes, m, respuesta, valores, mejor, perdida: mateDejado ? 100 + perdida : perdida });
+  }
+  const elegidos = momentos.sort((a, b) => b.perdida - a.perdida).slice(0, 3).sort((a, b) => a.i - b.i);
+  mensaje("");
+  if (!elegidos.length) {
+    textoEl.innerHTML = "¡No encontré errores grandes! 🎉 Cuidaste tus piezas y no dejaste pasar oportunidades. ¡Así se juega!";
+    Aprende.confeti(30);
+    agregarBoton("Volver al camino", "siguiente", volverAlMapa);
+    return;
+  }
+  mostrarMomento(elegidos, 0);
+}
+
+function mostrarMomento(momentos, k) {
+  const mo = momentos[k];
+  sesion++;
+  pos = mo.antes;
+  ultimo = null;
+  marcas = new Set();
+  casillasError = new Set([mo.m.desde, mo.m.hasta]);
+  bloqueado = false;
+  accionesEl.innerHTML = "";
+  panelEl.innerHTML = "";
+  mensaje("");
+  const tuya = notacion(mo.antes, mo.m);
+  let paso;
+  if (mo.perdida >= 100) paso = "¡Y ahí tenías un <strong>jaque mate</strong>!";
+  else if (mo.respuesta && mo.respuesta.captura) paso = `Después la compu se comió ${INFO_PIEZAS[A.tipoDe(mo.respuesta.captura)].articulo}.`;
+  else paso = "Con esa jugada perdías material.";
+  textoEl.innerHTML = `<strong>Momento ${k + 1} de ${momentos.length}</strong> · En tu jugada ${mo.i + 1} jugaste <strong>${tuya}</strong> (en rojo). ${paso} ¿Qué era mejor? Busca otra jugada.`;
+  pintarTablero();
+
+  let fallos = 0;
+  const siguiente = () => {
+    alMover = null;
+    if (k + 1 < momentos.length) agregarBoton("Siguiente momento →", "ejecutar", () => mostrarMomento(momentos, k + 1));
+    else {
+      textoEl.innerHTML += "<br><br>🧠 <strong>El secreto:</strong> antes de mover, pregúntate <em>¿qué me pueden comer?</em> y <em>¿qué puedo comer yo?</em>";
+      agregarBoton("Terminar revisión", "ejecutar", volverAlMapa);
+    }
+  };
+  const porQue = (v) => {
+    if (Busqueda.esMate(v.valor) && v.valor > 0) return "¡Es jaque mate! 🎉";
+    if (v.m.captura) return `¡Así te comías ${INFO_PIEZAS[A.tipoDe(v.m.captura)].articulo}!`;
+    return "Así no pierdes nada.";
+  };
+  alMover = (m) => {
+    const v = mo.valores.find((x) => claveMovimiento(x.m) === claveMovimiento(m));
+    if (v && v.valor >= mo.mejor.valor - 0.5) {
+      casillasError = new Set();
+      aplicar(m, true);
+      mensaje(`¡Esa es mucho mejor! 💪 ${porQue(v)}`, "exito");
+      Aprende.sonido.acierto();
+      siguiente();
+      return;
+    }
+    fallos++;
+    Aprende.sonido.error();
+    if (fallos < 2) {
+      mensaje("Esa tampoco… Piensa: ¿qué te pueden comer? ¿Qué puedes comer tú?", "error");
+      pintarTablero();
+      return;
+    }
+    marcas = new Set([mo.mejor.m.desde, mo.mejor.m.hasta]);
+    pintarTablero();
+    mensaje(`La mejor era <strong>${notacion(mo.antes, mo.mejor.m)}</strong> (marcada). ${porQue(mo.mejor)}`, "error");
+    siguiente();
+  };
+}
+
+// ---- Eventos ----
+
+document.getElementById("btn-mapa").addEventListener("click", volverAlMapa);
+botonRevisar.addEventListener("click", revisarPartida);
+document.getElementById("btn-volver-mapa").addEventListener("click", volverAlMapa);
 document.getElementById("btn-siguiente-cap").addEventListener("click", () => abrirCapitulo(capIndice + 1));
 
 pintarMapa();

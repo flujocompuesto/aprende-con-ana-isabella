@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi progreso — Aprende con Ana Isabella</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>Mi progreso</h1>
+    <p>Lleva tus estrellas de un aparato a otro.</p>
+  </header>
+
+  <main class="leccion">
+    <a class="volver" href="index.html">← Volver al inicio</a>
+
+    <section class="juego">
+      <div class="burbuja">
+        <img class="guia" src="img/capibara.svg" alt="Capi" />
+        <div>Tus estrellas se guardan en <strong>este</strong> aparato. Si juegas en otro (la tablet, la compu…), con papá puedes pasar el progreso con un <strong>código</strong>: lo copias aquí y lo pegas allá. Al cargarlo, me quedo con lo mejor de los dos: no se pierde nada. 🐾</div>
+      </div>
+      <p id="resumen-progreso" class="fin-puntaje"></p>
+
+      <h2>1. Llevar el progreso de este aparato</h2>
+      <div class="acciones">
+        <button id="btn-copiar" class="boton ejecutar">📋 Copiar mi código</button>
+        <button id="btn-descargar" class="boton siguiente">💾 Descargar archivo</button>
+      </div>
+      <textarea id="codigo-salida" class="codigo-progreso" readonly rows="4" aria-label="Tu código de progreso"></textarea>
+      <p class="pista-suave">Mándalo por mensaje o por correo a ti mismo, o guarda el archivo, y ábrelo en el otro aparato.</p>
+
+      <h2>2. Cargar un progreso en este aparato</h2>
+      <textarea id="codigo-entrada" class="codigo-progreso" rows="4" placeholder="Pega aquí el código (empieza con ANA1-)" aria-label="Pega el código de progreso"></textarea>
+      <div class="acciones">
+        <button id="btn-cargar" class="boton ejecutar">⬆️ Cargar el código</button>
+        <label class="boton siguiente boton-archivo">📂 Elegir archivo<input id="archivo" type="file" accept=".txt,.json,text/plain,application/json" hidden /></label>
+      </div>
+      <p id="mensaje-progreso" class="mensaje-juego"></p>
+    </section>
+  </main>
+
+  <footer>
+    Hecho a mano por papá, para Ana Isabella.
+  </footer>
+
+  <script src="js/comun.js"></script>
+  <script src="js/progreso.js"></script>
+</body>
+</html>

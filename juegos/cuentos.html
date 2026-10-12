@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuentos de Capi — Aprende con Ana Isabella</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>Cuentos de Capi</h1>
+    <p>Lee (o escucha) un cuento y demuestra cuánto entendiste.</p>
+  </header>
+
+  <main class="leccion">
+    <a class="volver" href="../index.html">← Volver al inicio</a>
+
+    <!-- Biblioteca -->
+    <section id="pantalla-biblioteca" class="juego">
+      <div class="burbuja">
+        <img class="guia" src="../img/capibara.svg" alt="Capi" />
+        <div>¡Bienvenida a mi biblioteca! Elige un cuento. Léelo con calma (o escúchalo 🔊) y después contesta las preguntas. Si no te acuerdas, ¡puedes volver a mirar el cuento!</div>
+      </div>
+      <div id="cuentos" class="capitulos"></div>
+    </section>
+
+    <!-- Leer el cuento -->
+    <section id="pantalla-lectura" class="juego" hidden>
+      <div class="barra-leccion">
+        <button class="volver-juego" data-accion="biblioteca" aria-label="Volver a la biblioteca">←</button>
+        <h2 id="titulo-cuento"></h2>
+      </div>
+      <div class="acciones acciones-voz">
+        <button id="btn-escuchar" class="boton siguiente">🔊 Escuchar el cuento</button>
+        <button id="btn-callar" class="boton quitar" hidden>⏹ Parar</button>
+      </div>
+      <p id="aviso-voz" class="pista-suave" hidden></p>
+      <article id="texto-cuento" class="texto-cuento"></article>
+      <div class="acciones">
+        <button id="btn-preguntas" class="boton ejecutar">¡Ya lo leí! → Preguntas</button>
+      </div>
+    </section>
+
+    <!-- Preguntas -->
+    <section id="pantalla-preguntas" class="juego" hidden>
+      <div class="barra-leccion">
+        <button class="volver-juego" data-accion="biblioteca" aria-label="Volver a la biblioteca">←</button>
+        <h2 id="titulo-preguntas"></h2>
+      </div>
+      <div id="puntos-pasos" class="puntos-pasos"></div>
+      <p id="pregunta" class="pregunta-cuento"></p>
+      <div id="respuestas"></div>
+      <p id="mensaje-cuento" class="mensaje-juego"></p>
+      <div id="acciones-cuento" class="acciones"></div>
+      <details class="ver-cuento">
+        <summary>📖 Mirar el cuento otra vez</summary>
+        <div id="texto-repaso" class="texto-cuento"></div>
+      </details>
+    </section>
+
+    <!-- Fin -->
+    <section id="pantalla-fin" class="juego" hidden>
+      <div id="fin-estrellas" class="fin-estrellas">⭐⭐⭐</div>
+      <h2 id="fin-felicitacion">¡Muy bien!</h2>
+      <p id="fin-resumen" class="fin-puntaje"></p>
+      <p id="fin-record" class="fin-record" hidden></p>
+      <div class="acciones">
+        <button class="boton ejecutar" data-accion="biblioteca">Elegir otro cuento</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Hecho a mano por papá, para Ana Isabella.
+  </footer>
+
+  <script src="../js/comun.js"></script>
+  <script src="../js/cuentos-datos.js"></script>
+  <script src="../js/cuentos.js"></script>
+</body>
+</html>
