@@ -145,7 +145,7 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
   clavada, descubierta: paso `tactica`), mates de campeona (mates difíciles,
   mate en 2), finales (mate con dama, con torre y la regla del cuadrado: paso
   `final`) y retos (coordenadas y notación: pasos `nombrar` y `coordenadas`;
-  la compu experta). Los capítulos con `requiere` se abren al terminar el que
+  Capi experta). Los capítulos con `requiere` se abren al terminar el que
   nombran. Progreso por capítulo, máximo 63 ⭐.
   - **Práctica diaria** (arriba del camino): el **problema del día** (todos
     los días otro del banco `js/ajedrez-problemas.js`, que da la vuelta), con
@@ -156,8 +156,9 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     arriba del tablero con un globo de frases y hace muecas dibujadas en SVG
     (las mismas formas de `img/capibara.svg`): le comen un peón → sorpresa;
     caballo → lengua afuera; alfil → berrinche con vapor; torre → llanto;
-    dama → llanto y se le vuela la mandarina; jaque → mareada; cuando ella
-    come → lentes de sol; al perder → bandera blanca; al ganar → baile.
+    dama → llanto y se le vuela la mandarina; jaque → mareada; cuando Capi
+    come algo o da jaque → lentes de sol; al perder → bandera blanca; al
+    ganar → baile.
     Sonidos `Aprende.sonido.boing()` y `gracioso()` (en `comun.js`). La
     jugada de la compu espera a que termine la mueca.
   - **"¿Dónde me equivoqué?"**: al terminar una partida, revisa cada jugada a
