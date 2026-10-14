@@ -1,11 +1,11 @@
 // Capi rival — Aprende con Ana Isabella
-// En las partidas de ajedrez, Capi se sienta del otro lado del tablero y
-// reacciona: cuando le comen una pieza hace muecas (ojos de plato, lengua
+// En las partidas de ajedrez (y en los problemas del día, donde juega con las
+// negras), Capi se sienta del otro lado del tablero y reacciona: cuando le comen una pieza hace muecas (ojos de plato, lengua
 // afuera, berrinche con vapor, llanto a mares… y con la dama ¡se le vuela
 // la mandarina!), se marea con los jaques, se pone lentes de sol cuando ella
 // come algo y al final se rinde con bandera blanca o festeja.
 // Las caras se dibujan en SVG con las mismas formas de img/capibara.svg.
-// Uso (desde js/ajedrez.js): CapiRival.mostrar(nivel), CapiRival.reaccionar(evento, info),
+// Uso (desde js/ajedrez.js): CapiRival.mostrar(nivel, frase?), CapiRival.reaccionar(evento, info),
 // CapiRival.ocultar(). reaccionar() devuelve cuánto dura la mueca (ms).
 
 const CapiRival = (() => {
@@ -171,7 +171,20 @@ const CapiRival = (() => {
     pierde: ["¡Me rindo! 🏳️ ¡Eres una campeona!", "Jaque mate… ¡qué bien juegas! 🏳️"],
     gana: ["¡Jaque mate! 🎉 ¿Jugamos otra?", "¡Gané! Pero casi me ganas 😄"],
     tablas: ["¡Empate! Nadie ganó, nadie perdió 🤝"],
+    // En los problemas:
+    falla: ["¡Nanana! Esa no era 😜", "¡Uf, me salvé! 😅", "¡Jeje, casi! 😜", "¡Ja! Por ahí no 😝"],
+    buena: ["¡Uy! ¿Cómo viste eso? 😰", "¡Oh, no! ¿Y ahora qué hago? 😰", "¡Glup! 😰"],
+    defiende: ["¡Me escapo por aquí! 😅", "¡Rápido, a salvarse!", "Uf… ¿y ahora? 😬"],
+    pista: ["¡No mires ahí! 🙈", "¡Ey, eso es ayudar! 🙈", "¡Shhh, no le digas! 🙈"],
   };
+
+  // Para empezar un problema: Capi reta a Ana Isabella según el tipo.
+  const RETOS = {
+    mate: ["¿A que no encuentras el mate? 😏", "¡Mi rey está bien escondido! (creo…) 😏"],
+    mate2: ["Mate en 2… ¡imposible! 😏", "¡Te reto: mate en 2! 😏"],
+    tactica: ["¡Mis piezas están bien cuidadas! (creo…) 😇", "¿Ves algo raro? Yo no veo nada 😇", "¡A que no me ganas nada! 😏"],
+  };
+  const reto = (tipo) => azar(RETOS[tipo] || RETOS.tactica);
 
   // Qué cara, qué animación y cuánto dura cada cosa.
   const REACCIONES = {
@@ -184,6 +197,10 @@ const CapiRival = (() => {
     come: { cara: "orgullosa", anima: "presume", ms: 1500 },
     daJaque: { cara: "orgullosa", anima: "presume", ms: 1400 },
     deshacer: { cara: "pensando", anima: "", ms: 1200 },
+    falla: { cara: "lengua", anima: "presume", ms: 1300 },
+    buena: { cara: "sorprendida", anima: "temblor", ms: 1000, sonido: "boing" },
+    defiende: { cara: "sorprendida", anima: "", ms: 1000 },
+    pista: { cara: "sorprendida", anima: "salto-sorpresa", ms: 1200 },
     pierde: { cara: "rendida", anima: "desinflada", ms: 0, sonido: "gracioso" },
     gana: { cara: "feliz", anima: "baile", ms: 0 },
     tablas: { cara: "sorprendida", anima: "", ms: 0 },
@@ -209,14 +226,14 @@ const CapiRival = (() => {
 
   const NOMBRES = { tranquila: "Capi tranquila", lista: "Capi lista", experta: "Capi experta" };
 
-  function mostrar(n) {
+  function mostrar(n, frase) {
     if (!caja) return;
     clearTimeout(reloj);
     nivel = n || "tranquila";
     caja.hidden = false;
     caja.innerHTML = `<div class="avatar-rival"></div>
       <div class="globo-rival"><strong class="nombre-rival">${n ? NOMBRES[n] : "Capi"}</strong><span class="frase-rival"></span></div>`;
-    pintar("normal", azar(n ? FRASES.inicio : FRASES.saludo));
+    pintar("normal", frase || azar(n ? FRASES.inicio : FRASES.saludo));
   }
 
   function ocultar() {
@@ -226,7 +243,8 @@ const CapiRival = (() => {
 
   // evento: "comida" (info.tipo = pieza que le comieron), "jaque", "come"
   // (info.tipo = pieza que comió Capi), "daJaque", "pensando", "turno",
-  // "deshacer", "pierde", "gana" o "tablas". Devuelve cuánto dura la mueca.
+  // "deshacer", "pierde", "gana" o "tablas"; en los problemas también "falla",
+  // "buena", "defiende" y "pista". Devuelve cuánto dura la mueca.
   function reaccionar(evento, info = {}) {
     if (!caja || caja.hidden) return 0;
     clearTimeout(reloj);
@@ -248,5 +266,5 @@ const CapiRival = (() => {
     return r.ms;
   }
 
-  return { mostrar, ocultar, reaccionar, dibujo, CARAS };
+  return { mostrar, ocultar, reaccionar, reto, dibujo, CARAS };
 })();

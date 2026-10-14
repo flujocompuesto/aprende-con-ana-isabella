@@ -647,6 +647,7 @@ function pedirMate(textoExito = "¡JAQUE MATE! 🎉 El rey negro no tiene escape
     marcas = new Set([m.desde]);
     pintarTablero();
     mensaje(`💡 Pista: la jugada ganadora es con ${INFO_PIEZAS[A.tipoDe(m.pieza)].articulo}. ¡Está marcada!`);
+    CapiRival.reaccionar("pista");
   };
   alMover = (m) => {
     const nueva = A.mover(pos, m);
@@ -657,6 +658,7 @@ function pedirMate(textoExito = "¡JAQUE MATE! 🎉 El rey negro no tiene escape
       marcas = new Set();
       alMover = null;
       pintarTablero();
+      CapiRival.reaccionar("pierde");
       mensaje(textoExito, "exito");
       Aprende.sonido.victoria();
       Aprende.confeti(40);
@@ -672,6 +674,7 @@ function pedirMate(textoExito = "¡JAQUE MATE! 🎉 El rey negro no tiene escape
     bloqueado = true;
     pintarTablero();
     Aprende.sonido.error();
+    CapiRival.reaccionar("falla");
     mensaje(
       resultado === "jaque"
         ? "Es jaque, pero el rey todavía puede escapar. ¡Busca otra jugada!"
@@ -847,6 +850,7 @@ const PASOS = {
       marcas = new Set([m.desde]);
       pintarTablero();
       mensaje(`💡 Pista: la primera jugada es con ${INFO_PIEZAS[A.tipoDe(m.pieza)].articulo}. ¡Está marcada!`);
+      CapiRival.reaccionar("pista");
     };
     agregarBoton("💡 Pista", "pista", () => darPista());
     mensaje("Jugada 1 de 2. ¡Piensa antes de mover! 🤔");
@@ -859,6 +863,7 @@ const PASOS = {
         alMover = null;
         bloqueado = true;
         Aprende.sonido.acierto();
+        CapiRival.reaccionar("buena");
         mensaje("¡Buena jugada! ✅ Capi se defiende…", "exito");
         setTimeout(() => {
           if (s !== sesion) return;
@@ -866,6 +871,7 @@ const PASOS = {
           const defensas = A.todosLegales(pos, "b");
           const cuantos = (d) => matesEn1(A.mover(pos, d)).length;
           aplicar(defensas.reduce((a, b) => (cuantos(b) < cuantos(a) ? b : a)));
+          CapiRival.reaccionar("defiende");
           bloqueado = false;
           mensaje("Jugada 2 de 2: ¡ahora da jaque mate!");
           darPista = pedirMate("¡JAQUE MATE EN 2! 🏆 ¡Pensaste como una campeona!");
@@ -879,6 +885,7 @@ const PASOS = {
       aplicar(m);
       bloqueado = true;
       Aprende.sonido.error();
+      CapiRival.reaccionar("falla");
       const salvada = A.todosLegales(pos, "b").find((d) => !matesEn1(A.mover(pos, d)).length);
       mensaje(
         salvada
@@ -981,6 +988,7 @@ const PASOS = {
       marcas = new Set([desde]);
       pintarTablero();
       mensaje(`💡 Pista: juega con ${INFO_PIEZAS[A.tipoDe(pos.tablero[desde])].articulo}. ¡Está marcada!`);
+      CapiRival.reaccionar("pista");
     };
     agregarBoton("💡 Pista", "pista", darPista);
     alMover = (m) => {
@@ -999,6 +1007,7 @@ const PASOS = {
         bloqueado = true;
         pintarTablero();
         Aprende.sonido.error();
+        CapiRival.reaccionar("falla");
         mensaje(k === 0 ? "Con esa no ganas nada… ¡busca otra jugada!" : "Casi… ¡hay una jugada mejor para rematar!", "error");
         setTimeout(() => {
           if (s !== sesion) return;
@@ -1013,6 +1022,11 @@ const PASOS = {
       marcas = new Set();
       aplicar(m);
       Aprende.sonido.acierto();
+      // Capi (si está jugando, como en el problema del día) reacciona.
+      if (esMate) CapiRival.reaccionar("pierde");
+      else if (m.captura) CapiRival.reaccionar("comida", { tipo: A.tipoDe(m.captura) });
+      else if (A.enJaque(pos, "b")) CapiRival.reaccionar("jaque");
+      else CapiRival.reaccionar("buena");
       const premio = `¡Muy bien! Ganaste ${paso.gana || "material"}. 🎉`;
       if (esMate) return ganar("¡JAQUE MATE! 🎉 Mejor imposible.");
       if (otraBuena) return ganar(`¡Esa también funciona! Ganas ${paso.gana || "material"}. 🎉`);
@@ -1024,6 +1038,7 @@ const PASOS = {
       setTimeout(() => {
         if (s !== sesion) return;
         aplicar(buscarMovimiento(pos, paso.linea[k]));
+        CapiRival.reaccionar("defiende");
         k++;
         bloqueado = false;
         if (k >= paso.linea.length) return ganar(premio);
@@ -1577,6 +1592,8 @@ function abrirProblema(problema, diario) {
   const paso = { ...problema, texto: ENUNCIADOS[problema.tema] || ENUNCIADOS.tranquila };
   modoSuelto = null;
   prepararPaso(paso);
+  // En los problemas Capi juega con las negras: reta, se burla y hace muecas.
+  CapiRival.mostrar(null, CapiRival.reto(problema.tipo));
   modoSuelto = {
     alResolver() {
       modoSuelto = null;

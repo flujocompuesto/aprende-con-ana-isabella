@@ -160,7 +160,11 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     come algo o da jaque → lentes de sol; al perder → bandera blanca; al
     ganar → baile.
     Sonidos `Aprende.sonido.boing()` y `gracioso()` (en `comun.js`). La
-    jugada de la compu espera a que termine la mueca.
+    jugada de la compu espera a que termine la mueca. En el problema del día
+    (y los de práctica) también juega con las negras: reta al abrir, se burla
+    con la lengua si la jugada no es, se asusta con la jugada clave, se
+    escapa, hace la mueca de la pieza que le comen y se rinde con el mate.
+    En los capítulos queda oculta: las reacciones son no-op si no se ve.
   - **"¿Dónde me equivoqué?"**: al terminar una partida, revisa cada jugada a
     2 jugadas (`Busqueda.valorarJugadas`) y muestra hasta 3 momentos donde
     perdió 2+ puntos o dejó pasar un mate; en cada uno busca una jugada mejor.
