@@ -136,8 +136,14 @@ const Finales = (() => {
     return mejor;
   }
 
+  // Una posición como texto, para saber si ya se vio.
+  const clave = (p) => p.tablero.map((x) => x || ".").join("") + p.turno;
+
   // Pista para las blancas. objetivo: "mate" (dama o torre) o "corona".
-  function pista(p, objetivo = "mate") {
+  // "vistas": posiciones que ya hubo en la partida (después de cada jugada
+  // blanca); la pista evita repetirlas, porque si no, el rey puede quedarse
+  // dando vueltas sin avanzar.
+  function pista(p, objetivo = "mate", vistas = new Set()) {
     if (objetivo === "corona") return pistaCorona(p);
     let mejor = null;
     let mejorPuntos = -Infinity;
@@ -146,7 +152,7 @@ const Finales = (() => {
       let v;
       if (A.situacion(n, "b") === "mate") v = 1e9;
       else if (piezaSuelta(n)) v = -1e9;
-      else v = buscar(n, "b", 2) + Math.random() * 0.01;
+      else v = buscar(n, "b", 2) + Math.random() * 0.01 - (vistas.has(clave(n)) ? 5000 : 0);
       if (v > mejorPuntos) {
         mejorPuntos = v;
         mejor = m;
@@ -155,7 +161,7 @@ const Finales = (() => {
     return mejor;
   }
 
-  return { caja, defensa, pista, piezaSuelta, distancia };
+  return { caja, defensa, pista, piezaSuelta, distancia, clave };
 })();
 
 if (typeof module !== "undefined") module.exports = Finales;

@@ -73,16 +73,19 @@ function revisarTactica(fen, linea, buenasDadas, etiqueta) {
 // Final: siguiendo la pista contra la defensa de la compu, ¿se logra?
 function revisarFinal(fen, objetivo, max, etiqueta) {
   const resultados = [];
-  for (let k = 0; k < 4; k++) {
+  // La defensa tiene un poquito de azar: se prueban muchas partidas.
+  for (let k = 0; k < 60; k++) {
     let p = A.desdeFEN(fen);
     let res = "no termina";
+    const vistas = new Set(); // como en la pantalla: la pista no repite posiciones
     for (let j = 1; j <= max; j++) {
-      const m = F.pista(p, objetivo);
+      const m = F.pista(p, objetivo, vistas);
       if (!m) {
         res = "sin pista";
         break;
       }
       p = A.mover(p, m);
+      vistas.add(F.clave(p));
       if (A.situacion(p, "b") === "mate") {
         res = j;
         break;
@@ -104,7 +107,9 @@ function revisarFinal(fen, objetivo, max, etiqueta) {
     }
     resultados.push(res);
   }
-  ok(resultados.every((r) => typeof r === "number"), `${etiqueta}: con la pista se logra en ${resultados.join(", ")} jugadas (máximo ${max})`);
+  const malas = resultados.filter((r) => typeof r !== "number");
+  const peor = Math.max(...resultados.filter((r) => typeof r === "number"));
+  ok(!malas.length, `${etiqueta}: con la pista se logra en ${resultados.length - malas.length}/${resultados.length} partidas, la más larga en ${peor} jugadas (máximo ${max})${malas.length ? " · falla: " + malas.join(", ") : ""}`);
 }
 
 console.log("== Capítulos ==");

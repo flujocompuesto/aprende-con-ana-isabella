@@ -221,8 +221,8 @@ const CAPITULOS = [
     id: "final-dama", emoji: "👑", titulo: "Mate con la dama", requiere: "jaque",
     pasos: [
       { tipo: "explica", fen: "8/8/3k4/8/8/8/8/Q3K3 w - - 0 1", texto: "Con rey y dama contra el rey solo, ¡siempre se gana! El truco es <strong>la caja</strong> 📦: la dama encierra al rey negro en un espacio cada vez más chico, y tu rey se acerca a ayudar. ⚠️ Si el rey negro <strong>no</strong> está en jaque y no puede moverse, es <strong>ahogado</strong>: ¡empate! Déjale siempre una casilla." },
-      { tipo: "final", fen: "4k3/8/8/8/8/8/8/3QK3 w - - 0 1", objetivo: "mate", max: 20, texto: "El rey negro ya está en la orilla. ¡Dale jaque mate! Si te trabas, pide una pista 💡." },
-      { tipo: "final", fen: "8/8/8/4k3/8/8/8/K6Q w - - 0 1", objetivo: "mate", max: 25, texto: "Ahora el rey negro está en el centro. Achica la caja con la dama y acerca tu rey." },
+      { tipo: "final", fen: "4k3/8/8/8/8/8/8/3QK3 w - - 0 1", objetivo: "mate", max: 30, texto: "El rey negro ya está en la orilla. ¡Dale jaque mate! Si te trabas, pide una pista 💡." },
+      { tipo: "final", fen: "8/8/8/4k3/8/8/8/K6Q w - - 0 1", objetivo: "mate", max: 30, texto: "Ahora el rey negro está en el centro. Achica la caja con la dama y acerca tu rey." },
     ],
   },
   {
@@ -1051,6 +1051,7 @@ const PASOS = {
   // La compu defiende con Finales.defensa y la pista es Finales.pista.
   final(paso) {
     let jugadas = 0;
+    let vistas = new Set(); // posiciones de la partida, para que la pista no las repita
     const contador = () =>
       (panelEl.innerHTML = `<p class="contador-ajedrez">Jugadas: <strong>${jugadas}</strong> de ${paso.max}</p>`);
     const reiniciar = () => {
@@ -1059,6 +1060,7 @@ const PASOS = {
       ultimo = null;
       marcas = new Set();
       jugadas = 0;
+      vistas = new Set();
       bloqueado = false;
       alMover = jugar;
       contador();
@@ -1083,6 +1085,7 @@ const PASOS = {
     function jugar(m) {
       marcas = new Set();
       aplicar(m);
+      vistas.add(Finales.clave(pos));
       jugadas++;
       contador();
       const sit = A.situacion(pos, "b");
@@ -1105,7 +1108,7 @@ const PASOS = {
     }
     agregarBoton("💡 Pista", "pista", () => {
       if (bloqueado || !alMover) return;
-      const m = Finales.pista(pos, paso.objetivo);
+      const m = Finales.pista(pos, paso.objetivo, vistas);
       if (!m) return;
       marcas = new Set([m.desde, m.hasta]);
       pintarTablero();
