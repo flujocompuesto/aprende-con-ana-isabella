@@ -2626,3 +2626,142 @@ footer {
 
 .enlace-progreso { margin: 26px 0 0; text-align: center; }
 .enlace-progreso a { font-weight: 700; color: var(--color-primario-oscuro); }
+
+/* ====== Capi rival en las partidas de ajedrez ====== */
+
+.rival-capi {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 420px);
+  margin: 0 auto 10px;
+}
+
+.avatar-rival { flex: 0 0 auto; width: 150px; margin: -10px 0 -6px -18px; transform-origin: 50% 90%; }
+.avatar-rival svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+.globo-rival {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 2.5px solid var(--tinta);
+  border-radius: 14px;
+  background: var(--tarjeta);
+  box-shadow: var(--sombra-tinta);
+  text-align: left;
+}
+
+/* El piquito del globo apunta a Capi. */
+.globo-rival::before {
+  content: "";
+  position: absolute;
+  left: -11px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border-left: 2.5px solid var(--tinta);
+  border-bottom: 2.5px solid var(--tinta);
+  background: var(--tarjeta);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.nombre-rival { font-family: var(--letra-titulos); font-size: 0.85rem; color: #8a7a66; }
+.frase-rival { font-family: var(--letra-titulos); font-weight: 700; font-size: 1.05rem; line-height: 1.3; }
+
+/* Muecas. Las partes del dibujo giran sobre su propio centro. */
+.avatar-rival .mandarina,
+.avatar-rival .estrellitas,
+.avatar-rival .vapor,
+.avatar-rival .corazones,
+.avatar-rival .burbujas-pensar circle,
+.avatar-rival .gotita { transform-box: fill-box; transform-origin: center; }
+.avatar-rival .bandera { transform-box: fill-box; transform-origin: 100% 100%; }
+
+.avatar-rival.temblor { animation: rival-temblor 0.12s linear 8; }
+.avatar-rival.salto-sorpresa { animation: rival-salto 0.5s ease-out; }
+.avatar-rival.salto-sorpresa .mandarina { animation: mandarina-salta 0.6s ease-out; }
+.avatar-rival.llanto { animation: rival-llanto 0.35s ease-in-out 5; }
+.avatar-rival .lagrimas .gotita { animation: gotita-cae 0.6s ease-in infinite; }
+.avatar-rival.mandarina-vuela .mandarina { animation: mandarina-vuela 1.6s ease-in forwards; }
+.avatar-rival.mareo { animation: rival-mareo 0.5s ease-in-out 3; }
+.avatar-rival .estrellitas { animation: estrellitas-giran 1.2s linear infinite; }
+.avatar-rival .vapor { animation: vapor-sube 0.7s ease-out infinite; }
+.avatar-rival .burbujas-pensar circle { animation: pensar 1.2s ease-in-out infinite; }
+.avatar-rival .burbujas-pensar circle:nth-child(2) { animation-delay: 0.2s; }
+.avatar-rival .burbujas-pensar circle:nth-child(3) { animation-delay: 0.4s; }
+.avatar-rival.presume { animation: rival-presume 0.6s ease-in-out 2; }
+.avatar-rival.desinflada { animation: rival-desinflada 0.9s ease-out forwards; }
+.avatar-rival .bandera { animation: bandera-ondea 0.6s ease-in-out infinite alternate; }
+.avatar-rival.baile { animation: rival-baile 0.5s ease-in-out 6; }
+.avatar-rival .corazones { animation: pensar 0.8s ease-in-out infinite; }
+
+@keyframes rival-temblor {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  25% { transform: translateX(-4px) rotate(-3deg); }
+  75% { transform: translateX(4px) rotate(3deg); }
+}
+
+@keyframes rival-salto {
+  30% { transform: translateY(-14px) scale(1.05, 0.95); }
+  60% { transform: translateY(0) scale(0.95, 1.05); }
+}
+
+@keyframes mandarina-salta {
+  40% { transform: translateY(-22px) rotate(-20deg); }
+}
+
+@keyframes rival-llanto {
+  50% { transform: scale(1.04, 0.96) rotate(-2deg); }
+}
+
+@keyframes gotita-cae {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(26px); opacity: 0; }
+}
+
+@keyframes mandarina-vuela {
+  30% { transform: translate(30px, -60px) rotate(140deg); }
+  100% { transform: translate(90px, 150px) rotate(420deg); opacity: 0; }
+}
+
+@keyframes rival-mareo {
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
+}
+
+@keyframes estrellitas-giran { to { transform: rotate(360deg); } }
+
+@keyframes vapor-sube {
+  from { transform: translateY(6px); opacity: 1; }
+  to { transform: translateY(-10px); opacity: 0.2; }
+}
+
+@keyframes pensar { 50% { transform: translateY(-4px); } }
+
+@keyframes rival-presume {
+  50% { transform: rotate(-6deg) scale(1.06); }
+}
+
+@keyframes rival-desinflada {
+  to { transform: scale(1.05, 0.9) translateY(4px); }
+}
+
+@keyframes bandera-ondea { to { transform: rotate(8deg); } }
+
+@keyframes rival-baile {
+  25% { transform: translateY(-8px) rotate(-6deg); }
+  75% { transform: translateY(-8px) rotate(6deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-rival,
+  .avatar-rival * { animation: none !important; }
+}
+
+@media (max-width: 520px) {
+  .avatar-rival { width: 116px; margin: -8px 0 -4px -14px; }
+  .frase-rival { font-size: 0.95rem; }
+}

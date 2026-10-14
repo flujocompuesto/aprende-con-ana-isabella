@@ -59,7 +59,38 @@ const Aprende = (() => {
     oscilador.stop(t + duracion + 0.05);
   }
 
+  // Una nota que se desliza de una frecuencia a otra (para sonidos chistosos).
+  function deslizar(desde, hasta, inicio, duracion, tipo = "triangle", volumen = 0.12) {
+    const c = audio();
+    if (!c) return;
+    const t = c.currentTime + inicio;
+    const oscilador = c.createOscillator();
+    const ganancia = c.createGain();
+    oscilador.type = tipo;
+    oscilador.frequency.setValueAtTime(desde, t);
+    oscilador.frequency.exponentialRampToValueAtTime(hasta, t + duracion);
+    ganancia.gain.setValueAtTime(0.0001, t);
+    ganancia.gain.exponentialRampToValueAtTime(volumen, t + 0.02);
+    ganancia.gain.exponentialRampToValueAtTime(0.0001, t + duracion);
+    oscilador.connect(ganancia);
+    ganancia.connect(c.destination);
+    oscilador.start(t);
+    oscilador.stop(t + duracion + 0.05);
+  }
+
   const sonido = {
+    // ¡Boing! (sorpresa)
+    boing() {
+      if (silencio) return;
+      deslizar(180, 620, 0, 0.18, "sine", 0.16);
+      deslizar(620, 300, 0.18, 0.22, "sine", 0.1);
+    },
+    // Wah, wah, wah, waaah (la trompeta triste de las caricaturas).
+    gracioso() {
+      if (silencio) return;
+      [392, 370, 349].forEach((f, i) => deslizar(f, f * 0.97, i * 0.28, 0.26, "triangle", 0.11));
+      deslizar(330, 290, 0.84, 0.7, "triangle", 0.11);
+    },
     acierto() {
       if (silencio) return;
       nota(660, 0, 0.15);

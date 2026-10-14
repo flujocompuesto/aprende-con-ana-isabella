@@ -148,7 +148,7 @@ const CAPITULOS = [
   {
     id: "partida", emoji: "🎮", titulo: "¡Juega una partida!",
     pasos: [
-      { tipo: "explica", fen: A.INICIAL, texto: "¡Llegó la hora de jugar una partida completa contra la compu! Tú juegas con las <strong>blancas</strong>. Usa las reglas de oro: centro, saca tus piezas y enroca. Si te equivocas puedes <strong>deshacer</strong>, y si no sabes qué jugar pide <strong>ayuda</strong> 💡." },
+      { tipo: "explica", fen: A.INICIAL, texto: "¡Llegó la hora de jugar una partida completa contra mí, Capi! 🍊 Tú juegas con las <strong>blancas</strong>. Usa las reglas de oro: centro, saca tus piezas y enroca. Si te equivocas puedes <strong>deshacer</strong>, y si no sabes qué jugar pide <strong>ayuda</strong> 💡." },
       { tipo: "partida" },
     ],
   },
@@ -209,7 +209,7 @@ const CAPITULOS = [
   {
     id: "mate2", emoji: "🧠", titulo: "Mate en 2", requiere: "mates",
     pasos: [
-      { tipo: "explica", fen: "7k/8/8/8/8/8/R7/1R4K1 w - - 0 1", texto: "En el <strong>mate en 2</strong> haces una jugada, la compu se defiende como pueda, y después das el mate. La pregunta es: ¿qué jugada deja al rey <strong>sin salida, haga lo que haga</strong>?" },
+      { tipo: "explica", fen: "7k/8/8/8/8/8/R7/1R4K1 w - - 0 1", texto: "En el <strong>mate en 2</strong> haces una jugada, Capi se defiende como pueda, y después das el mate. La pregunta es: ¿qué jugada deja al rey <strong>sin salida, haga lo que haga</strong>?" },
       { tipo: "mate2", fen: "7k/8/8/8/8/8/R7/1R4K1 w - - 0 1", texto: "Mate en 2 con las dos torres: la primera <strong>encierra</strong> al rey y la segunda da el mate." },
       { tipo: "mate2", fen: "2r3k1/5ppp/8/8/8/8/3Q1PPP/3R2K1 w - - 0 1", texto: "¡Un truco de campeona! A veces hay que <strong>regalar la dama</strong> para dar mate. La torre negra no puede cuidar todo a la vez…" },
       { tipo: "mate2", fen: "5r1k/6pp/7N/3Q4/8/8/8/6K1 w - - 0 1", texto: "El <strong>mate ahogado</strong>: el rey negro queda encerrado por sus propias piezas. Primero un sacrificio, después el caballo… 🐴" },
@@ -269,9 +269,9 @@ const CAPITULOS = [
     ],
   },
   {
-    id: "experta", emoji: "🦉", titulo: "Reto: la compu experta", requiere: "partida",
+    id: "experta", emoji: "🎓", titulo: "Reto: Capi experta", requiere: "partida",
     pasos: [
-      { tipo: "explica", fen: A.INICIAL, texto: "El último reto: la <strong>compu experta</strong>. Piensa <strong>2 jugadas adelante</strong>: casi nunca regala piezas y aprovecha las que tú dejes sueltas. Antes de cada jugada pregúntate: <em>¿qué me puede comer?</em> Ganarle vale ⭐⭐⭐ y empatar ⭐⭐." },
+      { tipo: "explica", fen: A.INICIAL, texto: "El último reto: <strong>Capi experta</strong>, con su birrete de graduada 🎓. Piensa <strong>2 jugadas adelante</strong>: casi nunca regala piezas y aprovecha las que tú dejes sueltas. Antes de cada jugada pregúntate: <em>¿qué me puede comer?</em> Ganarle vale ⭐⭐⭐ y empatar ⭐⭐." },
       { tipo: "partida", rival: "experta" },
     ],
   },
@@ -550,6 +550,7 @@ function mostrarPaso() {
 // Deja la pantalla limpia y arma el paso (de un capítulo o suelto).
 function prepararPaso(paso) {
   sesion++;
+  CapiRival.ocultar();
   tableroEl.classList.remove("sin-coordenadas");
   casillasError = new Set();
   pos = posDePaso(paso);
@@ -858,7 +859,7 @@ const PASOS = {
         alMover = null;
         bloqueado = true;
         Aprende.sonido.acierto();
-        mensaje("¡Buena jugada! ✅ La compu se defiende…", "exito");
+        mensaje("¡Buena jugada! ✅ Capi se defiende…", "exito");
         setTimeout(() => {
           if (s !== sesion) return;
           // La compu elige la defensa que deja menos mates.
@@ -881,7 +882,7 @@ const PASOS = {
       const salvada = A.todosLegales(pos, "b").find((d) => !matesEn1(A.mover(pos, d)).length);
       mensaje(
         salvada
-          ? "Mira cómo se salva la compu con esa jugada… ¡Busca otra!"
+          ? "Mira cómo se salva Capi con esa jugada… ¡Busca otra!"
           : "¡Cuidado! Así el rey negro no está en jaque pero no puede mover: eso es <strong>ahogado</strong> (empate).",
         "error"
       );
@@ -1019,7 +1020,7 @@ const PASOS = {
       if (k >= paso.linea.length) return ganar(premio);
       // La compu responde con la jugada de la línea.
       bloqueado = true;
-      mensaje("¡Buena jugada! ✅ La compu responde…", "exito");
+      mensaje("¡Buena jugada! ✅ Capi responde…", "exito");
       setTimeout(() => {
         if (s !== sesion) return;
         aplicar(buscarMovimiento(pos, paso.linea[k]));
@@ -1168,7 +1169,7 @@ const PASOS = {
 // ---- Partida contra la compu ----
 
 const VALOR = { P: 1, N: 3, B: 3, R: 5, Q: 9, K: 0 };
-const RIVALES = { tranquila: "🐢 compu tranquila", lista: "🦊 compu lista", experta: "🦉 compu experta" };
+const RIVALES = { tranquila: "Capi tranquila", lista: "Capi lista", experta: "Capi experta" };
 let rival = "tranquila";
 let rivalFijo = null; // el capítulo del reto juega siempre contra la experta
 // Cada jugada de la niña: la posición antes, su jugada y la respuesta de la compu.
@@ -1311,12 +1312,13 @@ function elegirJugadaExperta(p, color) {
 
 function elegirRival() {
   pos = A.desdeFEN(A.INICIAL);
-  textoEl.innerHTML = "¿Contra qué compu quieres jugar?";
+  textoEl.innerHTML = "¿Contra cuál Capi quieres jugar?";
+  CapiRival.mostrar(null);
   panelEl.innerHTML = '<div class="opciones" id="rivales"></div>';
   const rivales = document.getElementById("rivales");
   [
-    { t: "🐢 Compu tranquila (para empezar)", rival: "tranquila" },
-    { t: "🦊 Compu lista (más difícil)", rival: "lista" },
+    { t: "🍊 Capi tranquila (para empezar)", rival: "tranquila" },
+    { t: "🤓 Capi lista (más difícil)", rival: "lista" },
   ].forEach((r) => {
     const boton = document.createElement("button");
     boton.className = "opcion";
@@ -1337,7 +1339,8 @@ function empezarPartida(quien) {
   ultimo = null;
   marcas = new Set();
   bloqueado = false;
-  textoEl.innerHTML = `Juegas con las <strong>blancas</strong> contra la ${RIVALES[rival]}. ¡Buena suerte!`;
+  textoEl.innerHTML = `Juegas con las <strong>blancas</strong> contra <strong>${RIVALES[rival]}</strong>. ¡Buena suerte!`;
+  CapiRival.mostrar(rival);
   panelEl.innerHTML = `
     <p id="estado-partida" class="estado-partida"></p>
     <p class="capturadas">Comiste: <span id="comidas-blancas"></span></p>
@@ -1384,7 +1387,12 @@ function jugarBlancas(m) {
   jugadasHechas++;
   if (revisarFin()) return;
   bloqueado = true;
-  actualizarEstado("La compu está pensando… 🤔");
+  actualizarEstado("Capi está pensando… 🤔");
+  // Capi hace una mueca si le comen algo o le dan jaque; si no, se pone a pensar.
+  let mueca = 0;
+  if (m.captura) mueca = CapiRival.reaccionar("comida", { tipo: A.tipoDe(m.captura) });
+  else if (A.enJaque(pos, "b")) mueca = CapiRival.reaccionar("jaque");
+  else CapiRival.reaccionar("pensando");
   const s = sesion;
   setTimeout(() => {
     if (s !== sesion) return;
@@ -1394,8 +1402,12 @@ function jugarBlancas(m) {
     aplicar(respuesta);
     jugadasHechas++;
     bloqueado = false;
-    if (!revisarFin()) actualizarEstado();
-  }, 650);
+    if (revisarFin()) return;
+    actualizarEstado();
+    if (respuesta.captura) CapiRival.reaccionar("come", { tipo: A.tipoDe(respuesta.captura) });
+    else if (A.enJaque(pos, "w")) CapiRival.reaccionar("daJaque");
+    else CapiRival.reaccionar("turno");
+  }, Math.max(650, mueca * 0.8));
 }
 
 function revisarFin() {
@@ -1407,11 +1419,14 @@ function revisarFin() {
   let texto;
   if (sit === "mate" && pos.turno === "b") {
     estrellas = rival === "tranquila" ? 2 : 3;
-    texto = rival === "experta" ? "¡JAQUE MATE! 🏆🦉 ¡Le ganaste a la compu experta!" : "¡JAQUE MATE! 🏆 ¡Le ganaste a la compu!";
+    texto = rival === "experta" ? "¡JAQUE MATE! 🏆🎓 ¡Le ganaste a Capi experta!" : "¡JAQUE MATE! 🏆 ¡Le ganaste a Capi!";
+    CapiRival.reaccionar("pierde");
   } else if (sit === "mate") {
     estrellas = 0;
-    texto = "Jaque mate… esta vez ganó la compu. ¡Cada partida te hace mejor, inténtalo otra vez!";
+    texto = "Jaque mate… esta vez ganó Capi. ¡Cada partida te hace mejor, inténtalo otra vez!";
+    CapiRival.reaccionar("gana");
   } else {
+    CapiRival.reaccionar("tablas");
     estrellas = rival === "experta" ? 2 : 1;
     texto = sit === "ahogado"
       ? "¡Tablas por ahogado! El rey no estaba en jaque, pero no tenía ninguna jugada."
@@ -1421,9 +1436,9 @@ function revisarFin() {
   const s = sesion;
   setTimeout(() => {
     if (s !== sesion) return;
-    terminarCapitulo(estrellas, texto, `Contra la ${RIVALES[rival]}`);
+    terminarCapitulo(estrellas, texto, `Contra ${RIVALES[rival]}`);
     botonRevisar.hidden = registro.length < 3;
-  }, 1800);
+  }, 2600);
   return true;
 }
 
@@ -1431,6 +1446,7 @@ function deshacer() {
   if (bloqueado || !historial.length) return;
   const h = historial.pop();
   registro.pop();
+  CapiRival.reaccionar("deshacer");
   pos = h.pos;
   capturadas = h.capturadas;
   ultimo = h.ultimo;
@@ -1544,7 +1560,7 @@ function problemaAlAzar() {
 
 const ENUNCIADOS = {
   mate: "Juegan las blancas. ¡Hay un <strong>jaque mate en 1</strong>!",
-  mate2: "Juegan las blancas: <strong>mate en 2</strong>. Tu jugada, la compu se defiende… y mate.",
+  mate2: "Juegan las blancas: <strong>mate en 2</strong>. Tu jugada, Capi se defiende… y mate.",
   colgada: "Juegan las blancas. Hay una pieza negra <strong>sola</strong>… ¿la encuentras? Ojo con las que están cuidadas.",
   tenedor: "Juegan las blancas. Busca un <strong>tenedor</strong> 🍴: una pieza que ataque a dos a la vez.",
   jaque: "Juegan las blancas y pueden ganar material. Pista: empieza con un <strong>jaque</strong>.",
@@ -1734,7 +1750,7 @@ function mostrarMomento(momentos, k) {
   const tuya = notacion(mo.antes, mo.m);
   let paso;
   if (mo.perdida >= 100) paso = "¡Y ahí tenías un <strong>jaque mate</strong>!";
-  else if (mo.respuesta && mo.respuesta.captura) paso = `Después la compu se comió ${INFO_PIEZAS[A.tipoDe(mo.respuesta.captura)].articulo}.`;
+  else if (mo.respuesta && mo.respuesta.captura) paso = `Después Capi se comió ${INFO_PIEZAS[A.tipoDe(mo.respuesta.captura)].articulo}.`;
   else paso = "Con esa jugada perdías material.";
   textoEl.innerHTML = `<strong>Momento ${k + 1} de ${momentos.length}</strong> · En tu jugada ${mo.i + 1} jugaste <strong>${tuya}</strong> (en rojo). ${paso} ¿Qué era mejor? Busca otra jugada.`;
   pintarTablero();

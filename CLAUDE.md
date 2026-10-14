@@ -27,7 +27,9 @@ con IA.** Ivan lo pidió explícitamente. Reglas:
 - **Mascota: Capi, la capibara** (`img/capibara.svg`, con su mandarina en la
   cabeza). `js/comun.js` la pone sola en el encabezado de cada página y la
   hace saltar al terminar una partida; una página puede evitarlo con
-  `data-sin-mascota` en el `<header>`. En el ajedrez es la profe.
+  `data-sin-mascota` en el `<header>`. En el ajedrez es la profe y también
+  la **rival** de las partidas (Capi tranquila / lista con lentes / experta
+  con birrete).
 - Pie de página: "Hecho a mano por papá, para Ana Isabella."
 
 ## Stack técnico
@@ -52,7 +54,8 @@ con IA.** Ivan lo pidió explícitamente. Reglas:
 Todas las páginas cargan `js/comun.js` **antes** del script del juego. Expone
 el objeto `Aprende`:
 - `Aprende.silenciado()` — si está en 🔇 (la voz del juego de inglés también lo respeta).
-- `Aprende.sonido.acierto() / error() / clic() / paso() / victoria()` —
+- `Aprende.sonido.acierto() / error() / clic() / paso() / victoria() /
+  boing() / gracioso()` —
   sonidos sintetizados con Web Audio (sin archivos). El botón 🔊/🔇 se agrega
   solo al encabezado y recuerda la preferencia.
 - `Aprende.efecto.rebote(el) / sacudir(el)` y `Aprende.confeti()` (respetan
@@ -149,6 +152,14 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     racha 🔥 en `aprende:ajedrez-diario` (sigue viva si resolvió hoy o ayer;
     la página de inicio la muestra en la tarjeta), "Otro problema" para
     practicar y el reto de coordenadas de 30 s con récord.
+  - **Capi rival** (`js/capi-rival.js`): en las partidas Capi se sienta
+    arriba del tablero con un globo de frases y hace muecas dibujadas en SVG
+    (las mismas formas de `img/capibara.svg`): le comen un peón → sorpresa;
+    caballo → lengua afuera; alfil → berrinche con vapor; torre → llanto;
+    dama → llanto y se le vuela la mandarina; jaque → mareada; cuando ella
+    come → lentes de sol; al perder → bandera blanca; al ganar → baile.
+    Sonidos `Aprende.sonido.boing()` y `gracioso()` (en `comun.js`). La
+    jugada de la compu espera a que termine la mueca.
   - **"¿Dónde me equivoqué?"**: al terminar una partida, revisa cada jugada a
     2 jugadas (`Busqueda.valorarJugadas`) y muestra hasta 3 momentos donde
     perdió 2+ puntos o dejó pasar un mate; en cada uno busca una jugada mejor.
