@@ -694,6 +694,13 @@ function pedirMate(textoExito = "¡JAQUE MATE! 🎉 El rey negro no tiene escape
   return darPista;
 }
 
+// En los capítulos de mates de campeona, Capi juega con las negras (las
+// reacciones ya están en pedirMate y en el paso mate2).
+const CAPITULOS_CON_RIVAL = ["mates", "mate2"];
+function retarEnMates(tipo) {
+  if (CAPITULOS_CON_RIVAL.includes((CAPITULOS[capIndice] || {}).id)) CapiRival.mostrar(null, CapiRival.reto(tipo));
+}
+
 // ---- Tipos de paso ----
 
 const PASOS = {
@@ -835,6 +842,7 @@ const PASOS = {
   },
 
   mate() {
+    retarEnMates("mate");
     const darPista = pedirMate();
     agregarBoton("💡 Pista", "pista", () => darPista());
   },
@@ -843,6 +851,7 @@ const PASOS = {
   // defensa de la compu, y el mate. Se valida con el motor, no con una
   // respuesta fija: sirve cualquier jugada que fuerce el mate.
   mate2() {
+    retarEnMates("mate2");
     let fallos = 0;
     let darPista = () => {
       const m = A.todosLegales(pos, "w").find((x) => fuerzaMateEn2(pos, x));
