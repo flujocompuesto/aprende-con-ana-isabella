@@ -1,6 +1,7 @@
 // Capi rival — Aprende con Ana Isabella
-// En las partidas de ajedrez (y en los problemas del día, donde juega con las
-// negras), Capi se sienta del otro lado del tablero y reacciona: cuando le comen una pieza hace muecas (ojos de plato, lengua
+// En las partidas de ajedrez (y en los problemas del día, la táctica y los
+// finales, donde juega con las negras), Capi se sienta del otro lado del
+// tablero y reacciona: cuando le comen una pieza hace muecas (ojos de plato, lengua
 // afuera, berrinche con vapor, llanto a mares… y con la dama ¡se le vuela
 // la mandarina!), se marea con los jaques, se pone lentes de sol cuando ella
 // come algo y al final se rinde con bandera blanca o festeja.
@@ -176,6 +177,12 @@ const CapiRival = (() => {
     buena: ["¡Uy! ¿Cómo viste eso? 😰", "¡Oh, no! ¿Y ahora qué hago? 😰", "¡Glup! 😰"],
     defiende: ["¡Me escapo por aquí! 😅", "¡Rápido, a salvarse!", "Uf… ¿y ahora? 😬"],
     pista: ["¡No mires ahí! 🙈", "¡Ey, eso es ayudar! 🙈", "¡Shhh, no le digas! 🙈"],
+    // En los finales:
+    escapa: ["¡No me atrapas! 😜", "¡Por aquí me escapo! 😜", "¡Jeje, sigo libre! 😜"],
+    encerrada: ["¡Me estás encerrando! 😰", "¡Ay, ya casi no tengo casillas! 😰", "¡Socorro, la caja se achica! 😰"],
+    corona: ["¡Nooo! ¡Una dama nueva! 😭", "¡No llegué a tiempo! 😭"],
+    ahogado: ["¡Ahogado! ¡Empate! Me salvé 😜", "¡Jeje, no me puedo mover pero no es mate! 😜"],
+    sinJugadas: ["¡Se acabaron las jugadas! Me salvé 😜", "¡Tiempo! Mi rey sigue libre 😜"],
   };
 
   // Para empezar un problema: Capi reta a Ana Isabella según el tipo.
@@ -183,6 +190,8 @@ const CapiRival = (() => {
     mate: ["¿A que no encuentras el mate? 😏", "¡Mi rey está bien escondido! (creo…) 😏"],
     mate2: ["Mate en 2… ¡imposible! 😏", "¡Te reto: mate en 2! 😏"],
     tactica: ["¡Mis piezas están bien cuidadas! (creo…) 😇", "¿Ves algo raro? Yo no veo nada 😇", "¡A que no me ganas nada! 😏"],
+    final: ["¡A ver si me atrapas! Mi rey es muy rápido 😜", "¡Con un rey solito te gano igual! 😜"],
+    corona: ["¡Ese peón no corona! Voy corriendo 🏃", "¡Te alcanzo, peoncito! 🏃"],
   };
   const reto = (tipo) => azar(RETOS[tipo] || RETOS.tactica);
 
@@ -201,6 +210,11 @@ const CapiRival = (() => {
     buena: { cara: "sorprendida", anima: "temblor", ms: 1000, sonido: "boing" },
     defiende: { cara: "sorprendida", anima: "", ms: 1000 },
     pista: { cara: "sorprendida", anima: "salto-sorpresa", ms: 1200 },
+    escapa: { cara: "lengua", anima: "presume", ms: 1100 },
+    encerrada: { cara: "sorprendida", anima: "temblor", ms: 1100 },
+    corona: { cara: "llorona", anima: "llanto", ms: 0, sonido: "gracioso" },
+    ahogado: { cara: "lengua", anima: "presume", ms: 0 },
+    sinJugadas: { cara: "lengua", anima: "presume", ms: 0 },
     pierde: { cara: "rendida", anima: "desinflada", ms: 0, sonido: "gracioso" },
     gana: { cara: "feliz", anima: "baile", ms: 0 },
     tablas: { cara: "sorprendida", anima: "", ms: 0 },
@@ -244,7 +258,8 @@ const CapiRival = (() => {
   // evento: "comida" (info.tipo = pieza que le comieron), "jaque", "come"
   // (info.tipo = pieza que comió Capi), "daJaque", "pensando", "turno",
   // "deshacer", "pierde", "gana" o "tablas"; en los problemas también "falla",
-  // "buena", "defiende" y "pista". Devuelve cuánto dura la mueca.
+  // "buena", "defiende" y "pista"; en los finales "escapa", "encerrada",
+  // "corona", "ahogado" y "sinJugadas". Devuelve cuánto dura la mueca.
   function reaccionar(evento, info = {}) {
     if (!caja || caja.hidden) return 0;
     clearTimeout(reloj);

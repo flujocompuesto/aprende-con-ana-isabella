@@ -161,10 +161,14 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     ganar → baile.
     Sonidos `Aprende.sonido.boing()` y `gracioso()` (en `comun.js`). La
     jugada de la compu espera a que termine la mueca. En el problema del día
-    (y los de práctica) también juega con las negras: reta al abrir, se burla
-    con la lengua si la jugada no es, se asusta con la jugada clave, se
-    escapa, hace la mueca de la pieza que le comen y se rinde con el mate.
-    En los capítulos queda oculta: las reacciones son no-op si no se ve.
+    (y los de práctica) y en los pasos `tactica` y `final` de los capítulos
+    también juega con las negras: reta al abrir, se burla con la lengua si
+    la jugada no es, se asusta con la jugada clave, se escapa, hace la mueca
+    de la pieza que le comen y se rinde con el mate. En los finales además
+    se burla cuando su rey escapa, se asusta cuando le quedan 4 casillas o
+    menos (`Finales.caja`), festeja el ahogado y llora si el peón corona.
+    En los demás pasos queda oculta (`prepararPaso` la esconde) y las
+    reacciones no hacen nada.
   - **"¿Dónde me equivoqué?"**: al terminar una partida, revisa cada jugada a
     2 jugadas (`Busqueda.valorarJugadas`) y muestra hasta 3 momentos donde
     perdió 2+ puntos o dejó pasar un mate; en cada uno busca una jugada mejor.

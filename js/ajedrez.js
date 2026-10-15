@@ -972,6 +972,8 @@ const PASOS = {
   tactica(paso) {
     let k = 0;
     let fallos = 0;
+    // Capi juega con las negras (en el problema del día, abrirProblema la vuelve a mostrar con su reto).
+    CapiRival.mostrar(null, CapiRival.reto("tactica"));
     const desdeDe = (clave) => A.indiceCasilla(clave.slice(0, 2));
     const ganar = (texto) => {
       alMover = null;
@@ -1066,6 +1068,8 @@ const PASOS = {
       contador();
       mensaje("");
       pintarTablero();
+      // Capi juega con el rey negro y reta a la niña.
+      CapiRival.mostrar(null, CapiRival.reto(paso.objetivo === "corona" ? "corona" : "final"));
     };
     const fallar = (texto) => {
       contarError();
@@ -1089,13 +1093,29 @@ const PASOS = {
       jugadas++;
       contador();
       const sit = A.situacion(pos, "b");
-      if (sit === "mate") return ganar(`¡JAQUE MATE en ${jugadas} jugadas! 🏆`);
-      if (sit === "ahogado") return fallar("¡Ahogado! 😮 El rey negro no está en jaque y no puede moverse: es empate.");
+      if (sit === "mate") {
+        CapiRival.reaccionar("pierde");
+        return ganar(`¡JAQUE MATE en ${jugadas} jugadas! 🏆`);
+      }
+      if (sit === "ahogado") {
+        CapiRival.reaccionar("ahogado");
+        return fallar("¡Ahogado! 😮 El rey negro no está en jaque y no puede moverse: es empate.");
+      }
       if (paso.objetivo === "corona" && m.promocion) {
-        if (Finales.piezaSuelta(pos)) return fallar("Coronaste, pero el rey negro se come la dama nueva.");
+        if (Finales.piezaSuelta(pos)) {
+          CapiRival.reaccionar("come", { tipo: "Q" });
+          return fallar("Coronaste, pero el rey negro se come la dama nueva.");
+        }
+        CapiRival.reaccionar("corona");
         return ganar("¡Coronaste! 👑 Tu peón ya es dama: ¡la partida está ganada!");
       }
-      if (jugadas >= paso.max) return fallar(`Se acabaron las ${paso.max} jugadas.`);
+      if (jugadas >= paso.max) {
+        CapiRival.reaccionar("sinJugadas");
+        return fallar(`Se acabaron las ${paso.max} jugadas.`);
+      }
+      // Con el jaque Capi se marea (y esa cara se queda mientras responde).
+      const jaque = A.enJaque(pos, "b");
+      if (jaque) CapiRival.reaccionar("jaque");
       bloqueado = true;
       const s = sesion;
       setTimeout(() => {
@@ -1103,7 +1123,15 @@ const PASOS = {
         const r = Finales.defensa(pos);
         aplicar(r);
         bloqueado = false;
-        if (r.captura) fallar(`¡El rey negro se comió ${INFO_PIEZAS[A.tipoDe(r.captura)].articulo}! Cuida tus piezas con tu rey.`);
+        if (r.captura) {
+          CapiRival.reaccionar("come", { tipo: A.tipoDe(r.captura) });
+          fallar(`¡El rey negro se comió ${INFO_PIEZAS[A.tipoDe(r.captura)].articulo}! Cuida tus piezas con tu rey.`);
+          return;
+        }
+        if (jaque) return;
+        // Si le quedan pocas casillas se asusta; si no, a veces se burla.
+        if (paso.objetivo !== "corona" && Finales.caja(pos) <= 4) CapiRival.reaccionar("encerrada");
+        else if (Math.random() < 0.35) CapiRival.reaccionar("escapa");
       }, 550);
     }
     agregarBoton("💡 Pista", "pista", () => {
@@ -1113,6 +1141,7 @@ const PASOS = {
       marcas = new Set([m.desde, m.hasta]);
       pintarTablero();
       mensaje(`💡 Prueba mover ${INFO_PIEZAS[A.tipoDe(m.pieza)].articulo} a ${A.nombreCasilla(m.hasta)}.`);
+      CapiRival.reaccionar("pista");
     });
     agregarBoton("↺ Empezar otra vez", "quitar", reiniciar);
     reiniciar();
