@@ -694,11 +694,12 @@ function pedirMate(textoExito = "¡JAQUE MATE! 🎉 El rey negro no tiene escape
   return darPista;
 }
 
-// En los capítulos de mates de campeona, Capi juega con las negras (las
-// reacciones ya están en pedirMate y en el paso mate2).
-const CAPITULOS_CON_RIVAL = ["mates", "mate2"];
+// En estos capítulos Capi juega con las negras en los pasos de mate y de
+// escapar del jaque (las reacciones ya están en pedirMate y en mate2).
+const CAPITULOS_CON_RIVAL = ["jaque", "mates", "mate2"];
+const conRival = () => CAPITULOS_CON_RIVAL.includes((CAPITULOS[capIndice] || {}).id);
 function retarEnMates(tipo) {
-  if (CAPITULOS_CON_RIVAL.includes((CAPITULOS[capIndice] || {}).id)) CapiRival.mostrar(null, CapiRival.reto(tipo));
+  if (conRival()) CapiRival.mostrar(null, CapiRival.reto(tipo));
 }
 
 // ---- Tipos de paso ----
@@ -829,9 +830,16 @@ const PASOS = {
 
   escapa() {
     mensaje("Toca tu rey o una de tus piezas: el tablero solo te deja hacer jugadas que lo salvan.");
+    // Capi es la que da el jaque: presume, y se enoja si la niña se salva.
+    if (conRival()) {
+      CapiRival.mostrar(null, CapiRival.reto("escapa"));
+      CapiRival.reaccionar("daJaque");
+    }
     alMover = (m) => {
       aplicar(m);
       alMover = null;
+      if (m.captura) CapiRival.reaccionar("comida", { tipo: A.tipoDe(m.captura) });
+      else CapiRival.reaccionar("seSalva");
       let forma = "¡Bien pensado! Tapaste el ataque con otra pieza.";
       if (m.captura) forma = "¡Genial! Comiste a la pieza que atacaba.";
       else if (A.tipoDe(m.pieza) === "K") forma = "¡Muy bien! Moviste el rey a una casilla segura.";

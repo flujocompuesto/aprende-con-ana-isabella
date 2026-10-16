@@ -162,7 +162,8 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     Sonidos `Aprende.sonido.boing()` y `gracioso()` (en `comun.js`). La
     jugada de la compu espera a que termine la mueca. En el problema del día
     (y los de práctica) en los pasos `tactica` y `final` de los capítulos y en los
-    capítulos «Mates difíciles» y «Mate en 2» (`CAPITULOS_CON_RIVAL`)
+    capítulos «Jaque y jaque mate» (también al escapar del jaque), «Mates
+    difíciles» y «Mate en 2» (`CAPITULOS_CON_RIVAL`)
     también juega con las negras: reta al abrir, se burla con la lengua si
     la jugada no es, se asusta con la jugada clave, se escapa, hace la mueca
     de la pieza que le comen y se rinde con el mate. En los finales además

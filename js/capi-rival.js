@@ -183,6 +183,7 @@ const CapiRival = (() => {
     corona: ["¡Nooo! ¡Una dama nueva! 😭", "¡No llegué a tiempo! 😭"],
     ahogado: ["¡Ahogado! ¡Empate! Me salvé 😜", "¡Jeje, no me puedo mover pero no es mate! 😜"],
     sinJugadas: ["¡Se acabaron las jugadas! Me salvé 😜", "¡Tiempo! Mi rey sigue libre 😜"],
+    seSalva: ["¡Rayos, te salvaste! 😤", "¡Grrr! ¡Casi te atrapo! 😤"],
   };
 
   // Para empezar un problema: Capi reta a Ana Isabella según el tipo.
@@ -192,6 +193,7 @@ const CapiRival = (() => {
     tactica: ["¡Mis piezas están bien cuidadas! (creo…) 😇", "¿Ves algo raro? Yo no veo nada 😇", "¡A que no me ganas nada! 😏"],
     final: ["¡A ver si me atrapas! Mi rey es muy rápido 😜", "¡Con un rey solito te gano igual! 😜"],
     corona: ["¡Ese peón no corona! Voy corriendo 🏃", "¡Te alcanzo, peoncito! 🏃"],
+    escapa: ["¡Jaque! ¿Cómo vas a salvar a tu rey? 😎", "¡Te tengo en jaque! 😎"],
   };
   const reto = (tipo) => azar(RETOS[tipo] || RETOS.tactica);
 
@@ -215,6 +217,7 @@ const CapiRival = (() => {
     corona: { cara: "llorona", anima: "llanto", ms: 0, sonido: "gracioso" },
     ahogado: { cara: "lengua", anima: "presume", ms: 0 },
     sinJugadas: { cara: "lengua", anima: "presume", ms: 0 },
+    seSalva: { cara: "enojada", anima: "temblor", ms: 1600, sonido: "gracioso" },
     pierde: { cara: "rendida", anima: "desinflada", ms: 0, sonido: "gracioso" },
     gana: { cara: "feliz", anima: "baile", ms: 0 },
     tablas: { cara: "sorprendida", anima: "", ms: 0 },
