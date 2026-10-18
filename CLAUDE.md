@@ -37,6 +37,12 @@ con IA.** Ivan lo pidió explícitamente. Reglas:
   navegador o servirse con GitHub Pages / Cloudflare Pages.
 - Dependencias externas: imágenes de banderas (flagcdn.com) y las dos
   letras de Google Fonts.
+- Única parte con servidor: el ajedrez **en línea** (Pages Functions en
+  `functions/api/partida/` + la D1 `aprende-partidas`, binding `DB` en
+  `wrangler.toml`; esquema en `migraciones/`, se aplica con
+  `npx wrangler d1 migrations apply aprende-partidas --remote`). Para
+  probarlo local: `npx wrangler pages dev --port=8796` (config
+  `ana-wrangler`). El resto del sitio sigue funcionando sin servidor.
 
 ## Reglas y convenciones
 - Público siempre: **nunca** incluir datos personales sensibles, fotos,
@@ -183,6 +189,16 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     2+ puntos muy por encima de las demás jugadas), con el tablero volteado
     si les tocaba a las negras. ~15 min para 100 problemas; misma semilla,
     mismo banco.
+  - **Jugar con papá** (tarjeta en Práctica, `js/ajedrez-duo.js`): dos
+    jugadores en el mismo aparato (se pasan la tablet; deshacer y dar vuelta
+    el tablero) o **en línea** con un código de 4 números. El servidor solo
+    es cartero: guarda las jugadas en orden (`e2e4`, `e7e8q`), revisa turno,
+    número de jugada y la clave secreta de cada color; las reglas las valida
+    el motor en cada navegador. Se sondea cada 1,5 s. La partida en curso
+    queda en `aprende:partida-en-linea`; las partidas de más de 2 días se
+    borran solas. No guarda nombres ni nada personal. Capi hace de árbitro
+    (`CapiRival.decir`). `volteado` y `colorJugador` en `ajedrez.js` dan
+    vuelta el tablero y dicen qué color se puede mover.
   - **`node herramientas/probar-ajedrez.js`** verifica todo con el motor
     (perft, cada mate y mate en 2, cada táctica con su línea y sus `buenas`,
     los finales siguiendo la pista y el banco entero). Correrlo antes de

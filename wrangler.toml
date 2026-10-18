@@ -1,0 +1,14 @@
+# Configuración de Cloudflare Pages (el sitio es la raíz del repo).
+# Solo hace falta para las partidas de ajedrez en línea: la base D1
+# "aprende-partidas" guarda las jugadas (sin datos personales).
+# El id de la base no es secreto. Aplicar el esquema:
+#   npx wrangler d1 migrations apply aprende-partidas --remote
+name = "aprende-con-ana-isabella"
+pages_build_output_dir = "."
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "aprende-partidas"
+database_id = "23706ebc-a79e-480e-98b2-d64075144347"
+migrations_dir = "migraciones"

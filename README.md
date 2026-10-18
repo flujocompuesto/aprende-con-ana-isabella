@@ -56,7 +56,9 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   descubierta), mates de campeona, finales (mate con dama, con torre, regla
   del cuadrado) y retos (coordenadas, la compu experta). Cada día hay un
   **problema del día** con racha 🔥, y después de cada partida se puede ver
-  **«¿Dónde me equivoqué?»**.
+  **«¿Dónde me equivoqué?»**. Con **Jugar con papá** se juega de a dos en
+  el mismo aparato o en línea, cada uno en el suyo, con un código de 4
+  números.
 - **Explora el mundo** — continentes, países y capitales tocando un mapa de
   verdad; en experto, toda América Latina.
 - **Mi alcancía** — necesidades y deseos, los tres frascos, una meta de

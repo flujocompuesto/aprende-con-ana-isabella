@@ -302,6 +302,8 @@ let bloqueado = false;
 let alMover = null; // qué hacer cuando la niña mueve una pieza
 let alTocar = null; // pasos donde tocar una casilla hace otra cosa
 let casillasError = new Set(); // la jugada equivocada que se revisa
+let volteado = false; // tablero visto desde las negras
+let colorJugador = "w"; // qué piezas se pueden tocar (en las partidas entre dos, cambia)
 // Problema del día / práctica / revisión: fuera de los capítulos. Si existe,
 // mostrarSiguiente() le avisa a él en vez de pasar al siguiente paso.
 let modoSuelto = null;
@@ -431,7 +433,9 @@ function pintarTablero() {
     ? []
     : ["w", "b"].filter((c) => A.enJaque(pos, c)).map((c) => pos.tablero.indexOf(c === "w" ? "K" : "k"));
   tableroEl.innerHTML = "";
-  for (let i = 0; i < 64; i++) {
+  // Dado vuelta, la casilla h1 queda arriba a la izquierda.
+  for (let k = 0; k < 64; k++) {
+    const i = volteado ? 63 - k : k;
     const f = Math.floor(i / 8);
     const c = i % 8;
     const casilla = document.createElement("button");
@@ -454,8 +458,8 @@ function pintarTablero() {
       casilla.innerHTML = '<span class="objetivo">⭐</span>';
       etiqueta += " estrella";
     }
-    if (c === 0) casilla.insertAdjacentHTML("beforeend", `<span class="coord fila">${8 - f}</span>`);
-    if (f === 7) casilla.insertAdjacentHTML("beforeend", `<span class="coord columna">${"abcdefgh"[c]}</span>`);
+    if (c === (volteado ? 7 : 0)) casilla.insertAdjacentHTML("beforeend", `<span class="coord fila">${8 - f}</span>`);
+    if (f === (volteado ? 0 : 7)) casilla.insertAdjacentHTML("beforeend", `<span class="coord columna">${"abcdefgh"[c]}</span>`);
     casilla.setAttribute("aria-label", etiqueta);
     casilla.addEventListener("click", () => tocarCasilla(i));
     tableroEl.appendChild(casilla);
@@ -480,7 +484,7 @@ function tocarCasilla(i) {
     }
   }
   const p = pos.tablero[i];
-  if (p && A.colorDe(p) === "w" && i !== seleccion) {
+  if (p && A.colorDe(p) === colorJugador && i !== seleccion) {
     seleccion = i;
     destinos = A.legales(pos, i);
     Aprende.sonido.clic();
@@ -551,6 +555,8 @@ function mostrarPaso() {
 function prepararPaso(paso) {
   sesion++;
   CapiRival.ocultar();
+  volteado = false;
+  colorJugador = "w";
   tableroEl.classList.remove("sin-coordenadas");
   casillasError = new Set();
   pos = posDePaso(paso);
@@ -1608,10 +1614,23 @@ function pintarPractica() {
         <button class="boton siguiente" data-a="otro">Otro problema</button>
         <button class="boton pista" data-a="coord">🧭 Coordenadas</button>
       </div>
+    </div>
+    <div class="problema-dia jugar-con-papa">
+      <span class="icono-dia">👨‍👧</span>
+      <div class="texto-dia">
+        <strong>Jugar con papá</strong>
+        <span>Una partida entre ustedes dos, con Capi de árbitra.</span>
+      </div>
+      <div class="botones-dia">
+        <button class="boton ejecutar" data-a="duo-local">En este aparato</button>
+        <button class="boton siguiente" data-a="duo-linea">🌐 En línea</button>
+      </div>
     </div>`;
   practicaEl.querySelector('[data-a="hoy"]').addEventListener("click", () => abrirProblema(problemaDeHoy(), true));
   practicaEl.querySelector('[data-a="otro"]').addEventListener("click", () => abrirProblema(problemaAlAzar(), false));
   practicaEl.querySelector('[data-a="coord"]').addEventListener("click", abrirRetoCoordenadas);
+  practicaEl.querySelector('[data-a="duo-local"]').addEventListener("click", () => abrirDuoLocal());
+  practicaEl.querySelector('[data-a="duo-linea"]').addEventListener("click", () => abrirEnLinea());
 }
 
 function problemaAlAzar() {

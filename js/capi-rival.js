@@ -284,5 +284,14 @@ const CapiRival = (() => {
     return r.ms;
   }
 
-  return { mostrar, ocultar, reaccionar, reto, dibujo, CARAS };
+  // Para cuando Capi es la árbitra (partidas entre dos personas): una cara y
+  // una frase cualquiera. ms = 0 deja la cara puesta.
+  function decir(cara, frase, anima = "", ms = 1600) {
+    if (!caja || caja.hidden) return;
+    clearTimeout(reloj);
+    pintar(cara, frase, anima);
+    if (ms) reloj = setTimeout(() => pintar("normal"), ms);
+  }
+
+  return { mostrar, ocultar, reaccionar, reto, decir, dibujo, CARAS };
 })();
