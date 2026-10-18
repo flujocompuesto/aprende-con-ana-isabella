@@ -4,6 +4,8 @@
 //   jugada { clave, jugada, n } → agrega la jugada número n (0, 1, 2…) si es
 //                                 el turno de esa clave
 //   rendirse { clave }
+//   pedir-deshacer { clave }  → pide volver a antes de su última jugada
+//   responder-deshacer { clave, acepta } → el rival dice que sí o que no
 import { json, claveNueva, publica, JUGADA_VALIDA } from "../../_lib/partidas.js";
 
 async function leer(env, codigo) {
@@ -52,6 +54,33 @@ export async function onRequestPost({ params, request, env }) {
     return json(publica({ ...fila, estado: `rinde-${color}` }));
   }
 
+  if (cuerpo.tipo === "pedir-deshacer") {
+    if (fila.estado !== "jugando") return json({ error: "La partida no está en juego.", ...publica(fila) }, 409);
+    const total = fila.jugadas ? fila.jugadas.split(" ").length : 0;
+    const mias = color === "w" ? Math.ceil(total / 2) : Math.floor(total / 2);
+    if (!mias) return json({ error: "Todavía no has jugado.", ...publica(fila) }, 409);
+    await env.DB.prepare("UPDATE partidas SET deshacer = ?, actualizada = ? WHERE codigo = ?").bind(color, ahora, codigo).run();
+    return json(publica({ ...fila, deshacer: color }));
+  }
+
+  if (cuerpo.tipo === "responder-deshacer") {
+    const pide = fila.deshacer;
+    if (!pide || pide === color) return json({ error: "No hay ningún pedido que contestar.", ...publica(fila) }, 409);
+    const jugadas = fila.jugadas ? fila.jugadas.split(" ") : [];
+    let nuevas = fila.jugadas;
+    if (cuerpo.acepta) {
+      // Vuelve a antes de la última jugada del que pidió: si el rival ya
+      // le contestó, se quitan dos.
+      const turno = jugadas.length % 2 === 0 ? "w" : "b";
+      nuevas = jugadas.slice(0, jugadas.length - (turno === pide ? 2 : 1)).join(" ");
+    }
+    const r = await env.DB.prepare("UPDATE partidas SET jugadas = ?, deshacer = NULL, actualizada = ? WHERE codigo = ? AND jugadas = ? AND deshacer = ?")
+      .bind(nuevas, ahora, codigo, fila.jugadas, pide)
+      .run();
+    if (r.meta.changes !== 1) return json({ error: "La partida cambió justo ahora.", ...publica(await leer(env, codigo)) }, 409);
+    return json(publica({ ...fila, jugadas: nuevas, deshacer: null }));
+  }
+
   if (cuerpo.tipo === "jugada") {
     if (fila.estado !== "jugando") return json({ error: "La partida no está en juego.", ...publica(fila) }, 409);
     const jugadas = fila.jugadas ? fila.jugadas.split(" ") : [];
@@ -61,11 +90,12 @@ export async function onRequestPost({ params, request, env }) {
     if (!JUGADA_VALIDA.test(cuerpo.jugada || "")) return json({ error: "Jugada inválida." }, 400);
     const nuevas = [...jugadas, cuerpo.jugada].join(" ");
     // La condición sobre "jugadas" evita que dos pedidos pisen la misma jugada.
-    const r = await env.DB.prepare("UPDATE partidas SET jugadas = ?, actualizada = ? WHERE codigo = ? AND jugadas = ?")
+    // Jugar cancela cualquier pedido de deshacer pendiente.
+    const r = await env.DB.prepare("UPDATE partidas SET jugadas = ?, deshacer = NULL, actualizada = ? WHERE codigo = ? AND jugadas = ?")
       .bind(nuevas, ahora, codigo, fila.jugadas)
       .run();
     if (r.meta.changes !== 1) return json({ error: "Tu tablero estaba atrasado.", ...publica(await leer(env, codigo)) }, 409);
-    return json(publica({ ...fila, jugadas: nuevas }));
+    return json(publica({ ...fila, jugadas: nuevas, deshacer: null }));
   }
 
   return json({ error: "No entiendo ese pedido." }, 400);

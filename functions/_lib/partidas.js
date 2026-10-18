@@ -24,6 +24,8 @@ export function publica(fila) {
     estado: fila.estado,
     // Quién falta por entrar, para la pantalla de espera.
     libre: !fila.clave_w ? "w" : !fila.clave_b ? "b" : null,
+    // Quién pidió deshacer y espera respuesta ("w", "b" o null).
+    deshacer: fila.deshacer || null,
   };
 }
 

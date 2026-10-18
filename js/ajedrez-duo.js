@@ -46,8 +46,53 @@ function finDuo(texto) {
   Aprende.confeti(50);
 }
 
+// El panel debajo del tablero: el turno, el pedido de deshacer (en línea) y
+// las fichas que se comió cada uno.
+function panelDuo() {
+  panelEl.innerHTML = `
+    <p class="estado-partida" id="estado-duo"></p>
+    <div id="pedido-duo"></div>
+    <p class="capturadas">⚪ Las blancas comieron: <span id="comidas-w"></span></p>
+    <p class="capturadas">⚫ Las negras comieron: <span id="comidas-b"></span></p>`;
+}
+
+// Solo reescribe si cambió (el sondeo lo llama cada segundo y medio).
 function estadoDuo(texto) {
-  panelEl.innerHTML = `<p class="estado-partida">${texto}</p>`;
+  const el = document.getElementById("estado-duo");
+  if (!el) panelEl.innerHTML = `<p class="estado-partida">${texto}</p>`;
+  else if (el.innerHTML !== texto) el.innerHTML = texto;
+}
+
+const VALOR_PIEZA = { P: 1, N: 3, B: 3, R: 5, Q: 9, K: 0 };
+
+// Las fichas comidas por cada color (de las más valiosas a las menos) y
+// cuántos puntos va ganando el que va adelante.
+function pintarComidas(movs) {
+  const comio = { w: [], b: [] };
+  movs.forEach((m) => m.captura && comio[A.colorDe(m.pieza)].push(m.captura));
+  const puntos = (l) => l.reduce((t, x) => t + VALOR_PIEZA[A.tipoDe(x)], 0);
+  const ventaja = puntos(comio.w) - puntos(comio.b);
+  ["w", "b"].forEach((c) => {
+    const el = document.getElementById(`comidas-${c}`);
+    if (!el) return;
+    const lista = comio[c].sort((x, y) => VALOR_PIEZA[A.tipoDe(y)] - VALOR_PIEZA[A.tipoDe(x)]);
+    const extra = (c === "w" ? ventaja : -ventaja) > 0 ? ` <span class="ventaja">+${Math.abs(ventaja)}</span>` : "";
+    const html = lista.length ? piezasHTML(lista) + extra : '<span class="ninguna">ninguna todavía</span>';
+    if (el.innerHTML !== html) el.innerHTML = html;
+  });
+}
+
+// Las jugadas en texto, ya convertidas (para contar las comidas).
+function movsDeTextos(textos) {
+  let p = A.desdeFEN(A.INICIAL);
+  const movs = [];
+  for (const t of textos) {
+    const m = jugadaDeTexto(p, t);
+    if (!m) break;
+    movs.push(m);
+    p = A.mover(p, m);
+  }
+  return movs;
 }
 
 // ================= En el mismo aparato =================
@@ -58,7 +103,8 @@ function abrirDuoLocal() {
   puntosPasosEl.innerHTML = "";
   modoSuelto = null;
   prepararPaso({ tipo: "nada", fen: A.INICIAL, texto: "Juegan dos personas en el mismo aparato: se turnan para mover. Empiezan las <strong>blancas</strong>. Si quieren, den vuelta el tablero en cada turno 🔄." });
-  duo = { modo: "local", historial: [] };
+  duo = { modo: "local", historial: [], movs: [] };
+  panelDuo();
   CapiRival.mostrar(null, "¡Hoy yo soy la árbitra! Empiezan las blancas 🍊");
   const turnoLocal = () => {
     colorJugador = pos.turno;
@@ -70,7 +116,9 @@ function abrirDuoLocal() {
   alMover = (m) => {
     const antes = pos;
     duo.historial.push(pos);
+    duo.movs.push(m);
     aplicar(m);
+    pintarComidas(duo.movs);
     arbitra(antes, m, pos);
     turnoLocal();
     const sit = A.situacion(pos, pos.turno);
@@ -84,6 +132,8 @@ function abrirDuoLocal() {
   agregarBoton("↩ Deshacer", "quitar", () => {
     if (!duo.historial.length) return;
     pos = duo.historial.pop();
+    duo.movs.pop();
+    pintarComidas(duo.movs);
     ultimo = null;
     seleccion = null;
     destinos = [];
@@ -95,6 +145,7 @@ function abrirDuoLocal() {
   });
   agregarBoton("Nueva partida", "borrar", abrirDuoLocal);
   duo.alMover = alMover;
+  pintarComidas(duo.movs);
   turnoLocal();
   pintarTablero();
 }
@@ -192,7 +243,8 @@ function entrarAPartida(datos) {
   puntosPasosEl.innerHTML = "";
   modoSuelto = null;
   prepararPaso({ tipo: "nada", fen: A.INICIAL, texto: `Juegas con las <strong>${COLOR[datos.color]}</strong>. Código de la partida: <strong class="codigo-grande">${datos.codigo}</strong>` });
-  duo = { modo: "linea", ...datos, jugadas: [], estado: "esperando", enviando: false };
+  duo = { modo: "linea", ...datos, jugadas: [], estado: "esperando", enviando: false, deshacer: null };
+  panelDuo();
   volteado = datos.color === "b";
   colorJugador = datos.color;
   CapiRival.mostrar(null, "¡Que gane la mejor! 🍊");
@@ -204,6 +256,57 @@ function entrarAPartida(datos) {
     await pedir(`/api/partida/${duo.codigo}`, { tipo: "rendirse", clave: duo.clave });
     sondear();
   });
+  const botonDeshacer = agregarBoton("↩ Pedir deshacer", "pista", async () => {
+    if (!puedePedir()) return;
+    duo.deshacer = duo.color;
+    mostrarEstado();
+    const r = await pedir(`/api/partida/${duo.codigo}`, { tipo: "pedir-deshacer", clave: duo.clave });
+    if (!r.ok) {
+      duo.deshacer = r.datos.deshacer || null;
+      mensaje(r.datos.error || "No se pudo pedir. ¿Hay internet?", "error");
+    }
+    mostrarEstado();
+  });
+  // Se puede pedir si ya jugaste alguna vez y no hay otro pedido en curso.
+  const puedePedir = () => {
+    const mias = duo.color === "w" ? Math.ceil(duo.jugadas.length / 2) : Math.floor(duo.jugadas.length / 2);
+    return duo.estado === "jugando" && !duo.terminada && !duo.enviando && !duo.deshacer && mias > 0;
+  };
+  const responder = async (acepta) => {
+    const pedidoEl = document.getElementById("pedido-duo");
+    if (pedidoEl) pedidoEl.innerHTML = "";
+    const r = await pedir(`/api/partida/${duo.codigo}`, { tipo: "responder-deshacer", clave: duo.clave, acepta });
+    if (s !== sesion) return;
+    if (r.datos.jugadas) {
+      duo.deshacer = r.datos.deshacer;
+      aplicarLista(r.datos.jugadas);
+    }
+    if (!r.ok) mensaje(r.datos.error || "No se pudo contestar. ¿Hay internet?", "error");
+    else if (acepta) CapiRival.decir("pensando", "¡Volvimos atrás! ⏪ Piensen bien la próxima", "", 2000);
+    mostrarEstado();
+  };
+  // El cuadrito del pedido: preguntas al rival o «esperando respuesta».
+  const pintarPedido = () => {
+    const el = document.getElementById("pedido-duo");
+    if (!el) return;
+    const tipo = !duo.deshacer || duo.terminada ? "" : duo.deshacer === duo.color ? "espero" : "pregunta";
+    if (el.dataset.tipo === tipo) return;
+    el.dataset.tipo = tipo;
+    if (tipo === "espero") el.innerHTML = '<p class="pedido-deshacer">⏳ Le pediste a tu rival deshacer tu última jugada…</p>';
+    else if (tipo === "pregunta") {
+      el.innerHTML = `<div class="pedido-deshacer">
+          <p>↩ Tu rival quiere <strong>deshacer</strong> su última jugada. ¿Lo dejas?</p>
+          <div class="botones-dia">
+            <button class="boton ejecutar" data-r="si">Sí, que la deshaga</button>
+            <button class="boton quitar" data-r="no">No</button>
+          </div>
+        </div>`;
+      el.querySelector('[data-r="si"]').addEventListener("click", () => responder(true));
+      el.querySelector('[data-r="no"]').addEventListener("click", () => responder(false));
+      Aprende.sonido.boing?.();
+    } else el.innerHTML = "";
+  };
+
   agregarBoton("Salir de la partida", "borrar", () => {
     guardarEnLinea(null);
     volverAlMapa();
@@ -222,7 +325,10 @@ function entrarAPartida(datos) {
         duo.jugadas.push(t);
       });
       ultimo = null;
+      seleccion = null;
+      destinos = [];
       pintarTablero();
+      pintarComidas(movsDeTextos(duo.jugadas));
       return;
     }
     nuevas.forEach((t) => {
@@ -233,9 +339,12 @@ function entrarAPartida(datos) {
       duo.jugadas.push(t);
       arbitra(antes, m, pos);
     });
+    if (nuevas.length) pintarComidas(movsDeTextos(duo.jugadas));
   };
 
   const mostrarEstado = () => {
+    pintarPedido();
+    botonDeshacer.disabled = !puedePedir();
     const sit = A.situacion(pos, pos.turno);
     if (duo.estado === "esperando") {
       estadoDuo(`⏳ Esperando a tu rival… Dile este código: <strong class="codigo-grande">${duo.codigo}</strong>`);
@@ -270,10 +379,13 @@ function entrarAPartida(datos) {
   const jugarEnLinea = async (m) => {
     const texto = textoJugada(m);
     const n = duo.jugadas.length;
+    mensaje("");
     const antes = pos;
     aplicar(m);
     duo.jugadas.push(texto);
     duo.enviando = true;
+    duo.deshacer = null; // jugar cancela el pedido pendiente
+    pintarComidas(movsDeTextos(duo.jugadas));
     arbitra(antes, m, pos);
     mostrarEstado();
     const r = await pedir(`/api/partida/${duo.codigo}`, { tipo: "jugada", clave: duo.clave, jugada: texto, n });
@@ -304,6 +416,15 @@ function entrarAPartida(datos) {
       const antes = duo.estado;
       duo.estado = r.datos.estado;
       if (antes === "esperando" && duo.estado === "jugando") CapiRival.decir("feliz", "¡Ya llegó tu rival! ¡A jugar! 🎉", "baile");
+      // Mi pedido de deshacer se contestó: si la lista se acortó fue un sí.
+      if (duo.deshacer === duo.color && !r.datos.deshacer) {
+        if (r.datos.jugadas.length < duo.jugadas.length) CapiRival.decir("feliz", "¡Tu rival te dejó deshacer! ⏪ Vuelve a pensarla", "salto-sorpresa", 2200);
+        else if (r.datos.jugadas.length === duo.jugadas.length) {
+          mensaje("Tu rival dijo que no 🙅 La jugada se queda.", "error");
+          CapiRival.decir("sorprendida", "¡Dijo que no! 🙅 ¡A seguir!", "", 2000);
+        }
+      }
+      duo.deshacer = r.datos.deshacer;
       aplicarLista(r.datos.jugadas);
       mostrarEstado();
     }
@@ -311,6 +432,7 @@ function entrarAPartida(datos) {
   };
 
   pintarTablero();
+  pintarComidas([]);
   mostrarEstado();
   sondear();
 }

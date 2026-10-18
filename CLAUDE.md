@@ -196,7 +196,11 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     número de jugada y la clave secreta de cada color; las reglas las valida
     el motor en cada navegador. Se sondea cada 1,5 s. La partida en curso
     queda en `aprende:partida-en-linea`; las partidas de más de 2 días se
-    borran solas. No guarda nombres ni nada personal. Capi hace de árbitro
+    borran solas. No guarda nombres ni nada personal. Debajo del tablero
+    se ven las fichas que comió cada color (con la ventaja en puntos). En
+    línea, deshacer es un **pedido** que el rival acepta o no (columna
+    `deshacer` de la D1): vuelve a antes de la última jugada del que pidió
+    (quita 2 si el rival ya contestó) y cualquier jugada lo cancela. Capi hace de árbitro
     (`CapiRival.decir`). `volteado` y `colorJugador` en `ajedrez.js` dan
     vuelta el tablero y dicen qué color se puede mover.
   - **`node herramientas/probar-ajedrez.js`** verifica todo con el motor

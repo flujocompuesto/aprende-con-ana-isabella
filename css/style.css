@@ -1393,7 +1393,7 @@ footer {
 }
 
 .pieza.negra { color: #2b2118; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
-.pieza.mini { font-size: 1.3rem; }
+.pieza.mini { font-size: 1.3rem; width: auto; height: auto; border: 0; background: none; cursor: default; } /* no confundir con .mini de los bloques */
 
 .objetivo { font-size: clamp(1.1rem, 5.5vw, 1.9rem); animation: pulso 1.6s ease-in-out infinite; }
 
@@ -2793,3 +2793,9 @@ footer {
   text-align: center;
 }
 .codigo-grande { font-family: var(--letra-titulos); font-size: 1.5rem; letter-spacing: 3px; color: var(--color-acento); }
+
+/* Jugar con papá: comidas y pedido de deshacer */
+.capturadas .ventaja { font-weight: bold; color: var(--color-exito); margin-left: 4px; }
+.capturadas .ninguna { opacity: 0.55; font-size: 0.9rem; }
+.pedido-deshacer { background: var(--tarjeta); border: 2px dashed var(--mostaza); border-radius: 12px; padding: 8px 12px; margin: 6px 0; }
+.pedido-deshacer p { margin: 0 0 6px; }
