@@ -289,10 +289,14 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
   supera a lo puesto a los 13 años). Cifras de juego, no consejos de
   inversión. Progreso `alcancia`, máximo 12 ⭐.
 - "Cuentos de Capi" (`juegos/cuentos.html` + `js/cuentos.js`, cuentos en
-  `js/cuentos-datos.js`): 6 cuentos ORIGINALES en 3 niveles, para leer o
+  `js/cuentos-datos.js`): 13 cuentos ORIGINALES en 3 niveles, para leer o
   escuchar (voz del navegador en español), con preguntas literales, de
   deducción, de vocabulario, de idea principal y de ordenar los hechos.
-  Progreso `cuentos` → id del cuento, máximo 18 ⭐.
+  La biblioteca los ordena por nivel; `cuentos.html#<id>` abre uno directo.
+  El texto va sin HTML (la voz lo leería). «Las semillas de Sofía» vino del
+  CLOO (oct-2026): ganar, no gastar por impulso, las tres cajitas, interés
+  y acciones, con cifras de juego. Progreso `cuentos` → id del cuento,
+  máximo 39 ⭐ (3 por cuento: al agregar uno, subir `data-max` en index.html).
 - "Tablas de multiplicar" (`juegos/tablas.html` + `js/tablas.js`): repaso
   que se adapta (cajas de Leitner en `aprende:tablas`: bien y rápido sube de
   caja, error vuelve a la 0 y la pregunta reaparece en la partida), práctica

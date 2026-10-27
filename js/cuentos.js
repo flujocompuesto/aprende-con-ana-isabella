@@ -102,7 +102,8 @@ function estrellasDe(id) {
 function pintarBiblioteca() {
   const caja = document.getElementById("cuentos");
   caja.innerHTML = "";
-  CUENTOS.forEach((c, i) => {
+  // De los cortitos a los largos (sort es estable: dentro del nivel, el orden del archivo).
+  [...CUENTOS].sort((a, b) => a.nivel - b.nivel).forEach((c, i) => {
     const b = document.createElement("button");
     b.className = "capitulo-card tarjeta-cuento";
     const estrellas = estrellasDe(c.id);
@@ -277,3 +278,6 @@ document.getElementById("btn-callar").addEventListener("click", callar);
 
 pintarBiblioteca();
 mostrarPantalla("biblioteca");
+// Un enlace con #id abre ese cuento directo (ej. cuentos.html#semillas-sofia).
+const pedido = CUENTOS.find((c) => c.id === decodeURIComponent(location.hash.slice(1)));
+if (pedido) abrirCuento(pedido);
