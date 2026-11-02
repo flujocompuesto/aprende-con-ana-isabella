@@ -502,6 +502,351 @@ const CUENTOS = [
       ] },
     ],
   },
+  {
+    id: "tula-portera", nivel: 1, titulo: "Tula, la portera", dibujo: "🧤",
+    texto: [
+      "En el bosque armaron un equipo de fútbol: Las Mandarinas. Capi era la capitana.",
+      "Tula, la tortuga, también quería jugar. Pero era tan lenta que nunca alcanzaba la pelota. —Mejor me voy a mi casa —dijo, triste.",
+      "—¡Espera! —le dijo Capi—. Un equipo necesita a alguien que cuide el arco. No tiene que correr: tiene que estar atenta y parar los tiros. Esa es la portera.",
+      "Tula se paró debajo del arco. Cuando el conejo pateó fuerte, Tula se estiró… ¡y la pelota rebotó en su caparazón! ¡Pum!",
+      "—¡Atajada! —gritaron todos. En toda la tarde, nadie le pudo hacer un gol.",
+      "Esa noche, Tula se durmió sonriendo. Había descubierto que en un equipo hay un lugar para cada uno.",
+    ],
+    preguntas: [
+      { tipo: "opciones", texto: "¿Cómo se llamaba el equipo del bosque?", opciones: [
+        { t: "Las Mandarinas", ok: true, explica: "¡Sí! ¿Adivinas por qué se llama así? 🍊" },
+        { t: "Los Conejos", explica: "Vuelve a leer la primera línea." },
+        { t: "Las Tortugas", explica: "Vuelve a leer la primera línea." },
+      ] },
+      { tipo: "opciones", texto: "¿Por qué Tula se quería ir a su casa?", opciones: [
+        { t: "Porque era lenta y nunca alcanzaba la pelota", ok: true, explica: "¡Exacto! Por eso estaba triste." },
+        { t: "Porque tenía sueño", explica: "Se durmió al final, pero se quería ir por otra razón." },
+        { t: "Porque no le gustaba el fútbol", explica: "¡Sí le gustaba! Quería jugar." },
+      ] },
+      { tipo: "opciones", texto: "¿Qué hace una portera?", opciones: [
+        { t: "Cuida el arco y para los tiros", ok: true, explica: "¡Sí! Lo explica Capi en el cuento." },
+        { t: "Corre para hacer goles", explica: "Capi dijo que la portera no tiene que correr." },
+        { t: "Toca el silbato", explica: "Ese es el árbitro. Capi explica qué hace la portera." },
+      ] },
+      { tipo: "opciones", texto: "¿Qué descubrió Tula?", opciones: [
+        { t: "Que en un equipo hay un lugar para cada uno", ok: true, explica: "¡Eso! Lo que parecía un problema fue su fuerza." },
+        { t: "Que su caparazón es muy duro", explica: "Es verdad, ¡pum! Pero lo que descubrió está en la última línea." },
+        { t: "Que el fútbol es aburrido", explica: "¡Se durmió sonriendo! Mira la última línea." },
+      ] },
+    ],
+  },
+  {
+    id: "pelota-arbol", nivel: 1, titulo: "La pelota en el árbol", dibujo: "🌳",
+    texto: [
+      "Las Mandarinas estaban practicando cuando Tito, el zorro, pateó tan alto que la pelota se quedó atrapada en la copa de un árbol.",
+      "Capi saltó, pero no llegó. Tito se subió a una piedra, pero tampoco. —¡Se acabó el partido! —dijo el conejo.",
+      "Entonces escucharon una voz desde arriba: —¿Buscan esto? Era Rita, la urraca, sentada en una rama, mirando la pelota.",
+      "Rita empujó la pelota con el pico, una, dos, tres veces… ¡y la pelota cayó! ¡Toc!",
+      "—¡Gracias, Rita! —gritaron todos—. ¿Quieres jugar con nosotros?",
+      "—Mejor seré la árbitra —dijo Rita—. Desde arriba lo veo todo. Y desde ese día, Las Mandarinas jugaron con una árbitra que volaba.",
+    ],
+    preguntas: [
+      { tipo: "opciones", texto: "¿Dónde quedó atrapada la pelota?", opciones: [
+        { t: "En la copa de un árbol", ok: true, explica: "¡Sí! La copa es la parte de arriba del árbol." },
+        { t: "En el río", explica: "Vuelve a leer el primer párrafo." },
+        { t: "En una cueva", explica: "Vuelve a leer el primer párrafo." },
+      ] },
+      { tipo: "ordena", texto: "Ordena lo que pasó:", pasos: [
+        "Tito patea muy alto",
+        "Capi salta y no llega",
+        "Rita empuja la pelota con el pico",
+        "Rita se vuelve la árbitra",
+      ] },
+      { tipo: "opciones", texto: "¿Qué quiere decir «la copa» del árbol?", opciones: [
+        { t: "La parte de arriba, donde están las ramas y las hojas", ok: true, explica: "¡Exacto! Allí se sentó Rita." },
+        { t: "Un vaso para tomar agua", explica: "Esa es otra copa. En un árbol, la copa es otra cosa." },
+        { t: "El premio de un campeonato", explica: "¡Esa también es una copa! Pero en el árbol es otra cosa." },
+      ] },
+      { tipo: "opciones", texto: "¿Por qué Rita quiso ser la árbitra?", opciones: [
+        { t: "Porque desde arriba lo veía todo", ok: true, explica: "¡Bien! Una árbitra que vuela ve cada jugada." },
+        { t: "Porque no sabía jugar", explica: "El cuento no dice eso. Rita explica por qué." },
+        { t: "Porque estaba enojada con Tito", explica: "No estaba enojada. Lee lo que dice Rita al final." },
+      ] },
+    ],
+  },
+  {
+    id: "penal-tito", nivel: 2, titulo: "El penal de Tito", dibujo: "🟨",
+    texto: [
+      "Las Mandarinas jugaban contra Los Mapaches. Iban empatados y faltaba poco. Tito, el zorro, corrió con la pelota hacia el arco… y de repente se tiró al suelo. —¡Ay, ay! ¡Me empujaron! —gritó.",
+      "Pero nadie lo había tocado. Rita, la árbitra, no alcanzó a ver bien y pitó: —¡Penal para Las Mandarinas!",
+      "Todos aplaudieron, menos Tito. Mientras ponía la pelota en el punto del penal, sentía un nudo en la panza. Él sabía la verdad.",
+      "Tito miró a Rita y le dijo: —Nadie me empujó. Me tiré yo. Fingir una falta para engañar a la árbitra se llama simular.",
+      "Rita lo pensó un momento. —Gracias por decir la verdad, Tito. No hay penal. Igual te tengo que mostrar la tarjeta amarilla, porque simular no se vale. Pero eso que hiciste se llama juego limpio, y vale más que un gol.",
+      "Los Mapaches le dieron la mano a Tito. Y un minuto antes del final, Tito recibió un pase de Capi y metió un golazo de verdad. El partido terminó 1 a 0, y esta vez Tito no tenía ningún nudo en la panza.",
+    ],
+    preguntas: [
+      { tipo: "opciones", texto: "¿Por qué Rita pitó penal?", opciones: [
+        { t: "Porque Tito se tiró y ella creyó que lo habían empujado", ok: true, explica: "¡Sí! No alcanzó a ver bien." },
+        { t: "Porque un mapache le pegó a Tito", explica: "El cuento dice que nadie lo había tocado." },
+        { t: "Porque se acababa el partido", explica: "Busca qué hizo Tito justo antes." },
+      ] },
+      { tipo: "opciones", texto: "¿Qué quiere decir «simular» en el fútbol?", opciones: [
+        { t: "Fingir una falta para engañar al árbitro", ok: true, explica: "¡Exacto! Y eso no se vale." },
+        { t: "Patear muy fuerte", explica: "Tito lo explica en el cuento." },
+        { t: "Atajar un penal", explica: "Tito lo explica en el cuento." },
+      ] },
+      { tipo: "opciones", texto: "¿Por qué Tito sentía «un nudo en la panza»?", opciones: [
+        { t: "Porque sabía que había mentido", ok: true, explica: "¡Bien pensado! Así se siente cuando hacemos algo que no está bien." },
+        { t: "Porque había comido mucho", explica: "Es una forma de hablar. ¿Qué sabía Tito?" },
+        { t: "Porque le dolía la pierna", explica: "Nadie lo había tocado. ¿Qué sabía él?" },
+      ] },
+      { tipo: "ordena", texto: "Ordena el partido:", pasos: [
+        "Tito se tira al suelo",
+        "Rita pita penal",
+        "Tito dice la verdad",
+        "Tito mete un gol de verdad",
+      ] },
+      { tipo: "opciones", texto: "¿Qué enseña este cuento?", opciones: [
+        { t: "Que jugar limpio y decir la verdad vale más que ganar con trampa", ok: true, explica: "¡Eso! Y además Tito terminó metiendo un golazo." },
+        { t: "Que hay que tirarse para ganar penales", explica: "¡Al contrario! Mira lo que dijo Rita." },
+        { t: "Que las árbitras siempre se equivocan", explica: "Rita se equivocó una vez, pero el cuento enseña otra cosa." },
+      ] },
+    ],
+  },
+  {
+    id: "enjambre", nivel: 2, titulo: "El equipo enjambre", dibujo: "🐝",
+    texto: [
+      "Las Mandarinas perdieron su primer partido contra Las Garzas, 4 a 0. Cada vez que la pelota se movía, todo el equipo corría detrás de ella, apretados como abejas.",
+      "—Parecemos un enjambre —dijo el conejo, sin aire. Un enjambre es un montón de abejas que vuelan todas juntas.",
+      "La entrenadora, la maestra Garza, juntó al equipo. —Si todos corren a la pelota, nadie queda libre para recibir un pase. En la cancha hay que repartirse.",
+      "Con una ramita dibujó en la tierra: Tula de portera, cuidando el arco; dos defensas atrás, para ayudarla; dos mediocampistas en el centro, para pasar la pelota; y Capi y Tito de delanteros, cerca del arco rival, para hacer los goles.",
+      "En el siguiente partido, cada uno se quedó en su lugar. Cuando Capi tenía la pelota, miraba: siempre había alguien libre. ¡Pase, pase, pase… y gol!",
+      "Esa vez ganaron 3 a 1. —Ahora sí somos como las abejas —dijo el conejo—, pero de las que trabajan en equipo.",
+    ],
+    preguntas: [
+      { tipo: "opciones", texto: "¿Qué es un enjambre?", opciones: [
+        { t: "Un montón de abejas que vuelan juntas", ok: true, explica: "¡Sí! Lo explica el conejo." },
+        { t: "Un tipo de pelota", explica: "El cuento lo explica en el segundo párrafo." },
+        { t: "Un equipo de fútbol famoso", explica: "El cuento lo explica en el segundo párrafo." },
+      ] },
+      { tipo: "opciones", texto: "¿Por qué perdían Las Mandarinas?", opciones: [
+        { t: "Porque todos corrían detrás de la pelota y nadie quedaba libre", ok: true, explica: "¡Exacto! Eso dijo la maestra Garza." },
+        { t: "Porque no tenían portera", explica: "Tenían a Tula. El problema era otro." },
+        { t: "Porque corrían muy despacio", explica: "¡Corrían mucho! Pero todos al mismo lugar." },
+      ] },
+      { tipo: "opciones", texto: "¿Qué hacen los delanteros, según el dibujo de la maestra?", opciones: [
+        { t: "Juegan cerca del arco rival para hacer los goles", ok: true, explica: "¡Sí! Como Capi y Tito." },
+        { t: "Cuidan el arco propio", explica: "Esa es la portera, con ayuda de los defensas." },
+        { t: "Pitan las faltas", explica: "Eso lo hace la árbitra." },
+      ] },
+      { tipo: "ordena", texto: "Ordena la historia:", pasos: [
+        "Pierden 4 a 0",
+        "La maestra dibuja dónde va cada uno",
+        "Cada uno se queda en su lugar",
+        "Ganan 3 a 1",
+      ] },
+      { tipo: "opciones", texto: "¿Qué quiso decir el conejo al final?", opciones: [
+        { t: "Que ahora trabajaban en equipo, cada uno en lo suyo", ok: true, explica: "¡Bien! Las abejas de una colmena se reparten el trabajo." },
+        { t: "Que seguían corriendo todos juntos", explica: "Al contrario: ahora cada uno estaba en su lugar." },
+        { t: "Que querían ir a buscar miel", explica: "¡Ja! Es una forma de hablar. ¿Qué cambió en el equipo?" },
+      ] },
+    ],
+  },
+  {
+    id: "mundial-bosque", nivel: 3, titulo: "El Mundial del bosque", dibujo: "🏆",
+    texto: [
+      "Una tarde de lluvia, Las Mandarinas no pudieron entrenar. Se refugiaron en la casa del búho, que tenía una biblioteca enorme y un libro gordo que decía: «Historia del fútbol».",
+      "—¿Saben cuándo fue el primer Mundial? —preguntó el búho—. En 1930, en Uruguay, un país pequeño de Sudamérica. Jugaron trece selecciones, y ganó el equipo de casa: ¡Uruguay!",
+      "—¿Y las mujeres? —preguntó Capi—. ¿No jugaban? —Jugaban, pero por muchos años no las dejaron tener su propio Mundial —contestó el búho—. El primero fue en 1991, en China, y lo ganó Estados Unidos. Hoy los estadios se llenan para verlas.",
+      "El búho les contó más cosas: que un equipo tiene once jugadores en la cancha, que el Mundial se juega cada cuatro años, y que en un penal la pelota se patea desde un punto a once metros del arco.",
+      "—¡Hagamos nuestro propio Mundial! —propuso Tito. Cada equipo del bosque eligió un país y dibujó su bandera: Las Mandarinas eligieron Brasil, por la prima Cacá; Las Garzas, Argentina; y Los Mapaches, Japón.",
+      "Cuando salió el sol, jugaron el Mundial del bosque. No ganó nadie, porque se hizo de noche y quedaron todos empatados. Pero el búho dijo que era el mejor Mundial de la historia, porque todos habían aprendido algo.",
+    ],
+    preguntas: [
+      { tipo: "opciones", texto: "¿Dónde se jugó el primer Mundial?", opciones: [
+        { t: "En Uruguay", ok: true, explica: "¡Sí! En 1930, y lo ganó Uruguay." },
+        { t: "En China", explica: "En China fue el primer Mundial de mujeres, en 1991." },
+        { t: "En Brasil", explica: "Brasil es el país que eligieron Las Mandarinas. Lee lo que dijo el búho." },
+      ] },
+      { tipo: "opciones", texto: "¿Cuántos jugadores tiene un equipo en la cancha?", opciones: [
+        { t: "Once", ok: true, explica: "¡Exacto! Y el penal también se patea a once metros." },
+        { t: "Trece", explica: "Trece fueron las selecciones del primer Mundial." },
+        { t: "Cuatro", explica: "Cuatro son los años entre un Mundial y otro." },
+      ] },
+      { tipo: "opciones", texto: "¿Por qué Capi preguntó por las mujeres?", opciones: [
+        { t: "Porque ella juega fútbol y quería saber de las jugadoras", ok: true, explica: "¡Claro! Capi es la capitana de Las Mandarinas." },
+        { t: "Porque no le gusta el fútbol", explica: "¡Es la capitana! Piensa en por qué le importa." },
+        { t: "Porque el búho se lo pidió", explica: "Capi preguntó solita. ¿Por qué le interesaba?" },
+      ] },
+      { tipo: "ordena", texto: "Ordena la tarde de lluvia:", pasos: [
+        "Se refugian en la casa del búho",
+        "El búho cuenta del primer Mundial",
+        "Cada equipo dibuja una bandera",
+        "Juegan el Mundial del bosque",
+      ] },
+      { tipo: "opciones", texto: "¿Por qué el búho dijo que era «el mejor Mundial de la historia»?", opciones: [
+        { t: "Porque todos habían aprendido algo, aunque nadie ganó", ok: true, explica: "¡Eso! Lo importante no siempre es ganar." },
+        { t: "Porque ganaron Las Mandarinas", explica: "Nadie ganó: quedaron empatados." },
+        { t: "Porque se jugó en Uruguay", explica: "Se jugó en el bosque. Lee la última línea." },
+      ] },
+    ],
+  },
+  {
+    id: "final-lluvia", nivel: 3, titulo: "La final bajo la lluvia", dibujo: "🌧️",
+    texto: [
+      "Era la final del campeonato del bosque: Las Mandarinas contra Las Garzas, el equipo que les había ganado 4 a 0 al principio. Empezó a llover y la cancha se llenó de charcos.",
+      "En el primer tiempo, Las Garzas metieron dos goles. Las Mandarinas se fueron al descanso empapadas y con las orejas bajas. —Ya perdimos —dijo el conejo.",
+      "Capi, la capitana, se paró en el medio del grupo. —Todavía queda un tiempo entero. Acuérdense de cuando éramos un enjambre: aprendimos. Juguemos como sabemos, cada una en su lugar, y pasando la pelota.",
+      "En el segundo tiempo, la pelota no rodaba en los charcos. Entonces Tito tuvo una idea: —¡Pasémosla por el aire! Así llegó el primer gol, de cabeza del conejo. Y casi al final, Capi metió el segundo. ¡2 a 2!",
+      "El partido terminó empatado y hubo que patear penales. Cuatro patearon y todos hicieron gol, de los dos equipos. Faltaba el último penal de Las Garzas.",
+      "Tula, la portera, se acordó de su primer día: no tenía que correr, tenía que estar atenta. Miró los ojos de la garza, se estiró hacia la izquierda… ¡y la atajó con el caparazón!",
+      "Las Mandarinas eran campeonas. Bajo la lluvia, todas se abrazaron. Y la maestra Garza, que también entrenaba a Las Garzas, les dio la copa con una sonrisa: —Ganaron porque nunca dejaron de intentarlo.",
+    ],
+    preguntas: [
+      { tipo: "opciones", texto: "¿Cómo iba el partido al terminar el primer tiempo?", opciones: [
+        { t: "Las Garzas ganaban 2 a 0", ok: true, explica: "¡Sí! Por eso el conejo creía que ya habían perdido." },
+        { t: "Las Mandarinas ganaban 2 a 0", explica: "Al revés. Vuelve a leer el segundo párrafo." },
+        { t: "Iban empatados", explica: "Todavía no. Vuelve a leer el segundo párrafo." },
+      ] },
+      { tipo: "opciones", texto: "¿Por qué Tito propuso pasar la pelota por el aire?", opciones: [
+        { t: "Porque en los charcos la pelota no rodaba", ok: true, explica: "¡Bien pensado! La lluvia cambió el partido." },
+        { t: "Porque le gustaba patear alto", explica: "Lo hizo una vez y quedó en un árbol… pero aquí había otra razón." },
+        { t: "Porque la árbitra lo pidió", explica: "Fue idea de Tito. Mira cómo estaba la cancha." },
+      ] },
+      { tipo: "opciones", texto: "¿Qué hizo Capi como capitana en el descanso?", opciones: [
+        { t: "Animó al equipo y les recordó lo que habían aprendido", ok: true, explica: "¡Exacto! Eso hace una buena capitana." },
+        { t: "Dijo que ya habían perdido", explica: "Eso lo dijo el conejo. Capi dijo otra cosa." },
+        { t: "Se fue a su casa por la lluvia", explica: "¡No! Se paró en el medio del grupo." },
+      ] },
+      { tipo: "ordena", texto: "Ordena la final:", pasos: [
+        "Las Garzas meten dos goles",
+        "Capi anima al equipo",
+        "Empatan 2 a 2",
+        "Tula ataja el último penal",
+      ] },
+      { tipo: "opciones", texto: "¿Por qué la maestra dijo que ganaron?", opciones: [
+        { t: "Porque nunca dejaron de intentarlo", ok: true, explica: "¡Eso! Iban perdiendo 2 a 0 y no se rindieron." },
+        { t: "Porque eran más rápidas", explica: "La maestra dijo otra razón. Lee la última línea." },
+        { t: "Porque llovió", explica: "La lluvia fue para los dos equipos. Lee la última línea." },
+      ] },
+    ],
+  },
+  {
+    id: "sombra-cuernos", nivel: 1, titulo: "La sombra con cuernos", dibujo: "👻",
+    texto: [
+      "Era de noche y Capi no podía dormir. Afuera soplaba el viento: uuuuuh.",
+      "De pronto, en la pared de su cuarto apareció una sombra enorme. ¡Tenía cuernos largos y unas manos con dedos finitos! La sombra se movía despacito… hacia su cama.",
+      "Capi se tapó hasta las orejas. Le temblaba la mandarina. —¿Q-quién está ahí? —preguntó.",
+      "—Soy yo —dijo una vocecita—. Tula. Me perdí en la oscuridad y vi tu ventana.",
+      "Capi asomó la nariz. En la ventana estaba Tula, con su linterna y una hoja de helecho pegada en la cabeza. La linterna, muy cerca de la hoja, hacía en la pared una sombra gigante: los cuernos eran la hoja, ¡y los dedos finitos eran las patitas de Tula!",
+      "Las dos se rieron un montón. Esa noche hicieron sombras de conejos, de pájaros y de monstruos. Y Capi aprendió que cuando la luz está muy cerca, hasta una tortuguita hace una sombra de gigante.",
+    ],
+    preguntas: [
+      { tipo: "opciones", texto: "¿Qué vio Capi en la pared?", opciones: [
+        { t: "Una sombra enorme con cuernos", ok: true, explica: "¡Uy, qué susto! 😱" },
+        { t: "Un fantasma blanco", explica: "Vuelve a leer el segundo párrafo: era algo oscuro." },
+        { t: "Una araña", explica: "Vuelve a leer el segundo párrafo." },
+      ] },
+      { tipo: "opciones", texto: "¿Qué eran los «cuernos» de la sombra?", opciones: [
+        { t: "Una hoja de helecho en la cabeza de Tula", ok: true, explica: "¡Sí! ¡No era ningún monstruo!" },
+        { t: "Los cuernos de un monstruo", explica: "El misterio se resuelve en el quinto párrafo." },
+        { t: "Las ramas de un árbol", explica: "Busca qué tenía Tula en la cabeza." },
+      ] },
+      { tipo: "opciones", texto: "¿Por qué la sombra era tan grande?", opciones: [
+        { t: "Porque la linterna estaba muy cerca", ok: true, explica: "¡Exacto! Pruébalo con una linterna y tu mano." },
+        { t: "Porque Tula es enorme", explica: "¡Tula es chiquita! Lee lo que aprendió Capi." },
+        { t: "Porque era de noche", explica: "La noche ayuda, pero la razón está en la última línea." },
+      ] },
+      { tipo: "ordena", texto: "Ordena la noche de Capi:", pasos: [
+        "Capi no puede dormir",
+        "Aparece una sombra con cuernos",
+        "Tula dice quién es",
+        "Juegan a hacer sombras",
+      ] },
+    ],
+  },
+  {
+    id: "ruidos-atico", nivel: 2, titulo: "Los ruidos del ático", dibujo: "🕯️",
+    texto: [
+      "En casa de Leo, a medianoche, se escuchó un ruido en el ático: toc… toc… toc. Después, uno más raro: ñiiiic, ñiiiic. Y al final, algo que rodaba por el piso: rrrrrr.",
+      "Leo se sentó en la cama con el corazón a mil. —Bip, ¿escuchaste eso? Los ojitos de luz de Bip se encendieron. —Escuché tres sonidos distintos —dijo Bip—. Podemos investigarlos uno por uno.",
+      "Subieron la escalera muy despacio. Leo iba detrás de Bip, porque los ojitos del robot alumbraban como dos linternas. Arriba olía a polvo y a cosas viejas.",
+      "Primero encontraron el ñiiiic: era la ventanita del ático, que se abría y se cerraba con el viento, chirriando como una puerta de película de fantasmas.",
+      "Después, el rrrrrr: en el piso rodaban nueces, una detrás de otra. Y en un rincón, sobre un montón de hojas, ¡dos ojos brillantes los miraban!",
+      "Leo casi grita… hasta que vio la cola peluda. Era Nina, la ardillita, que había entrado por la ventana a guardar sus nueces para el invierno. El toc, toc, toc era ella, rompiendo cáscaras con los dientes.",
+      "Leo cerró bien la ventana y le armó a Nina una casita con una caja de zapatos en el árbol del patio. —¿Sabes, Bip? —dijo Leo, ya en la cama—. El miedo se achica cuando miras las cosas una por una.",
+    ],
+    preguntas: [
+      { tipo: "opciones", texto: "¿Qué hacía el ruido ñiiiic?", opciones: [
+        { t: "La ventanita del ático, movida por el viento", ok: true, explica: "¡Sí! Chirriaba como una puerta de película de fantasmas." },
+        { t: "Un fantasma", explica: "Leo y Bip lo encontraron en el cuarto párrafo." },
+        { t: "Bip", explica: "Bip estaba con Leo. Lee el cuarto párrafo." },
+      ] },
+      { tipo: "opciones", texto: "¿Qué quiere decir que Leo tenía «el corazón a mil»?", opciones: [
+        { t: "Que le latía muy rápido del susto", ok: true, explica: "¡Exacto! Así late el corazón cuando tenemos miedo." },
+        { t: "Que tenía mil corazones", explica: "¡Ja! Es una forma de hablar. ¿Cómo se sentía Leo?" },
+        { t: "Que estaba muy tranquilo", explica: "Al contrario. Acababa de escuchar ruidos a medianoche." },
+      ] },
+      { tipo: "opciones", texto: "¿Por qué Leo subió detrás de Bip?", opciones: [
+        { t: "Porque los ojitos de Bip alumbraban como linternas", ok: true, explica: "¡Sí! Bip iluminaba el camino." },
+        { t: "Porque Bip era más grande", explica: "Bip es un robot pequeñito. Busca qué tenía Bip." },
+        { t: "Porque Leo quería volver a dormir", explica: "Busca qué tenían de especial los ojitos de Bip." },
+      ] },
+      { tipo: "ordena", texto: "Ordena el misterio:", pasos: [
+        "Leo escucha tres ruidos",
+        "Suben al ático con Bip",
+        "Encuentran la ventana que chirría",
+        "Descubren a Nina con sus nueces",
+      ] },
+      { tipo: "opciones", texto: "¿Qué aprendió Leo?", opciones: [
+        { t: "Que el miedo se achica cuando miras las cosas una por una", ok: true, explica: "¡Eso! Como hizo Bip con los tres sonidos." },
+        { t: "Que los áticos tienen fantasmas", explica: "¡No había ningún fantasma! Lee la última línea." },
+        { t: "Que las ardillas dan miedo", explica: "Nina era muy simpática. Lee la última línea." },
+      ] },
+    ],
+  },
+  {
+    id: "casa-pantano", nivel: 3, titulo: "La casa del pantano", dibujo: "🏚️",
+    texto: [
+      "Detrás de la cancha de Las Mandarinas había una casa vieja junto al pantano. Tenía las ventanas rotas, el techo torcido y una cerca llena de enredaderas. Todos decían que ahí vivía la Bruja del Pantano.",
+      "Una tarde, Tito pateó tan fuerte que la pelota voló por encima de la cerca y cayó justo en el jardín de la casa. Se hizo un silencio. —Yo no voy —dijo el conejo. —Yo tampoco —dijo Tito.",
+      "Capi tragó saliva. —La pelota es del equipo. Vamos juntos: así da menos miedo. Y Capi, Tito y Tula empujaron la puerta de la cerca: ñiiiic.",
+      "Adentro estaba oscuro. De pronto vieron decenas de lucecitas verdes que se prendían y se apagaban entre los árboles. —¡Son los ojos de la bruja! —susurró Tito. Pero Tula miró de cerca: eran luciérnagas, unos bichitos que tienen luz en la panza.",
+      "Después escucharon un quejido larguísimo: uuuuuuu. Tito se escondió detrás de Tula. Capi siguió el sonido y encontró una botella vieja en la ventana: cuando el viento soplaba por la boca de la botella, ¡sonaba como un fantasma!",
+      "Y entonces la vieron: una figura blanca y alta en el jardín, que se movía con los brazos abiertos. —¡La bruja! —gritaron los tres. Pero la figura no caminaba: solo se agitaba con el viento. Era una sábana colgada en el tendedero.",
+      "Detrás de la sábana apareció una señora lechuza, con lentes y un delantal lleno de harina. —¿Buscan esto? —dijo, con la pelota en las alas—. Hace años que vivo aquí sola. Nadie viene a visitarme… creo que les doy miedo.",
+      "Esa tarde, la señora Lechuza les sirvió galletas de miel. Desde entonces va a ver todos los partidos de Las Mandarinas, y la casa del pantano tiene la ventana arreglada. Capi aprendió algo importante: lo que se cuenta de alguien no siempre es verdad, y hay que conocerlo para saber cómo es.",
+    ],
+    preguntas: [
+      { tipo: "opciones", texto: "¿Por qué los animales le tenían miedo a la casa?", opciones: [
+        { t: "Porque era vieja y decían que ahí vivía una bruja", ok: true, explica: "¡Sí! Pero nadie la había visto de verdad." },
+        { t: "Porque la bruja les había hecho algo", explica: "El cuento no dice eso: solo «todos decían»." },
+        { t: "Porque estaba muy lejos", explica: "Estaba justo detrás de la cancha. Mira el primer párrafo." },
+      ] },
+      { tipo: "opciones", texto: "¿Qué eran las lucecitas verdes?", opciones: [
+        { t: "Luciérnagas", ok: true, explica: "¡Exacto! Bichitos con luz en la panza." },
+        { t: "Los ojos de la bruja", explica: "Eso creyó Tito. Tula miró de cerca." },
+        { t: "Linternas", explica: "Tula miró de cerca y descubrió qué eran." },
+      ] },
+      { tipo: "opciones", texto: "¿Por qué Capi dijo «vamos juntos»?", opciones: [
+        { t: "Porque acompañados da menos miedo", ok: true, explica: "¡Sí! Y además la pelota era de todo el equipo." },
+        { t: "Porque no sabía dónde estaba la pelota", explica: "Sí sabía: en el jardín. Lee lo que dijo Capi." },
+        { t: "Porque Tito se lo pidió", explica: "Tito no quería ir. Fue idea de Capi." },
+      ] },
+      { tipo: "ordena", texto: "Ordena los sustos de la casa:", pasos: [
+        "La pelota cae en el jardín",
+        "Ven lucecitas verdes",
+        "Escuchan un quejido largo",
+        "Aparece una figura blanca",
+        "Conocen a la señora Lechuza",
+      ] },
+      { tipo: "opciones", texto: "¿Por qué la señora Lechuza vivía sola?", opciones: [
+        { t: "Porque todos le tenían miedo y nadie la visitaba", ok: true, explica: "¡Qué triste! Por suerte eso cambió." },
+        { t: "Porque no le gustaban los animales", explica: "¡Les hizo galletas! Lee lo que ella dice." },
+        { t: "Porque era una bruja de verdad", explica: "No era ninguna bruja. Lee lo que ella cuenta." },
+      ] },
+      { tipo: "opciones", texto: "¿Qué aprendió Capi?", opciones: [
+        { t: "Que lo que se cuenta de alguien no siempre es verdad", ok: true, explica: "¡Eso! Hay que conocer a alguien para saber cómo es." },
+        { t: "Que las casas viejas tienen brujas", explica: "¡No había ninguna bruja! Lee el final." },
+        { t: "Que no hay que jugar fútbol cerca del pantano", explica: "Siguen jugando ahí. Lee la última línea." },
+      ] },
+    ],
+  },
 ];
 
 if (typeof module !== "undefined") module.exports = { CUENTOS };

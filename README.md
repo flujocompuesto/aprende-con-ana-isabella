@@ -63,9 +63,9 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   verdad; en experto, toda América Latina.
 - **Mi alcancía** — necesidades y deseos, los tres frascos, una meta de
   ahorro con tentaciones y el interés compuesto con un gráfico.
-- **Cuentos de Capi** — 13 cuentos originales para leer o escuchar, con
-  preguntas de comprensión (incluye «Las semillas de Sofía», sobre el
-  dinero).
+- **Cuentos de Capi** — 22 cuentos originales para leer o escuchar, con
+  preguntas de comprensión: de fútbol, de miedito y «Las semillas de
+  Sofía», sobre el dinero.
 - **Tablas de multiplicar** — un repaso que pregunta más las que cuestan,
   con trucos y un mapa de lo que ya domina.
 - **Mi progreso** (`progreso.html`) — pasar las estrellas a otro aparato con
