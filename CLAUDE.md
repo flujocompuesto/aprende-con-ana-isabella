@@ -134,11 +134,13 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
   !important}` porque una clase con `display` (ej. `.acciones`) le ganaba al
   atributo `hidden` y dejaba visible un botón que debía ocultarse.
 - Juego "Inglés divertido" (`juegos/ingles-divertido.html` + `js/ingles.js`):
-  8 temas en vez de niveles (animales, colores, números, comida, cuerpo, mi
-  mundo, acciones y ropa; el progreso se guarda por tema) y el **Desafío
+  14 temas en vez de niveles (animales, colores, números, comida, cuerpo, mi
+  mundo, acciones, ropa y, desde nov-2026, deportes, escuela, familia,
+  emociones, espacio y de miedito; el progreso se guarda por tema) y el **Desafío
   final** (`desafio`): palabras de todos los temas con trampas del mismo
   tema, 4 deletreos de palabras de 5+ letras y 70 % del tiempo. Se abre con
-  estrellas en 4 temas. Máximo 27 ⭐. Cada partida son 10
+  estrellas en 4 temas. Máximo 45 ⭐ (3 por tema + 3 del desafío). Ninguna
+  palabra en inglés se repite entre temas (el desafío las mezcla). Cada partida son 10
   retos en orden creciente: ver ×3, escuchar ×3, traducir ×2, deletrear ×2.
   Cada pregunta va contra reloj con bono por rapidez. La pronunciación usa la
   voz del navegador (`speechSynthesis`, en-US); si no hay voz o está en 🔇,
@@ -247,17 +249,20 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     accidente, y el programa de 4 bloques de los niveles 6–7 ya no sirve.
     Por eso la estrella está en una cueva en medio del campo: en la orilla,
     seguir la pared con 4 bloques la resolvía.
-- "Curso de portugués" (`juegos/portugues.html`): 11 unidades de portugués
+- "Curso de portugués" (`juegos/portugues.html`): 16 unidades de portugués
   de Brasil que se desbloquean en orden (saludos, números, colores, animales,
   familia, comida, escuela, una conversación con Capi y tres difíciles:
   verbos con palabras engañosas —brincar, acordar—, días de la semana y
-  clima, y pedir comida en una lanchonete). Las de conversación tienen
+  clima, y pedir comida en una lanchonete; desde nov-2026: o corpo, roupas
+  —calça, óculos, luvas—, futebol —time es equipo— y dos conversaciones:
+  un paseo por el Pantanal con la prima Cacá del cuento y una noche de
+  misterio). Las de conversación tienen
   `conversa` (y `finConversa`) en vez de palabras. Cada unidad:
   tarjetas para escuchar (con una "dica" de pronunciación), práctica de 8
   preguntas (leer / escuchar / traducir, con la palabra en español como
   trampa cuando es distinta) y armar frases. Voz `speechSynthesis` pt-BR.
   Datos en `js/portugues-unidades.js`, pantalla en `js/portugues.js`.
-  Progreso `portugues` → id de la unidad, máximo 33 ⭐. La conversación usa
+  Progreso `portugues` → id de la unidad, máximo 48 ⭐. La conversación usa
   el nombre de pila de Ana Isabella y sus gustos (ajedrez y robots).
 - "Estudio de videos" (`juegos/videos.html`, oct-2026): curso de 7 unidades
   para hacer videos de YouTube (la idea, cuidarse en internet, el guion,

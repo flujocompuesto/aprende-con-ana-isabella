@@ -47,7 +47,8 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   (fracciones equivalentes y sumas).
 
 - **Inglés divertido** — vocabulario en inglés por temas (animales, colores,
-  números, comida, cuerpo, mi mundo, acciones y ropa): mirar, escuchar la
+  números, comida, cuerpo, mi mundo, acciones, ropa, deportes, escuela,
+  familia, emociones, espacio y de miedito): mirar, escuchar la
   pronunciación, traducir y deletrear, contra reloj. Al final se repasan las
   palabras. Con estrellas en 4 temas se abre el Desafío final.
 
@@ -76,7 +77,7 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   varios tableros) y arma circuitos girando cables (interruptor, motor, serie,
   paralelo y cortocircuito). 10 niveles en cada taller.
 
-- **Curso de portugués** — 11 unidades con Capi: palabras con su
+- **Curso de portugués** — 16 unidades con Capi: palabras con su
   pronunciación, práctica, armar frases y conversaciones en portugués
   (presentarse y pedir comida en una cafetería).
 

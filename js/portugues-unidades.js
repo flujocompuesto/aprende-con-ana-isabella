@@ -256,6 +256,137 @@ const UNIDADES_PT = [
       { pt: "Não, obrigada!", es: "¡No, gracias!" },
     ],
   },
+  // ---- Unidades nuevas (nov-2026): cuerpo, ropa, fútbol y dos aventuras ----
+  {
+    id: "corpo", titulo: "O corpo", es: "El cuerpo", icono: "🖐️", conDibujos: true,
+    dica: "La <strong>lh</strong> otra vez: o<strong>lh</strong>o se dice «olio» y ore<strong>lh</strong>a «orelia». La <strong>ç</strong> suena como <strong>s</strong>: bra<strong>ç</strong>o es «braso». ¡Y el pelo es <strong>cabelo</strong>!",
+    palabras: [
+      { pt: "cabeça", es: "cabeza", emoji: "🙆" },
+      { pt: "cabelo", es: "pelo", emoji: "💇" },
+      { pt: "olho", es: "ojo", emoji: "👁️" },
+      { pt: "orelha", es: "oreja", emoji: "👂" },
+      { pt: "nariz", es: "nariz", emoji: "👃" },
+      { pt: "boca", es: "boca", emoji: "👄" },
+      { pt: "dente", es: "diente", emoji: "🦷" },
+      { pt: "mão", es: "mano", emoji: "✋" },
+      { pt: "braço", es: "brazo", emoji: "💪" },
+      { pt: "perna", es: "pierna", emoji: "🦵" },
+      { pt: "pé", es: "pie", emoji: "🦶" },
+      { pt: "coração", es: "corazón", emoji: "❤️" },
+    ],
+    frases: [
+      { pt: "Eu tenho dois olhos.", es: "Tengo dos ojos." },
+      { pt: "A Capi lava as mãos.", es: "Capi se lava las manos." },
+      { pt: "Meu cabelo é comprido.", es: "Mi pelo es largo." },
+    ],
+  },
+  {
+    id: "roupas", titulo: "Roupas", es: "Ropa", icono: "👕", conDibujos: true,
+    dica: "¡Palabras engañosas! La <strong>calça</strong> es el pantalón, los <strong>óculos</strong> son los lentes y las <strong>luvas</strong> son los guantes. Los zapatos deportivos se llaman <strong>tênis</strong>.",
+    palabras: [
+      { pt: "camiseta", es: "camiseta", emoji: "👕" },
+      { pt: "calça", es: "pantalón", emoji: "👖" },
+      { pt: "vestido", es: "vestido", emoji: "👗" },
+      { pt: "tênis", es: "zapatillas", emoji: "👟" },
+      { pt: "boné", es: "gorra", emoji: "🧢" },
+      { pt: "chapéu", es: "sombrero", emoji: "👒" },
+      { pt: "meias", es: "medias", emoji: "🧦" },
+      { pt: "casaco", es: "abrigo", emoji: "🧥" },
+      { pt: "cachecol", es: "bufanda", emoji: "🧣" },
+      { pt: "luvas", es: "guantes", emoji: "🧤" },
+      { pt: "óculos", es: "lentes", emoji: "👓" },
+    ],
+    frases: [
+      { pt: "Eu gosto do meu boné vermelho.", es: "Me gusta mi gorra roja." },
+      { pt: "Hoje eu uso um vestido azul.", es: "Hoy uso un vestido azul." },
+      { pt: "Faz frio, coloca o casaco!", es: "¡Hace frío, ponte el abrigo!" },
+    ],
+  },
+  {
+    id: "futebol", titulo: "Futebol!", es: "Fútbol", icono: "⚽", conDibujos: true,
+    dica: "En Brasil el fútbol es casi un idioma. ¡Ojo! <strong>Time</strong> no es tiempo: es el <strong>equipo</strong>, y se dice «chi-mi». La portera es la <strong>goleira</strong> y la hinchada es la <strong>torcida</strong>. ¿Y el gol? ¡Se grita «gooooool»!",
+    palabras: [
+      { pt: "bola", es: "pelota", emoji: "⚽" },
+      { pt: "gol", es: "gol", emoji: "🥅" },
+      { pt: "time", es: "equipo", emoji: "👥" },
+      { pt: "goleira", es: "portera", emoji: "🧤" },
+      { pt: "chutar", es: "patear", emoji: "🦵" },
+      { pt: "torcida", es: "hinchada", emoji: "📣" },
+      { pt: "estádio", es: "estadio", emoji: "🏟️" },
+      { pt: "cartão amarelo", es: "tarjeta amarilla", emoji: "🟨" },
+      { pt: "troféu", es: "trofeo", emoji: "🏆" },
+      { pt: "campeã", es: "campeona", emoji: "🥇" },
+    ],
+    frases: [
+      { pt: "A goleira defendeu o pênalti!", es: "¡La portera atajó el penal!" },
+      { pt: "O meu time ganhou o jogo.", es: "Mi equipo ganó el partido." },
+      { pt: "Chuta a bola, Capi!", es: "¡Patea la pelota, Capi!" },
+    ],
+  },
+  {
+    id: "pantanal", titulo: "No Pantanal", es: "Paseo por el Pantanal", icono: "🦜", conDibujos: false,
+    dica: "¿Te acuerdas del cuento «Capi viaja a Brasil»? Hoy la prima <strong>Cacá</strong> te lleva a pasear por el Pantanal. Escucha lo que dice y contéstale en portugués. Una palabra útil: <strong>Nossa!</strong> es «¡Guau!».",
+    palabras: [],
+    finConversa: "¡Paseaste por el Pantanal en portugués! 🇧🇷🦜",
+    conversa: [
+      {
+        capi: "Oi, prima! Bem-vinda ao Pantanal!", es: "¡Hola, prima! ¡Bienvenida al Pantanal!",
+        opciones: [{ pt: "Obrigada, Cacá! Que lugar lindo!", ok: true }, { pt: "Eu quero um sanduíche." }, { pt: "Hoje é segunda-feira." }],
+      },
+      {
+        capi: "Você quer nadar no rio?", es: "¿Quieres nadar en el río?",
+        opciones: [{ pt: "Sim! Eu adoro nadar.", ok: true }, { pt: "Eu tenho dois gatos." }, { pt: "Boa noite!" }],
+      },
+      {
+        capi: "Olha ali! Um jacaré!", es: "¡Mira allá! ¡Un yacaré!",
+        opciones: [{ pt: "Nossa! Que grande!", ok: true }, { pt: "Eu uso óculos." }, { pt: "Quanto custa?" }],
+      },
+      {
+        capi: "Você está com fome?", es: "¿Tienes hambre?",
+        opciones: [{ pt: "Sim, eu quero uma fruta, por favor.", ok: true }, { pt: "Não, eu sou a goleira." }, { pt: "Tchau, professora!" }],
+      },
+      {
+        capi: "Amanhã vamos ver as araras!", es: "¡Mañana vamos a ver las guacamayas!",
+        opciones: [{ pt: "Oba! Até amanhã, Cacá!", ok: true }, { pt: "Hoje faz muito frio." }, { pt: "Eu me chamo Capi." }],
+      },
+    ],
+    frases: [
+      { pt: "Eu adoro nadar no rio.", es: "Me encanta nadar en el río." },
+      { pt: "Olha, uma arara azul!", es: "¡Mira, una guacamaya azul!" },
+    ],
+  },
+  {
+    id: "misterio", titulo: "Noite de mistério", es: "Noche de misterio", icono: "🔦", conDibujos: false,
+    dica: "Es de noche y Capi escucha un ruido raro… ¿te animas a investigar con ella? Palabras de miedito: <strong>medo</strong> es miedo, <strong>barulho</strong> es ruido y <strong>escuro</strong> es oscuro. Y cuando pasa el susto se dice <strong>Ufa!</strong>",
+    palabras: [],
+    finConversa: "¡Resolviste el misterio en portugués! 🔦👻",
+    conversa: [
+      {
+        capi: "Psiu! Você ouviu esse barulho?", es: "¡Shh! ¿Escuchaste ese ruido?",
+        opciones: [{ pt: "Sim! O que foi isso?", ok: true }, { pt: "Eu gosto de dançar." }, { pt: "Bom apetite!" }],
+      },
+      {
+        capi: "Vamos ver com a lanterna?", es: "¿Vamos a ver con la linterna?",
+        opciones: [{ pt: "Vamos, mas bem devagar!", ok: true }, { pt: "Eu quero um suco." }, { pt: "Hoje é sábado." }],
+      },
+      {
+        capi: "Olha! Dois olhos brilhando no escuro!", es: "¡Mira! ¡Dos ojos brillando en la oscuridad!",
+        opciones: [{ pt: "Que medo! Quem está aí?", ok: true }, { pt: "Meu time ganhou." }, { pt: "Obrigada, professora!" }],
+      },
+      {
+        capi: "É só a Nina, a esquilinha!", es: "¡Es solo Nina, la ardillita!",
+        opciones: [{ pt: "Ufa! Que susto!", ok: true }, { pt: "Eu gosto de azul." }, { pt: "Um suco de laranja." }],
+      },
+      {
+        capi: "Agora vamos dormir. Boa noite!", es: "Ahora a dormir. ¡Buenas noches!",
+        opciones: [{ pt: "Boa noite, Capi! Durma bem!", ok: true }, { pt: "Bom dia, Cacá!" }, { pt: "Vamos chutar a bola!" }],
+      },
+    ],
+    frases: [
+      { pt: "Eu tenho medo do escuro.", es: "Le tengo miedo a la oscuridad." },
+      { pt: "Ufa, que susto!", es: "¡Uf, qué susto!" },
+    ],
+  },
 ];
 
 if (typeof module !== "undefined") module.exports = { UNIDADES_PT };
