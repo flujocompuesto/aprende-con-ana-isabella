@@ -2799,3 +2799,17 @@ footer {
 .capturadas .ninguna { opacity: 0.55; font-size: 0.9rem; }
 .pedido-deshacer { background: var(--tarjeta); border: 2px dashed var(--mostaza); border-radius: 12px; padding: 8px 12px; margin: 6px 0; }
 .pedido-deshacer p { margin: 0 0 6px; }
+
+/* Ajedrez: el termómetro del centro (js/ajedrez-centro.js) */
+.casilla.casilla-centro { outline: 3px dashed var(--naranja); outline-offset: -3px; }
+.cuenta-centro { position: absolute; top: 2px; right: 2px; display: flex; gap: 2px; font-family: var(--letra-titulos); font-size: clamp(0.55rem, 2.2vw, 0.8rem); line-height: 1; z-index: 1; pointer-events: none; }
+.cuenta-centro b { min-width: 1.2em; padding: 1px 3px; border: 1.5px solid var(--tinta); border-radius: 6px; text-align: center; }
+.cuenta-centro .blanco { background: #fff; color: var(--tinta); }
+.cuenta-centro .negro { background: var(--tinta); color: #fff; }
+.termometro { display: grid; gap: 4px; max-width: 420px; margin: 6px auto; padding: 8px 12px; background: var(--tarjeta); border: 2px solid var(--tinta); border-radius: var(--radio); box-shadow: var(--sombra-tinta); }
+.fila-termo { display: grid; grid-template-columns: 5.5em 1fr 2em; align-items: center; gap: 8px; }
+.barra-termo { height: 14px; border: 2px solid var(--tinta); border-radius: 8px; background: var(--papel-oscuro); overflow: hidden; }
+.relleno-termo { display: block; height: 100%; transition: width 0.4s; }
+.relleno-termo.blanco { background: var(--mostaza); }
+.relleno-termo.negro { background: var(--tinta); }
+.fila-termo b { font-family: var(--letra-titulos); text-align: right; }

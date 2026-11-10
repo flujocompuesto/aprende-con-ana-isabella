@@ -1,7 +1,8 @@
 // Pruebas del ajedrez — Aprende con Ana Isabella
 // Uso: node herramientas/probar-ajedrez.js
 // Verifica con el motor: perft (reglas), cada problema de los capítulos
-// (mates, mates en 2, tácticas con su línea y sus "buenas"), el banco del
+// (mates, mates en 2, tácticas con su línea y sus "buenas", jugadas y guiones
+// legales), el banco del
 // problema del día y que los finales se ganen siguiendo la pista de Capi.
 // Correrlo antes de publicar cualquier cambio en el ajedrez.
 
@@ -11,6 +12,7 @@ const A = require("../js/ajedrez-motor.js");
 const B = require("../js/ajedrez-busqueda.js");
 const F = require("../js/ajedrez-finales.js");
 const { PROBLEMAS } = require("../js/ajedrez-problemas.js");
+const Centro = require("../js/ajedrez-centro.js");
 
 let errores = 0;
 const ok = (bien, texto) => {
@@ -112,6 +114,24 @@ function revisarFinal(fen, objetivo, max, etiqueta) {
   ok(!malas.length, `${etiqueta}: con la pista se logra en ${resultados.length - malas.length}/${resultados.length} partidas, la más larga en ${peor} jugadas (máximo ${max})${malas.length ? " · falla: " + malas.join(", ") : ""}`);
 }
 
+console.log("== Termómetro del centro ==");
+{
+  const t = (fen, casilla) => {
+    const p = A.desdeFEN(fen);
+    const i = A.indiceCasilla(casilla);
+    return Array.from({ length: 64 }, (_, j) => j).filter((j) => Centro.ataca(p.tablero, j, i)).length;
+  };
+  // Cada pieza sola contra el motor: Centro.ataca tiene que coincidir con A.atacada.
+  let iguales = true;
+  for (const fen of [A.INICIAL, "r1bqkbnr/pppp1ppp/2n5/4p3/3PP3/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 3", "4k3/8/8/2pP4/8/8/8/4K3 w - - 0 1"]) {
+    const p = A.desdeFEN(fen);
+    for (let i = 0; i < 64; i++)
+      for (const color of ["w", "b"]) if ((Centro.ataques(p, i, color) > 0) !== A.atacada(p, i, color)) iguales = false;
+  }
+  ok(iguales, "Centro.ataques coincide con el motor en qué casillas están atacadas");
+  ok(t("8/8/8/8/3N4/8/8/8 w - - 0 1", "f5") === 1 && Centro.control(A.desdeFEN(A.INICIAL), "w") === 0, "el caballo en d4 ataca f5; al empezar nadie controla el centro");
+}
+
 console.log("== Capítulos ==");
 const ids = new Set();
 for (const cap of CAPITULOS) {
@@ -132,6 +152,36 @@ for (const cap of CAPITULOS) {
     }
     if (paso.tipo === "tactica") revisarTactica(paso.fen, paso.linea, paso.buenas, etiqueta);
     if (paso.tipo === "final") revisarFinal(paso.fen, paso.objetivo, paso.max, etiqueta);
+    // "jugada": cada una de las buenas tiene que ser legal (si no, nunca se podría hacer).
+    if (paso.tipo === "jugada") {
+      const p = A.desdeFEN(paso.fen);
+      const ilegales = Object.keys(paso.buenas).filter((k) => !buscar(p, k));
+      ok(!ilegales.length, `${etiqueta}: las buenas son legales${ilegales.length ? " · ilegales: " + ilegales.join(", ") : ""}`);
+    }
+    // "centro": alguna jugada sube el termómetro.
+    if (paso.tipo === "centro") {
+      const p = A.desdeFEN(paso.fen);
+      const inicio = Centro.control(p, "w");
+      const mejor = Math.max(...A.todosLegales(p, "w").map((m) => Centro.control(A.mover(p, m), "w") - inicio));
+      ok(mejor >= 1, `${etiqueta}: la mejor jugada sube el termómetro ${mejor}`);
+    }
+    // "guion": la secuencia entera (blancas y negras) se puede jugar.
+    if (paso.tipo === "guion") {
+      let p = A.desdeFEN(paso.fen);
+      let falla = "";
+      for (const j of paso.jugadas) {
+        for (const clave of [j.blanca, j.negra].filter(Boolean)) {
+          const m = buscar(p, clave);
+          if (!m) {
+            falla = clave;
+            break;
+          }
+          p = A.mover(p, m);
+        }
+        if (falla) break;
+      }
+      ok(!falla, `${etiqueta}: el guion se puede jugar${falla ? " · falla en " + falla : ""}`);
+    }
   });
 }
 

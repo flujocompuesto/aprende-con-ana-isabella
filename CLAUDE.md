@@ -148,13 +148,28 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
   espacios (por el deletreo). Colores se dibujan como muestras y números como
   cifras, no con emojis.
 - "Aprende ajedrez" (`juegos/ajedrez.html`): el juego que más usa. Camino
-  de 21 capítulos con Capi en secciones (`SECCIONES`): lo básico (meta,
-  piezas, jaque y mate, cómo empezar, partida), táctica (pieza sola, tenedor,
+  de 26 capítulos con Capi en secciones (`SECCIONES`): lo básico (meta,
+  piezas, jaque y mate, cómo empezar, partida), estrategia: el centro (nov-2026:
+  «El poder del centro» y «La batalla por el centro»), reglas especiales
+  (nov-2026: comer al paso y coronar, el enroque y el rey, ahogado y
+  tablas), táctica (pieza sola, tenedor,
   clavada, descubierta: paso `tactica`), mates de campeona (mates difíciles,
   mate en 2), finales (mate con dama, con torre y la regla del cuadrado: paso
   `final`) y retos (coordenadas y notación: pasos `nombrar` y `coordenadas`;
   Capi experta). Los capítulos con `requiere` se abren al terminar el que
-  nombran. Progreso por capítulo, máximo 63 ⭐.
+  nombran. Progreso por capítulo, máximo 78 ⭐.
+  - **Termómetro del centro** (`js/ajedrez-centro.js`, puro): cuánto
+    controla cada color d4, e4, d5 y e5 (+1 por pieza que ataca o defiende
+    cada casilla, +1 por pieza parada en ella). Con `termometro: true` en un
+    paso (o el global `termometro`) el tablero muestra los dos números en
+    cada casilla del centro y una barra arriba del panel. Paso `centro`:
+    sirve una jugada que suba el termómetro al menos la mejor menos 1.
+    Paso `batallaCentro`: 6 jugadas cada una desde el principio contra Capi
+    (`rival`: tranquila o lista); al hacer ella la sexta, gana si su
+    termómetro es más alto (simulado: buscando el centro gana ~90 % contra
+    la tranquila y ~65 % contra la lista; moviendo al azar, ~20 % y ~5 %).
+    En las partidas normales, el botón «🌡️ Centro» lo prende y lo apaga.
+  - `pedirMate` avisa si la jugada es **ahogado** (Capi se burla).
   - **Práctica diaria** (arriba del camino): el **problema del día** (todos
     los días otro del banco `js/ajedrez-problemas.js`, que da la vuelta), con
     racha 🔥 en `aprende:ajedrez-diario` (sigue viva si resolvió hoy o ayer;
@@ -207,7 +222,9 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     vuelta el tablero y dicen qué color se puede mover.
   - **`node herramientas/probar-ajedrez.js`** verifica todo con el motor
     (perft, cada mate y mate en 2, cada táctica con su línea y sus `buenas`,
-    los finales siguiendo la pista y el banco entero). Correrlo antes de
+    los finales siguiendo la pista, que las jugadas de los pasos `jugada` y
+    `guion` sean legales, el termómetro contra el motor, que cada paso
+    `centro` tenga una jugada que lo suba, y el banco entero). Correrlo antes de
     publicar cualquier cambio del ajedrez.
   - `js/ajedrez-motor.js`: reglas completas (jaque, enroque, al paso,
     coronación, mate/ahogado). Se valida con perft:
@@ -215,7 +232,8 @@ y un `<span class="progreso-card">` — `js/inicio.js` pinta el progreso.
     debe dar 197281. Si se toca el motor, correr perft antes de publicar.
   - `js/ajedrez.js`: contenido (`CAPITULOS`, cada paso tiene un `tipo`:
     explica, conoce, explora, estrellas, pregunta, escapa, mate, mate2,
-    tactica, final, nombrar, coordenadas, jugada, guion, partida) y la compu (`elegirJugada`, heurística de 1 jugada con azar; la
+    tactica, final, nombrar, coordenadas, jugada, guion, partida, centro,
+    batallaCentro) y la compu (`elegirJugada`, heurística de 1 jugada con azar; la
     "tranquila" a veces no revisa si deja piezas colgando). La **experta**
     (`elegirJugadaExperta`) mira 2 jugadas (la suya y la mejor respuesta) y
     al final la mejor captura que queda; ~30 ms por jugada y le gana casi

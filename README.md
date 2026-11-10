@@ -52,8 +52,10 @@ cada cambio en `main`). En local basta con abrir `index.html`.
   pronunciación, traducir y deletrear, contra reloj. Al final se repasan las
   palabras. Con estrellas en 4 temas se abre el Desafío final.
 
-- **Aprende ajedrez** — 21 capítulos con Capi: lo básico (piezas, jaque y
-  mate, cómo empezar, una partida), táctica (pieza sola, tenedor, clavada,
+- **Aprende ajedrez** — 26 capítulos con Capi: lo básico (piezas, jaque y
+  mate, cómo empezar, una partida), el centro (con un termómetro que mide
+  quién lo controla y una batalla contra Capi), reglas especiales (comer al
+  paso, coronar, el enroque, ahogado y tablas), táctica (pieza sola, tenedor, clavada,
   descubierta), mates de campeona, finales (mate con dama, con torre, regla
   del cuadrado) y retos (coordenadas, la compu experta). Cada día hay un
   **problema del día** con racha 🔥, y después de cada partida se puede ver

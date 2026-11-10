@@ -1,6 +1,8 @@
 // Aprende ajedrez — Aprende con Ana Isabella
 // Camino de capítulos con Capi, la capibara, en secciones: lo básico (cómo se
-// mueve cada pieza, jaque y mate, cómo empezar y una partida), táctica
+// mueve cada pieza, jaque y mate, cómo empezar y una partida), el centro
+// (con el termómetro de js/ajedrez-centro.js y la batalla contra Capi), reglas
+// especiales (al paso, coronar, el enroque y el rey, ahogado y tablas), táctica
 // (pieza sola, tenedor, clavada, descubierta), mates de campeona, finales y
 // retos. Arriba del camino está la práctica diaria: el problema del día con
 // su racha, problemas extra y el reto de coordenadas. Después de cada
@@ -24,7 +26,9 @@ const INFO_PIEZAS = {
 
 // ---- Contenido del camino ----
 // Tipos de paso: explica, conoce, explora, estrellas, pregunta, escapa, mate,
-// mate2, tactica, final, nombrar, coordenadas, jugada, guion y partida. Las
+// mate2, tactica, final, nombrar, coordenadas, jugada, guion, partida, centro
+// (subir el termómetro del centro) y batallaCentro. "termometro: true" muestra
+// el termómetro en cualquier paso. Las
 // posiciones se dan con "fen" o con "piezas". Un capítulo con "requiere" se
 // abre al ganar al menos 1 ⭐ en el capítulo que nombra.
 
@@ -150,6 +154,132 @@ const CAPITULOS = [
     pasos: [
       { tipo: "explica", fen: A.INICIAL, texto: "¡Llegó la hora de jugar una partida completa contra mí, Capi! 🍊 Tú juegas con las <strong>blancas</strong>. Usa las reglas de oro: centro, saca tus piezas y enroca. Si te equivocas puedes <strong>deshacer</strong>, y si no sabes qué jugar pide <strong>ayuda</strong> 💡." },
       { tipo: "partida" },
+    ],
+  },
+  // ---- Estrategia: el centro (el termómetro está en js/ajedrez-centro.js) ----
+  {
+    id: "centro", emoji: "🎯", titulo: "El poder del centro", requiere: "apertura",
+    pasos: [
+      { tipo: "explica", piezas: { a1: "N" }, marcas: ["b3", "c2"], texto: "Mira este caballo en la <strong>esquina</strong>: solo puede saltar a <strong>2 casillas</strong> (las marcadas). ¡Pobrecito, está aburrido! 😴" },
+      { tipo: "explica", piezas: { d4: "N" }, marcas: ["c2", "e2", "b3", "f3", "b5", "f5", "c6", "e6"], texto: "Ahora el mismo caballo en el <strong>centro</strong>: ¡llega a <strong>8 casillas</strong>! Desde el medio del tablero, las piezas llegan rápido a todos lados, para atacar y para defender." },
+      { tipo: "pregunta", piezas: { a1: "B", d5: "B" }, texto: "¿Cuál de los dos alfiles controla más casillas?", opciones: [
+        { t: "El de a1, en la esquina" },
+        { t: "El de d5, en el centro", ok: true, explica: "¡Sí! El de d5 llega a 13 casillas y el de la esquina solo a 7. En el centro, las piezas son más fuertes." },
+      ] },
+      { tipo: "explica", fen: A.INICIAL, marcas: ["d4", "e4", "d5", "e5"], texto: "Estas 4 casillas del medio, <strong>d4, e4, d5 y e5</strong>, son <strong>el centro</strong>. Es como la cima de una montaña ⛰️: desde ahí se ve y se llega a todo el tablero.<br><br><strong>Controlar el centro</strong> es tener piezas <strong>en</strong> esas casillas o piezas que las <strong>ataquen</strong>. Si tú lo controlas, tus piezas tienen espacio para moverse… ¡y las de tu rival quedan apretadas!" },
+      { tipo: "explica", termometro: true, fen: "r1bqkbnr/pppp1ppp/2n5/4p3/3PP3/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 3", texto: "Este es el <strong>termómetro del centro</strong> 🌡️. En cada casilla del centro hay dos números: el blanco ⚪ dice cuántas veces la controlan las blancas, y el negro ⚫, las negras. Cuenta las piezas que <strong>están</strong> en la casilla y las que la <strong>atacan</strong>. Abajo del tablero está el total de cada una." },
+      { tipo: "centro", fen: A.INICIAL, texto: "¡Tu turno! Haz una primera jugada que <strong>suba tu termómetro</strong> lo más posible. 🌡️" },
+      { tipo: "centro", fen: "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2", texto: "Las negras también fueron al centro con su peón. ¡Sube tu termómetro otra vez!" },
+      { tipo: "centro", fen: "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/7N/PPPP1PPP/RNBQKB1R w KQkq - 2 3", texto: "Uy, alguien puso el caballo en la <strong>orilla</strong>, en h3: desde ahí no mira el centro. Busca la jugada que más ayude al centro." },
+      { tipo: "pregunta", fen: "rnbqkbnr/1pppppp1/p6p/8/3PP3/2N2N2/PPP2PPP/R1BQKB1R w KQkq - 0 4", texto: "¿Quién controla el centro en esta partida?", opciones: [
+        { t: "Las blancas", ok: true, explica: "¡Sí! Las blancas tienen dos peones en el centro y sus caballos lo miran. Las negras movieron los peones de las orillas (a6 y h6) y no controlan nada." },
+        { t: "Las negras" },
+        { t: "Nadie" },
+      ] },
+    ],
+  },
+  {
+    id: "batalla", emoji: "⚔️", titulo: "La batalla por el centro", requiere: "centro",
+    pasos: [
+      { tipo: "explica", fen: A.INICIAL, marcas: ["d4", "e4", "d5", "e5"], texto: "El plan para conquistar el centro:<ol><li>♟ Pon <strong>peones en el centro</strong> (e4 y d4).</li><li>🐴 Saca los <strong>caballos</strong> hacia el centro (f3 y c3), ¡no a la orilla!</li><li>📐 Saca los <strong>alfiles</strong> apuntando al centro.</li><li>🏰 Enroca para cuidar a tu rey.</li></ol>¡Y ojo, que no te coman las piezas!" },
+      { tipo: "batallaCentro", jugadas: 6, rival: "tranquila", texto: "¡Batalla contra Capi! Cada una hace <strong>6 jugadas</strong>. Cuando hagas la sexta, gana la que tenga el <strong>termómetro del centro</strong> más alto. 🌡️" },
+      { tipo: "batallaCentro", jugadas: 6, rival: "lista", texto: "¡Revancha contra <strong>Capi lista</strong> 🤓! Esta vez ella también pelea por el centro… 6 jugadas, ¡a conquistarlo!" },
+    ],
+  },
+  // ---- Reglas especiales: comer al paso, coronar, el enroque y el rey, ahogado y tablas ----
+  {
+    id: "alpaso", emoji: "🕵️", titulo: "Comer al paso", requiere: "peon",
+    pasos: [
+      { tipo: "explica", fen: "4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1", marcas: ["d6"], texto: "Una regla secreta del peón: <strong>comer al paso</strong>. Si un peón rival avanza <strong>dos casillas</strong> de un salto y queda <strong>justo al lado</strong> de tu peón, lo puedes comer como si hubiera avanzado solo una. Tu peón va en diagonal a la casilla por la que <strong>pasó</strong> (la marcada) y el peón rival desaparece." },
+      { tipo: "guion", fen: "4k3/3p4/8/8/4P3/8/8/4K3 w - - 0 1", texto: "Vamos a probarlo juntas, paso a paso.",
+        jugadas: [
+          { blanca: "e4e5", texto: "1️⃣ Avanza tu peón de <strong>e4</strong> a <strong>e5</strong>.", negra: "d7d5", textoNegra: "¡El peón negro saltó dos casillas, de d7 a d5, y quedó al lado del tuyo! Cree que se escapó…" },
+          { blanca: "e5d6", texto: "2️⃣ ¡Cómelo al paso! Mueve tu peón en diagonal a <strong>d6</strong>, la casilla por la que pasó el peón negro." },
+        ],
+        final: "¡Lo comiste al paso! 🎉 Tu peón quedó en d6 y el peón negro desapareció de d5. ¡Aunque no estaba en la casilla a la que llegaste!" },
+      { tipo: "jugada", fen: "4k3/8/8/2pP4/8/8/8/4K3 w - c6 0 1", texto: "Las negras acaban de jugar su peón de <strong>c7 a c5</strong>, dos casillas de un salto. ¡Es tu turno! ¿Qué haces?",
+        buenas: { d5c6: "¡Al paso! 🕵️ Tu peón fue a c6 y el peón negro de c5 desapareció." },
+        consejo: "Esa no es. El peón negro de c5 acaba de saltar <strong>dos casillas</strong> y quedó al lado del tuyo… ¿te acuerdas de lo que puedes hacer?" },
+      { tipo: "pregunta", fen: "4k3/8/8/2pP4/8/8/8/4K3 w - - 0 1", texto: "Ahora el peón negro de c5 llegó ahí <strong>hace varias jugadas</strong>. ¿Todavía lo puedes comer al paso?", opciones: [
+        { t: "Sí, cuando yo quiera" },
+        { t: "No: solo se puede justo en la jugada siguiente", ok: true, explica: "¡Exacto! Comer al paso hay que hacerlo enseguida. Si esperas una jugada, se pierde la oportunidad." },
+      ] },
+      { tipo: "pregunta", texto: "¿Quién puede comer al paso?", opciones: [
+        { t: "Cualquier pieza" },
+        { t: "Solo un peón, y solo a otro peón", ok: true, explica: "¡Sí! Es una regla solo de los peones." },
+        { t: "Solo el rey" },
+      ] },
+      { tipo: "pregunta", piezas: { e7: "P", e1: "K", a8: "k" }, marcas: ["e8"], texto: "Otra regla del peón: cuando llega al otro lado, <strong>corona</strong>. ¿En qué se puede convertir?", opciones: [
+        { t: "Solo en dama" },
+        { t: "En dama, torre, alfil o caballo", ok: true, explica: "¡Sí! Casi siempre se elige la dama, la más poderosa (en este tablero corona en dama solita). ¡Y puedes tener dos damas o más!" },
+        { t: "En cualquier pieza, hasta en rey" },
+      ] },
+    ],
+  },
+  {
+    id: "enroque", emoji: "🛡️", titulo: "El enroque y el rey", requiere: "alpaso",
+    pasos: [
+      { tipo: "explica", fen: "4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1", marcas: ["g1", "c1"], texto: "El <strong>enroque</strong> es la única jugada en la que mueves <strong>dos piezas a la vez</strong>: el rey camina dos casillas hacia una torre, y la torre salta al otro lado del rey. Hacia la torre de la derecha es el <strong>enroque corto</strong> (el rey va a g1); hacia la de la izquierda, el <strong>enroque largo</strong> (el rey va a c1)." },
+      { tipo: "jugada", fen: "4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1", texto: "Haz un enroque, el que quieras: toca el <strong>rey</strong> y llévalo dos casillas hacia una torre.",
+        buenas: {
+          e1g1: "¡Enroque corto! 🏰 Tu rey quedó escondido en la esquina y la torre salió a jugar.",
+          e1c1: "¡Enroque largo! 🏰 El rey se fue hacia la izquierda y la torre llegó al centro.",
+        },
+        consejo: "Eso no es un enroque. Toca el <strong>rey</strong> y muévelo <strong>dos casillas</strong> hacia una de las torres." },
+      { tipo: "explica", fen: "4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1", texto: "Pero el enroque tiene <strong>4 reglas</strong>:<ol><li>El rey y esa torre <strong>nunca se han movido</strong>.</li><li>No hay <strong>ninguna pieza</strong> entre ellos.</li><li>El rey <strong>no está en jaque</strong>.</li><li>El rey no puede <strong>pasar ni caer</strong> en una casilla atacada.</li></ol>Vamos a ver cada una." },
+      { tipo: "pregunta", fen: "4k3/8/8/8/8/8/8/RN2K2R w KQ - 0 1", texto: "¿Puedes hacer el enroque <strong>largo</strong>, hacia la torre de a1?", opciones: [
+        { t: "Sí" },
+        { t: "No", ok: true, explica: "¡Exacto! El caballo de b1 está en el medio. Todas las casillas entre el rey y la torre tienen que estar vacías… ¡hasta b1, aunque el rey no pase por ahí!" },
+      ] },
+      { tipo: "pregunta", fen: "4r1k1/8/8/8/8/8/8/R3K2R w KQ - 0 1", texto: "La torre negra le da <strong>jaque</strong> a tu rey. ¿Puedes enrocar para escapar?", opciones: [
+        { t: "Sí, el enroque lo salva" },
+        { t: "No: con el rey en jaque no se puede enrocar", ok: true, explica: "¡Bien! Primero hay que salvar al rey de otra forma: moverlo, tapar o comer." },
+      ] },
+      { tipo: "jugada", fen: "4k3/8/8/8/2b5/8/8/R3K2R w KQ - 0 1", texto: "Quieres enrocar. Pero ojo con el <strong>alfil negro</strong> de c4… ¿Hacia qué lado se puede? ¡Hazlo!",
+        buenas: { e1c1: "¡Bien visto! 👀 El alfil ataca f1, y el rey no puede pasar por una casilla atacada: por eso el corto no se podía. El largo, sí." },
+        consejo: "Esa no es. Toca el rey: ¿hacia qué lado te deja enrocar el tablero? Fíjate por dónde ataca el alfil." },
+      { tipo: "pregunta", piezas: { e1: "K", h1: "R", e8: "k" }, texto: "Tu rey salió de e1 a pasear… y después volvió a e1. ¿Puede enrocar ahora?", opciones: [
+        { t: "Sí, porque volvió a su casilla" },
+        { t: "No, ya nunca más", ok: true, explica: "¡Así es! Si el rey se movió aunque sea una vez, ya no puede enrocar en toda la partida. Si se movió una torre, ya no se puede enrocar hacia ese lado." },
+      ] },
+      { tipo: "pregunta", piezas: { d4: "K", f6: "k" }, marcas: ["e5"], texto: "Una regla más del rey: ¿tu rey puede moverse a la casilla marcada?", opciones: [
+        { t: "Sí" },
+        { t: "No: los reyes nunca pueden quedar uno al lado del otro", ok: true, explica: "¡Correcto! Un rey no puede ponerse en jaque, y al lado del otro rey estaría atacado. Por eso siempre queda al menos una casilla entre los dos." },
+      ] },
+    ],
+  },
+  {
+    id: "ahogado", emoji: "🤝", titulo: "Ahogado y tablas", requiere: "enroque",
+    pasos: [
+      { tipo: "explica", fen: "7k/5Q2/6K1/8/8/8/8/8 b - - 0 1", texto: "Le toca a las negras. Su rey <strong>no está en jaque</strong>… pero <strong>no tiene ninguna jugada</strong>: las casillas de al lado están atacadas y no le quedan otras piezas. Eso se llama <strong>AHOGADO</strong> y la partida termina en <strong>empate</strong> (tablas). ¡Aunque las blancas tengan una dama de más! 😮" },
+      { tipo: "pregunta", piezas: { a8: "k", c7: "Q", b6: "K" }, texto: "Le toca a las negras. ¿Qué es?", opciones: [
+        { t: "Jaque mate" },
+        { t: "Ahogado (empate)", ok: true, explica: "¡Sí! El rey no está en jaque y no tiene a dónde ir: empate." },
+        { t: "Ninguno: el rey puede moverse" },
+      ] },
+      { tipo: "pregunta", piezas: { a8: "k", b7: "Q", b6: "K" }, texto: "¿Y ahora?", opciones: [
+        { t: "Jaque mate", ok: true, explica: "¡Exacto! Está en jaque, no puede escapar y no puede comerse a la dama porque la protege tu rey." },
+        { t: "Ahogado (empate)" },
+        { t: "Ninguno: el rey puede moverse" },
+      ] },
+      { tipo: "pregunta", piezas: { a8: "k", c2: "Q", b6: "K" }, texto: "¿Y esta?", opciones: [
+        { t: "Jaque mate" },
+        { t: "Ahogado (empate)" },
+        { t: "Ninguno: el rey puede moverse", ok: true, explica: "¡Bien! No está en jaque y todavía puede ir a b8." },
+      ] },
+      { tipo: "mate", fen: "k7/8/1K6/8/8/8/8/2Q5 w - - 0 1", texto: "Da <strong>jaque mate en 1</strong>… pero ⚠️ ¡cuidado! Hay jugadas que parecen buenas y son <strong>ahogado</strong>." },
+      { tipo: "mate", fen: "7k/5K2/8/8/8/8/8/6Q1 w - - 0 1", texto: "Otra vez: jaque mate en 1, ¡sin ahogar al rey!" },
+      { tipo: "explica", fen: "8/8/3k4/8/8/4K3/8/8 w - - 0 1", texto: "Hay otras formas de empatar (<strong>tablas</strong>):<ul><li>👑 Solo quedan <strong>los dos reyes</strong>: nadie puede dar mate.</li><li>🔁 La misma posición se repite <strong>3 veces</strong>.</li><li>⏳ Pasan <strong>50 jugadas</strong> de cada una sin comer ninguna pieza ni mover un peón.</li><li>🤝 Las dos jugadoras se ponen de <strong>acuerdo</strong>.</li></ul>" },
+      { tipo: "pregunta", texto: "Si la misma posición se repite <strong>3 veces</strong>, ¿qué pasa?", opciones: [
+        { t: "Gana la que movió última" },
+        { t: "Es empate: tablas por repetición", ok: true, explica: "¡Sí! Si las dos repiten y repiten, la partida termina en tablas." },
+        { t: "Hay que empezar de nuevo" },
+      ] },
+      { tipo: "pregunta", texto: "Vas perdiendo: Capi tiene una dama y tú solo tu rey. ¿Qué te conviene buscar?", opciones: [
+        { t: "Rendirme enseguida" },
+        { t: "Un ahogado: si mi rey se queda sin jugadas y sin jaque, es empate", ok: true, explica: "¡Truco de campeona! 🏆 Cuando vas perdiendo, un ahogado te salva. Y cuando vas ganando… ¡deja siempre una casilla libre al rey rival!" },
+        { t: "Comerme la dama con el rey, aunque esté protegida" },
+      ] },
     ],
   },
   // ---- Nivel experto: se abren al terminar el capítulo que piden ----
@@ -280,6 +410,8 @@ const CAPITULOS = [
 // Secciones del camino: cada una empieza en el capítulo "desde".
 const SECCIONES = [
   { desde: "meta", titulo: "Lo básico" },
+  { desde: "centro", titulo: "Estrategia: el centro" },
+  { desde: "alpaso", titulo: "Reglas especiales" },
   { desde: "colgada", titulo: "Táctica: trucos para ganar piezas" },
   { desde: "mates", titulo: "Mates de campeona" },
   { desde: "final-dama", titulo: "Finales" },
@@ -304,6 +436,7 @@ let alTocar = null; // pasos donde tocar una casilla hace otra cosa
 let casillasError = new Set(); // la jugada equivocada que se revisa
 let volteado = false; // tablero visto desde las negras
 let colorJugador = "w"; // qué piezas se pueden tocar (en las partidas entre dos, cambia)
+let termometro = false; // muestra cuánto controla el centro cada color (js/ajedrez-centro.js)
 // Problema del día / práctica / revisión: fuera de los capítulos. Si existe,
 // mostrarSiguiente() le avisa a él en vez de pasar al siguiente paso.
 let modoSuelto = null;
@@ -433,6 +566,7 @@ function pintarTablero() {
     ? []
     : ["w", "b"].filter((c) => A.enJaque(pos, c)).map((c) => pos.tablero.indexOf(c === "w" ? "K" : "k"));
   tableroEl.innerHTML = "";
+  const cuentasCentro = termometro ? Centro.porCasilla(pos) : [];
   // Dado vuelta, la casilla h1 queda arriba a la izquierda.
   for (let k = 0; k < 64; k++) {
     const i = volteado ? 63 - k : k;
@@ -458,12 +592,36 @@ function pintarTablero() {
       casilla.innerHTML = '<span class="objetivo">⭐</span>';
       etiqueta += " estrella";
     }
+    const enCentro = cuentasCentro.find((x) => x.i === i);
+    if (enCentro) {
+      casilla.classList.add("casilla-centro");
+      casilla.insertAdjacentHTML("beforeend", `<span class="cuenta-centro"><b class="blanco">${enCentro.w}</b><b class="negro">${enCentro.b}</b></span>`);
+    }
     if (c === (volteado ? 7 : 0)) casilla.insertAdjacentHTML("beforeend", `<span class="coord fila">${8 - f}</span>`);
     if (f === (volteado ? 0 : 7)) casilla.insertAdjacentHTML("beforeend", `<span class="coord columna">${"abcdefgh"[c]}</span>`);
     casilla.setAttribute("aria-label", etiqueta);
     casilla.addEventListener("click", () => tocarCasilla(i));
     tableroEl.appendChild(casilla);
   }
+  if (termometro) pintarTermometro();
+  else document.getElementById("termometro")?.remove();
+}
+
+// El total del termómetro del centro, arriba del panel.
+function pintarTermometro() {
+  let caja = document.getElementById("termometro");
+  if (!caja) {
+    caja = document.createElement("div");
+    caja.id = "termometro";
+    caja.className = "termometro";
+    panelEl.prepend(caja);
+  }
+  const tu = Centro.control(pos, "w");
+  const capi = Centro.control(pos, "b");
+  const tope = Math.max(tu, capi, 4);
+  const fila = (nombre, n, clase) =>
+    `<div class="fila-termo"><span>${nombre}</span><span class="barra-termo"><span class="relleno-termo ${clase}" style="width:${(n / tope) * 100}%"></span></span><b>${n}</b></div>`;
+  caja.innerHTML = `<strong>🌡️ Termómetro del centro</strong>${fila("⚪ Tú", tu, "blanco")}${fila("⚫ Capi", capi, "negro")}`;
 }
 
 function tocarCasilla(i) {
@@ -557,6 +715,7 @@ function prepararPaso(paso) {
   CapiRival.ocultar();
   volteado = false;
   colorJugador = "w";
+  termometro = !!paso.termometro;
   tableroEl.classList.remove("sin-coordenadas");
   casillasError = new Set();
   pos = posDePaso(paso);
@@ -680,11 +839,13 @@ function pedirMate(textoExito = "¡JAQUE MATE! 🎉 El rey negro no tiene escape
     bloqueado = true;
     pintarTablero();
     Aprende.sonido.error();
-    CapiRival.reaccionar("falla");
+    CapiRival.reaccionar(resultado === "ahogado" ? "ahogado" : "falla");
     mensaje(
-      resultado === "jaque"
-        ? "Es jaque, pero el rey todavía puede escapar. ¡Busca otra jugada!"
-        : "Eso no es jaque mate. ¡Intenta otra!",
+      resultado === "ahogado"
+        ? "¡Uy, <strong>ahogado</strong>! 😮 El rey negro no está en jaque y no puede moverse: sería empate. ¡Busca otra jugada!"
+        : resultado === "jaque"
+          ? "Es jaque, pero el rey todavía puede escapar. ¡Busca otra jugada!"
+          : "Eso no es jaque mate. ¡Intenta otra!",
       "error"
     );
     const s = sesion;
@@ -702,7 +863,7 @@ function pedirMate(textoExito = "¡JAQUE MATE! 🎉 El rey negro no tiene escape
 
 // En estos capítulos Capi juega con las negras en los pasos de mate y de
 // escapar del jaque (las reacciones ya están en pedirMate y en mate2).
-const CAPITULOS_CON_RIVAL = ["jaque", "mates", "mate2"];
+const CAPITULOS_CON_RIVAL = ["jaque", "mates", "mate2", "ahogado"];
 const conRival = () => CAPITULOS_CON_RIVAL.includes((CAPITULOS[capIndice] || {}).id);
 function retarEnMates(tipo) {
   if (conRival()) CapiRival.mostrar(null, CapiRival.reto(tipo));
@@ -929,6 +1090,151 @@ const PASOS = {
         }, 1300);
       }, 800);
     };
+  },
+
+  // Subir el termómetro del centro: sirve cualquier jugada que lo suba casi
+  // tanto como la mejor (la mejor menos 1, o "minimo" si el paso lo trae).
+  centro(paso) {
+    termometro = true;
+    pintarTablero();
+    const inicio = Centro.control(pos, "w");
+    const sube = (m) => Centro.control(A.mover(pos, m), "w") - inicio;
+    const legales = A.todosLegales(pos, "w");
+    const mejor = Math.max(...legales.map(sube));
+    const minimo = paso.minimo ?? Math.max(1, mejor - 1);
+    let fallos = 0;
+    const darPista = () => {
+      const m = legales.find((x) => sube(x) === mejor);
+      marcas = new Set([m.desde]);
+      pintarTablero();
+      mensaje(`💡 Pista: prueba con ${INFO_PIEZAS[A.tipoDe(m.pieza)].articulo} marcado.`);
+    };
+    agregarBoton("💡 Pista", "pista", darPista);
+    alMover = (m) => {
+      const g = sube(m);
+      if (g >= minimo) {
+        aplicar(m);
+        alMover = null;
+        marcas = new Set();
+        pintarTablero();
+        const como =
+          A.tipoDe(m.pieza) === "P" && Centro.CASILLAS.includes(m.hasta)
+            ? "Tu peón se plantó en el centro."
+            : A.tipoDe(m.pieza) === "N"
+              ? "Tu caballo ahora mira al centro."
+              : "Tus piezas ahora miran al centro.";
+        mensaje(`¡Bien! 🌡️ ${como} Tu termómetro subió de <strong>${inicio}</strong> a <strong>${inicio + g}</strong>.`, "exito");
+        Aprende.sonido.acierto();
+        mostrarSiguiente();
+        return;
+      }
+      // Se ve un momento y se devuelve.
+      fallos++;
+      contarError();
+      const antes = pos;
+      aplicar(m);
+      bloqueado = true;
+      Aprende.sonido.error();
+      mensaje(
+        g <= 0
+          ? "Esa jugada no ayuda al centro: tu termómetro no subió. ¡Prueba otra!"
+          : `Subió solo ${g}. ¡Hay jugadas que lo suben más! 🌡️`,
+        "error"
+      );
+      const s = sesion;
+      setTimeout(() => {
+        if (s !== sesion) return;
+        pos = antes;
+        ultimo = null;
+        bloqueado = false;
+        if (fallos >= 2) darPista();
+        pintarTablero();
+      }, 1300);
+    };
+  },
+
+  // Batalla contra Capi: N jugadas cada una desde el principio; cuando la
+  // niña hace la última, gana si su termómetro del centro es más alto.
+  batallaCentro(paso) {
+    const N = paso.jugadas || 6;
+    const lista = paso.rival === "lista";
+    let hechas = 0;
+    let ronda = 0;
+    termometro = true;
+    panelEl.innerHTML = `<p class="contador-ajedrez">Jugada <strong id="cuenta-batalla">1</strong> de ${N}</p>`;
+    CapiRival.mostrar(paso.rival || "tranquila", "¡A ver quién se queda con el centro! 🍊");
+    const contador = () => {
+      const el = document.getElementById("cuenta-batalla");
+      if (el) el.textContent = Math.min(hechas + 1, N);
+    };
+    const comentar = () => {
+      const tu = Centro.control(pos, "w");
+      const capi = Centro.control(pos, "b");
+      if (tu > capi) CapiRival.decir("sorprendida", "¡Me estás ganando el centro! 😰");
+      else if (tu < capi) CapiRival.decir("orgullosa", "¡El centro es mío! 😎");
+      else CapiRival.decir("pensando", "Vamos parejas… 🤔");
+    };
+    const terminar = (mate) => {
+      alMover = null;
+      const tu = Centro.control(pos, "w");
+      const capi = Centro.control(pos, "b");
+      if (mate || tu > capi) {
+        mensaje(`¡Ganaste la batalla del centro! 🏆 ⚪ ${tu} contra ⚫ ${capi}.${mate ? " ¡Y además le diste jaque mate!" : ""}`, "exito");
+        CapiRival.reaccionar("pierde");
+        Aprende.sonido.victoria();
+        Aprende.confeti(40);
+        mostrarSiguiente();
+        return;
+      }
+      contarError();
+      Aprende.sonido.error();
+      mensaje(`${tu === capi ? "¡Empate en el centro!" : "Capi controla más el centro."} ⚪ ${tu} — ⚫ ${capi}. Toca «Empezar de nuevo»: peones al centro y caballos mirando al centro.`, "error");
+      CapiRival.decir("orgullosa", tu === capi ? "¡Empate! Pero no te alcanza 😜" : "¡El centro es mío! 😎", "presume", 0);
+    };
+    const jugar = (m) => {
+      aplicar(m);
+      hechas++;
+      jugadasHechas++;
+      if (A.situacion(pos, "b") === "mate") return terminar(true);
+      if (hechas >= N) return terminar(false);
+      bloqueado = true;
+      const mueca = m.captura ? CapiRival.reaccionar("comida", { tipo: A.tipoDe(m.captura) }) : CapiRival.reaccionar("pensando");
+      const r = ronda;
+      const s = sesion;
+      setTimeout(() => {
+        if (s !== sesion || r !== ronda) return;
+        const resp = elegirJugada(pos, "b", lista);
+        aplicar(resp);
+        jugadasHechas++;
+        bloqueado = false;
+        contador();
+        if (A.situacion(pos, "w") === "mate") {
+          alMover = null;
+          contarError();
+          mensaje("¡Jaque mate de Capi! 😮 Cuida a tu rey mientras conquistas el centro. Toca «Empezar de nuevo».", "error");
+          CapiRival.reaccionar("gana");
+          return;
+        }
+        if (resp.captura) CapiRival.reaccionar("come", { tipo: A.tipoDe(resp.captura) });
+        else comentar();
+      }, Math.max(650, mueca * 0.8));
+    };
+    const empezar = () => {
+      ronda++;
+      pos = A.desdeFEN(A.INICIAL);
+      hechas = 0;
+      jugadasHechas = 0;
+      ultimo = null;
+      seleccion = null;
+      destinos = [];
+      bloqueado = false;
+      alMover = jugar;
+      contador();
+      mensaje("Empiezas tú. ¡Al centro! 🌡️");
+      pintarTablero();
+    };
+    agregarBoton("↺ Empezar de nuevo", "quitar", empezar);
+    empezar();
   },
 
   jugada(paso) {
@@ -1418,6 +1724,10 @@ function empezarPartida(quien) {
   accionesEl.innerHTML = "";
   agregarBoton("↩ Deshacer", "quitar", deshacer);
   agregarBoton("💡 Ayuda", "pista", ayuda);
+  agregarBoton("🌡️ Centro", "siguiente", () => {
+    termometro = !termometro;
+    pintarTablero();
+  });
   agregarBoton("Nueva partida", "borrar", () => {
     sesion++;
     bloqueado = false;
